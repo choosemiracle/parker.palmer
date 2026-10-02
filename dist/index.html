@@ -1,432 +1,85 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>帕克·帕尔默思想研究｜Parker J. Palmer</title>
-  <meta name="description" content="一份面向中文读者的 Parker J. Palmer 思想地图：从内在导师、身份与完整性，到使命、教育、信任圈、澄心会、悲剧性张力与公共生活。" />
-  <meta name="theme-color" content="#101b2b" />
-  <link rel="preconnect" href="https://upload.wikimedia.org" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101b2b'/%3E%3Ccircle cx='32' cy='32' r='18' fill='none' stroke='%23d8aa5b' stroke-width='3'/%3E%3Ccircle cx='32' cy='32' r='9' fill='none' stroke='%23d8aa5b' stroke-width='2' opacity='.65'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23f4d69b'/%3E%3C/svg%3E" />
-  <style>
-    :root {
-      --ink: #101b2b;
-      --ink-2: #17263b;
-      --paper: #f6f3ec;
-      --paper-2: #eee9df;
-      --line: rgba(16,27,43,.14);
-      --muted: #6e6f73;
-      --gold: #c5903d;
-      --gold-2: #e7c37b;
-      --blue: #34587c;
-      --green: #466456;
-      --white: #fffef9;
-      --shadow: 0 22px 60px rgba(12,22,36,.10);
-      --radius: 24px;
-      --max: 1180px;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 20% 6%, rgba(197,144,61,.11), transparent 25rem),
-        linear-gradient(180deg, #f8f6f0 0%, #f2eee6 100%);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-      line-height: 1.75;
-      font-size: 16px;
-    }
-    a { color: inherit; }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    .shell { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
-    .topbar {
-      position: sticky; top: 0; z-index: 50;
-      backdrop-filter: blur(14px);
-      background: rgba(248,246,240,.88);
-      border-bottom: 1px solid rgba(16,27,43,.08);
-    }
-    .topbar-inner { min-height: 66px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 760; letter-spacing: .02em; }
-    .brand-mark { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(197,144,61,.45); display:grid; place-items:center; position:relative; }
-    .brand-mark::before, .brand-mark::after { content:""; position:absolute; border:1px solid var(--gold); border-radius:50%; }
-    .brand-mark::before { width:17px; height:17px; opacity:.65; }
-    .brand-mark::after { width:6px; height:6px; background:var(--gold-2); }
-    nav { display: flex; gap: 22px; font-size: 14px; color: #4e5460; }
-    nav a { text-decoration: none; }
-    nav a:hover { color: var(--ink); }
-    .hero { padding: 64px 0 46px; }
-    .hero-grid { display:grid; grid-template-columns: 1.25fr .75fr; gap: 30px; align-items: stretch; }
-    .hero-main, .hero-side { border-radius: 30px; overflow:hidden; }
-    .hero-main {
-      min-height: 520px;
-      padding: 56px;
-      color: #f9f6ef;
-      background:
-        radial-gradient(circle at 76% 40%, rgba(231,195,123,.13) 0 8%, transparent 9% 16%, rgba(231,195,123,.08) 17% 18%, transparent 19%),
-        linear-gradient(145deg, #101b2b 0%, #172943 62%, #203b50 100%);
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-    .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: 12px; font-weight: 750; opacity: .68; }
-    h1 { margin: 16px 0 22px; font-size: clamp(46px, 6.6vw, 82px); line-height: 1.02; letter-spacing: -.055em; max-width: 780px; }
-    h1 em { color: var(--gold-2); font-style: normal; }
-    .hero-copy { max-width: 690px; font-size: 18px; color: rgba(255,255,255,.78); }
-    .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
-    .btn { border:1px solid rgba(255,255,255,.22); border-radius:999px; padding:11px 18px; text-decoration:none; background:rgba(255,255,255,.07); color:white; font-weight:700; font-size:14px; }
-    .btn.primary { background:var(--gold-2); color:var(--ink); border-color:transparent; }
-    .hero-note { position:absolute; left:56px; right:56px; bottom:30px; display:flex; justify-content:space-between; gap:20px; font-size:12px; color:rgba(255,255,255,.48); }
-    .hero-side { background: #d9d2c5; min-height:520px; position:relative; box-shadow:var(--shadow); }
-    .hero-side img { width:100%; height:100%; object-fit:cover; filter:saturate(.78) contrast(.95); display:block; }
-    .portrait-caption { position:absolute; left:18px; right:18px; bottom:18px; padding:14px 16px; border-radius:16px; color:white; background:linear-gradient(180deg, rgba(11,19,31,.18), rgba(11,19,31,.72)); font-size:13px; }
-    .portrait-caption a { opacity:.8; }
-
-    .section { padding: 64px 0; }
-    .section-head { display:grid; grid-template-columns:.72fr 1.28fr; gap:34px; align-items:end; margin-bottom:28px; }
-    .kicker { font-size:12px; color:var(--gold); font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
-    h2 { margin:8px 0 0; font-size:clamp(34px,4.6vw,58px); line-height:1.08; letter-spacing:-.045em; }
-    .section-intro { margin:0; max-width:720px; color:#555d67; font-size:17px; }
-
-    .map-wrap { background:var(--ink); border-radius:30px; padding:34px; color:white; box-shadow:var(--shadow); }
-    .map-flow { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; }
-    .node { border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.055); border-radius:18px; padding:18px 15px; min-height:138px; text-align:left; color:white; transition:.22s ease; }
-    .node:hover, .node.active { transform:translateY(-3px); background:rgba(231,195,123,.11); border-color:rgba(231,195,123,.55); }
-    .node .n { display:block; font-size:11px; letter-spacing:.13em; color:var(--gold-2); margin-bottom:18px; }
-    .node strong { display:block; font-size:17px; margin-bottom:5px; }
-    .node small { color:rgba(255,255,255,.58); line-height:1.5; }
-    .concept-panel { margin-top:16px; display:grid; grid-template-columns:1fr .68fr; gap:16px; }
-    .concept-card { border:1px solid rgba(255,255,255,.12); border-radius:20px; padding:25px; background:rgba(255,255,255,.04); }
-    .concept-card h3 { margin:0 0 8px; font-size:24px; }
-    .concept-card p { margin:0; color:rgba(255,255,255,.73); }
-    .concept-card .source-link { display:inline-block; margin-top:18px; color:var(--gold-2); font-size:13px; }
-    .question-box { border-radius:20px; padding:25px; color:var(--ink); background:var(--gold-2); }
-    .question-box span { font-size:11px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; opacity:.65; }
-    .question-box p { margin:10px 0 0; font-size:20px; line-height:1.5; font-weight:700; }
-
-    .grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .card { background:rgba(255,255,255,.7); border:1px solid var(--line); border-radius:var(--radius); padding:25px; box-shadow:0 12px 30px rgba(16,27,43,.04); }
-    .card .tag { font-size:11px; text-transform:uppercase; letter-spacing:.14em; color:var(--gold); font-weight:800; }
-    .card h3 { font-size:24px; line-height:1.25; margin:10px 0; }
-    .card p { margin:0; color:#606670; }
-    .card .mini { margin-top:18px; padding-top:16px; border-top:1px solid var(--line); font-size:13px; color:#777b82; }
-
-    .practice-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-    .practice { position:relative; overflow:hidden; min-height:290px; }
-    .practice .num { position:absolute; right:18px; top:4px; font-size:96px; font-weight:800; color:rgba(197,144,61,.09); letter-spacing:-.08em; }
-    .practice ul { margin:16px 0 0; padding-left:20px; color:#5b626c; }
-    .practice li { margin:7px 0; }
-
-    .works-tools { display:flex; align-items:center; justify-content:space-between; gap:18px; margin-bottom:18px; }
-    .chips { display:flex; flex-wrap:wrap; gap:8px; }
-    .chip { border:1px solid var(--line); background:rgba(255,255,255,.65); border-radius:999px; padding:8px 13px; font-size:13px; color:#59606a; }
-    .chip.active { background:var(--ink); color:white; border-color:var(--ink); }
-    .search { min-width:260px; border:1px solid var(--line); border-radius:999px; background:white; padding:10px 16px; color:var(--ink); outline:none; }
-    .search:focus { border-color:rgba(197,144,61,.7); box-shadow:0 0 0 3px rgba(197,144,61,.12); }
-    .works { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-    .work { display:grid; grid-template-columns:90px 1fr; gap:18px; background:rgba(255,255,255,.66); border:1px solid var(--line); border-radius:20px; padding:20px; }
-    .work-year { font-size:34px; line-height:1; font-weight:800; letter-spacing:-.04em; color:#b68436; }
-    .work h3 { margin:0 0 4px; font-size:20px; }
-    .work .en { font-size:13px; color:#86898e; margin-bottom:9px; }
-    .work p { margin:0; color:#606670; font-size:14px; }
-    .work.hidden { display:none; }
-
-    .path-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-    .path { background:var(--ink-2); color:white; }
-    .path p { color:rgba(255,255,255,.68); }
-    .path ol { padding-left:20px; margin:18px 0 0; }
-    .path li { margin:8px 0; }
-
-    .sources { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-    .source { display:flex; justify-content:space-between; gap:20px; padding:20px 0; border-bottom:1px solid var(--line); text-decoration:none; }
-    .source strong { display:block; }
-    .source span { display:block; font-size:13px; color:#777b82; margin-top:4px; }
-    .source b { font-size:18px; color:var(--gold); font-weight:500; }
-
-    .footer { margin-top:40px; background:var(--ink); color:rgba(255,255,255,.7); padding:42px 0; }
-    .footer-grid { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:end; }
-    .footer strong { color:white; font-size:20px; }
-    .footer p { max-width:730px; margin:8px 0 0; font-size:14px; }
-    .footer small { color:rgba(255,255,255,.45); }
-
-    .reveal { opacity:0; transform:translateY(14px); transition:.55s ease; }
-    .reveal.visible { opacity:1; transform:none; }
-    @media (prefers-reduced-motion: reduce) { * { scroll-behavior:auto !important; transition:none !important; } .reveal { opacity:1; transform:none; } }
-    @media (max-width: 980px) {
-      nav { display:none; }
-      .hero-grid, .section-head, .concept-panel { grid-template-columns:1fr; }
-      .hero-main { min-height:500px; padding:40px; }
-      .hero-note { left:40px; right:40px; }
-      .hero-side { min-height:440px; }
-      .map-flow { grid-template-columns:repeat(3,1fr); }
-      .grid-3, .path-grid { grid-template-columns:1fr 1fr; }
-    }
-    @media (max-width: 700px) {
-      .shell { width:min(100% - 24px, var(--max)); }
-      .hero { padding-top:24px; }
-      .hero-main { min-height:540px; padding:30px 24px; }
-      .hero-copy { font-size:16px; }
-      .hero-note { left:24px; right:24px; bottom:22px; flex-direction:column; gap:3px; }
-      .hero-side { min-height:390px; }
-      .section { padding:48px 0; }
-      .map-wrap { padding:18px; border-radius:22px; }
-      .map-flow { grid-template-columns:1fr 1fr; }
-      .node { min-height:120px; }
-      .grid-3, .practice-grid, .works, .path-grid, .sources { grid-template-columns:1fr; }
-      .works-tools { align-items:stretch; flex-direction:column; }
-      .search { min-width:0; width:100%; }
-      .work { grid-template-columns:70px 1fr; }
-      .footer-grid { grid-template-columns:1fr; }
-    }
-  </style>
-</head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>帕克·帕尔默｜思想研究与生命实践</title>
+<meta name="description" content="一个面向中文读者的 Parker J. Palmer 深度研究与实践网站：思想谱系、核心概念、原著研读、信任圈、澄心会、教育、使命、公共生活与12周实践路径。">
+<style>
+:root{--ink:#162438;--ink2:#22364d;--paper:#f6f1e7;--paper2:#eee6d8;--gold:#b78643;--gold2:#e6c78e;--green:#506b5a;--muted:#687078;--line:rgba(22,36,56,.14);--white:#fffdf7;--r:24px;--max:1200px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 85% 5%,rgba(183,134,67,.12),transparent 28rem),linear-gradient(#faf7f0,#f1ebdf);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.75}a{color:inherit}.shell{width:min(var(--max),calc(100% - 36px));margin:auto}.top{position:sticky;top:0;z-index:30;background:rgba(248,244,236,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}.topin{min-height:66px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800}.mark{width:32px;height:32px;border:1px solid var(--gold);border-radius:50%;position:relative}.mark:before,.mark:after{content:"";position:absolute;border-radius:50%;inset:7px;border:1px solid var(--gold)}.mark:after{inset:13px;background:var(--gold);border:0}nav{display:flex;gap:18px;font-size:13px;color:#59616b}nav a{text-decoration:none}.hero{padding:48px 0 34px}.heroGrid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.heroMain,.heroSide{border-radius:30px;overflow:hidden;min-height:570px;box-shadow:0 24px 70px rgba(20,34,51,.10)}.heroMain{background:radial-gradient(circle at 80% 34%,rgba(230,199,142,.18),transparent 10%,transparent 15%,rgba(230,199,142,.08) 16%,transparent 18%),linear-gradient(145deg,#142238,#223c50);color:white;padding:54px;position:relative}.eyebrow,.kicker{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}.hero .eyebrow{color:var(--gold2)}h1{font-size:clamp(46px,6.6vw,82px);line-height:1.03;letter-spacing:-.055em;margin:18px 0 20px}h1 em{font-style:normal;color:var(--gold2)}.lead{font-size:18px;color:rgba(255,255,255,.77);max-width:720px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-block;padding:10px 17px;border-radius:999px;border:1px solid rgba(255,255,255,.24);text-decoration:none;font-size:14px;font-weight:700}.primary{background:var(--gold2);color:var(--ink);border:0}.heroQuote{position:absolute;bottom:32px;left:54px;right:54px;border-top:1px solid rgba(255,255,255,.16);padding-top:18px;color:rgba(255,255,255,.57);font-size:13px}.heroSide{background:linear-gradient(160deg,#d8cfbf,#9ca99c);padding:32px;display:flex;flex-direction:column;justify-content:space-between}.rings{height:300px;display:grid;place-items:center}.ring{width:235px;height:235px;border:1px solid rgba(255,255,255,.72);border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 34px rgba(255,255,255,.13),0 0 0 68px rgba(255,255,255,.07)}.ring span{width:62px;height:62px;border-radius:50%;background:#f1d9a8;box-shadow:0 0 40px rgba(255,226,166,.8);display:grid;place-items:center;font-size:11px;font-weight:800;text-align:center}.sideText{background:rgba(255,253,247,.82);padding:20px;border-radius:20px}.sideText strong{font-size:21px}.sideText p{margin:8px 0 0;color:#58616a;font-size:14px}.section{padding:62px 0}.head{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;align-items:end;margin-bottom:28px}.head h2{font-size:clamp(34px,4.5vw,56px);line-height:1.08;letter-spacing:-.045em;margin:7px 0 0}.head p{margin:0;color:#59616a;font-size:17px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:rgba(255,255,255,.66);border:1px solid var(--line);border-radius:var(--r);padding:25px}.card h3{font-size:23px;line-height:1.3;margin:9px 0}.card p{color:#5e6670;margin:0}.tag{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:800}.mini{margin-top:17px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:#777}.map{background:var(--ink);color:white;border-radius:30px;padding:28px}.nodes{display:grid;grid-template-columns:repeat(7,1fr);gap:9px}.node{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:white;border-radius:17px;padding:16px 12px;text-align:left;min-height:128px;cursor:pointer}.node.active,.node:hover{border-color:var(--gold2);background:rgba(230,199,142,.1)}.node b{display:block;font-size:16px;margin-top:16px}.node small{color:rgba(255,255,255,.55)}.panel{display:grid;grid-template-columns:1.25fr .75fr;gap:12px;margin-top:12px}.panel>div{border-radius:18px;padding:23px;background:rgba(255,255,255,.055)}.panel h3{font-size:25px;margin:0 0 7px}.panel p{margin:0;color:rgba(255,255,255,.72)}.question{background:var(--gold2)!important;color:var(--ink)}.question p{color:var(--ink);font-size:19px;font-weight:700}.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.era{border-top:3px solid var(--gold);padding-top:14px}.era b{font-size:18px}.era p{font-size:13px;color:#666;margin:5px 0}.lab{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}.practice{min-height:270px;position:relative;overflow:hidden}.practice .num{position:absolute;right:18px;top:-18px;font-size:100px;font-weight:900;color:rgba(183,134,67,.08)}.practice ul{padding-left:19px;color:#5e6670}.practice li{margin:5px 0}.booksTools{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:15px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{border:1px solid var(--line);background:white;border-radius:999px;padding:7px 12px;cursor:pointer}.chip.active{background:var(--ink);color:white}.search{border:1px solid var(--line);border-radius:999px;padding:9px 14px;min-width:250px}.books{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.book{display:grid;grid-template-columns:74px 1fr;gap:15px}.year{font-size:28px;color:var(--gold);font-weight:900}.book h3{margin:0;font-size:19px}.book p{font-size:13px}.hidden{display:none}.path{background:var(--ink2);color:white}.path p,.path li{color:rgba(255,255,255,.7)}.path ol{padding-left:20px}.weekly{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.week{padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.6)}.week b{display:block;color:var(--gold);font-size:12px}.week strong{display:block;margin:6px 0}.week span{font-size:13px;color:#6b7077}.sourcebox{background:#e9e0d1;border-radius:28px;padding:28px}.sourcegrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.source{background:rgba(255,255,255,.58);border-radius:18px;padding:18px}.source strong{display:block}.source span{font-size:13px;color:#666}.footer{margin-top:45px;background:var(--ink);color:rgba(255,255,255,.66);padding:38px 0}.footer strong{color:white}.note{font-size:13px}.reveal{opacity:0;transform:translateY(12px);transition:.5s}.reveal.visible{opacity:1;transform:none}
+@media(max-width:980px){nav{display:none}.heroGrid,.head,.panel{grid-template-columns:1fr}.nodes{grid-template-columns:repeat(4,1fr)}.grid3,.timeline,.weekly,.sourcegrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:680px){.heroMain{padding:30px 24px;min-height:620px}.heroQuote{left:24px;right:24px}.heroSide{min-height:470px}.nodes,.grid3,.lab,.books,.timeline,.weekly,.sourcegrid{grid-template-columns:1fr}.booksTools{align-items:stretch;flex-direction:column}.search{min-width:0;width:100%}.section{padding:46px 0}}
+</style></head>
 <body>
-  <header class="topbar">
-    <div class="shell topbar-inner">
-      <a class="brand" href="#top" aria-label="回到顶部"><span class="brand-mark" aria-hidden="true"></span><span>帕克·帕尔默思想研究</span></a>
-      <nav aria-label="主要导航">
-        <a href="#map">思想地图</a>
-        <a href="#practice">实践方法</a>
-        <a href="#works">著作</a>
-        <a href="#paths">学习路径</a>
-        <a href="#sources">资料来源</a>
-      </nav>
-    </div>
-  </header>
+<header class="top"><div class="shell topin"><a class="brand" href="#top"><span class="mark"></span>帕克·帕尔默思想研究</a><nav><a href="#genealogy">思想谱系</a><a href="#map">核心思想</a><a href="#practice">实践实验室</a><a href="#books">原著地图</a><a href="#path">研修路径</a><a href="#sources">资料库</a></nav></div></header>
+<main id="top">
+<section class="hero"><div class="shell heroGrid">
+<div class="heroMain"><div class="eyebrow">Parker J. Palmer · Study & Practice</div><h1>不是研究一个人<br>而是学习<em>不再分裂地生活</em></h1><p class="lead">这是一个把帕克·帕尔默的思想、生命经历、贵格会根源、教育哲学与信任圈实践放在同一张地图上的中文研修网站。阅读不是终点：每个主题都回到一个问题、一段静默、一项练习，以及现实生活中的一次选择。</p><div class="actions"><a class="btn primary" href="#path">开始 12 周研修</a><a class="btn" href="#map">打开思想地图</a><a class="btn" href="#practice">直接进入实践</a></div><div class="heroQuote">研究原则：先回到原著，再进入经验；不把 Palmer 变成一套“技巧”，也不把内在探索与关系、工作和公共生活切开。</div></div>
+<div class="heroSide"><div class="rings"><div class="ring"><span>INNER<br>TEACHER</span></div></div><div class="sideText"><span class="tag">一条贯穿全站的线</span><strong>内在真实 → 关系 → 行动</strong><p>从“我是谁”到“我如何知道”，从“我如何教”到“我如何与陌生人共同生活”。Palmer 的主题很多，但核心始终是：让内在生命与外在生活重新相遇。</p></div></div>
+</div></section>
 
-  <main id="top">
-    <section class="hero">
-      <div class="shell hero-grid">
-        <div class="hero-main">
-          <div class="eyebrow">Parker J. Palmer · 思想档案</div>
-          <h1>从<em>内在真实</em><br>到公共世界</h1>
-          <p class="hero-copy">帕克·帕尔默的工作横跨教育、使命、领导、社群、灵性与社会变迁。理解他的关键，不是把这些主题分开，而是看见同一条线：一个人如何听见内在导师，让身份与角色逐渐一致，并在可信赖的共同体中把这种完整性带回真实世界。</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#map">进入思想地图</a>
-            <a class="btn" href="#paths">选择学习路径</a>
-          </div>
-          <div class="hero-note">
-            <span>中文研究导览 · 非官方站点</span>
-            <span>资料核对：Center for Courage & Renewal / Wiley</span>
-          </div>
-        </div>
-        <figure class="hero-side">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Parker_J._Palmer.jpg" alt="Parker J. Palmer 户外肖像" referrerpolicy="no-referrer" />
-          <figcaption class="portrait-caption">Parker J. Palmer，作家、教育思想者与 Center for Courage & Renewal 创始人之一。<a href="https://commons.wikimedia.org/wiki/File:Parker_J._Palmer.jpg" target="_blank" rel="noreferrer">图像来源</a></figcaption>
-        </figure>
-      </div>
-    </section>
+<section class="section" id="genealogy"><div class="shell"><div class="head reveal"><div><div class="kicker">Genealogy</div><h2>先看思想从哪里长出来</h2></div><p>帕尔默不是从抽象理论开始。他的思想在生命经验、Pendle Hill 的贵格会共同体、沉默实践、教育工作与公共参与中逐渐成形。理解这些根系，才能明白“内在导师”“完整性”“共同体”为什么不是漂亮概念。</p></div>
+<div class="timeline reveal"><div class="era"><b>社会学与公共世界</b><p>早期社会学训练与社区工作，让他持续关心制度、差异与公共生活。</p></div><div class="era"><b>Pendle Hill</b><p>共同生活、工作、学习与贵格会静默，成为思想转折点。</p></div><div class="era"><b>Thomas Merton</b><p>“隐藏的完整性”等意象，为内在生命提供深层语言。</p></div><div class="era"><b>教育与教师生命</b><p>从认识论进入“我们以怎样的人去教、去认识”。</p></div><div class="era"><b>Courage & Renewal</b><p>思想逐渐成为信任圈、澄心会、基石、第三物等可实践结构。</p></div></div>
+<div class="grid3" style="margin-top:16px"><article class="card reveal"><span class="tag">Quaker roots</span><h3>“Meeting” 不只是开会</h3><p>在贵格会语境中，meeting 是共同等待、寻找真理的方式。学习因此也可以成为一种“meeting for learning”：教师、学习者与真理相遇。</p></article><article class="card reveal"><span class="tag">Experience</span><h3>从二手信念回到亲身经验</h3><p>Pendle Hill 的沉默迫使 Palmer 追问：哪些东西只是“听来的”，哪些是自己真实活过、能够从经验中说出的？</p></article><article class="card reveal"><span class="tag">Paradox</span><h3>不急着消灭矛盾</h3><p>沉思与行动、独处与共同体、真实自我与社会角色、现实与可能，并非总要二选一。承载张力本身就是一种能力。</p></article></div></div></section>
 
-    <section class="section" id="map">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">思想地图</div><h2>六个节点，一条线</h2></div>
-          <p class="section-intro">点击下面任一节点，会看到这个概念在 Palmer 思想中的位置。它们不是六门独立课程，而是一条从“如何成为自己”逐步走向“如何与他人和世界相处”的路径。</p>
-        </div>
-        <div class="map-wrap reveal">
-          <div class="map-flow" role="list" aria-label="核心概念">
-            <button class="node active" data-concept="inner" role="listitem"><span class="n">01 · LISTEN</span><strong>内在导师</strong><small>Inner Teacher</small></button>
-            <button class="node" data-concept="identity" role="listitem"><span class="n">02 · BECOME</span><strong>身份与完整性</strong><small>Identity & Integrity</small></button>
-            <button class="node" data-concept="vocation" role="listitem"><span class="n">03 · DISCERN</span><strong>使命与召唤</strong><small>Vocation</small></button>
-            <button class="node" data-concept="community" role="listitem"><span class="n">04 · RELATE</span><strong>可信赖的共同体</strong><small>Trustworthy Community</small></button>
-            <button class="node" data-concept="undivided" role="listitem"><span class="n">05 · ALIGN</span><strong>不再分裂地生活</strong><small>Undivided Life</small></button>
-            <button class="node" data-concept="public" role="listitem"><span class="n">06 · ACT</span><strong>内在工作与公共生活</strong><small>Inner Work → Outer World</small></button>
-          </div>
-          <div class="concept-panel" aria-live="polite">
-            <article class="concept-card">
-              <h3 id="concept-title">内在导师</h3>
-              <p id="concept-body">Palmer 用“内在导师”指向人身上一种能够辨认真实、意义与方向的内在资源。他并不把它限定为某一种宗教语言；在不同文本中，它也会被说成真实自我、灵魂、身份或内在之光。关键不是服从外部权威，而是创造足够安静、诚实的条件，让这个声音变得可辨认。</p>
-              <a id="concept-source" class="source-link" href="https://couragerenewal.org/foundations-participant-portfolio-oct-nov-2023/session-one/" target="_blank" rel="noreferrer">查看官方延伸资料</a>
-            </article>
-            <aside class="question-box"><span>把思想变成问题</span><p id="concept-question">此刻我真正知道、却还没有认真听见的是什么？</p></aside>
-          </div>
-        </div>
-      </div>
-    </section>
+<section class="section" id="map"><div class="shell"><div class="head reveal"><div><div class="kicker">Core map</div><h2>七个概念，一套生命逻辑</h2></div><p>点击节点。不要把它们当作词典定义，而要看它们如何彼此生成：内在导师让真实可被听见；身份与完整性让真实有形；使命让它进入选择；共同体保护这种辨识；不分裂的生活把它带进现实。</p></div>
+<div class="map reveal"><div class="nodes">
+<button class="node active" data-k="inner"><small>01 · LISTEN</small><b>内在导师</b><small>Inner Teacher</small></button>
+<button class="node" data-k="self"><small>02 · BECOME</small><b>真实自我</b><small>True Self</small></button>
+<button class="node" data-k="integrity"><small>03 · ALIGN</small><b>身份与完整性</b><small>Identity & Integrity</small></button>
+<button class="node" data-k="vocation"><small>04 · DISCERN</small><b>使命与召唤</b><small>Vocation</small></button>
+<button class="node" data-k="community"><small>05 · RELATE</small><b>可信赖共同体</b><small>Trustworthy Community</small></button>
+<button class="node" data-k="paradox"><small>06 · HOLD</small><b>承载张力</b><small>Paradox</small></button>
+<button class="node" data-k="public"><small>07 · ACT</small><b>公共生活</b><small>Outer World</small></button>
+</div><div class="panel"><div><h3 id="ct">内在导师</h3><p id="cb">不是一个替你下命令的神秘声音，而是人内在能够辨认真实、意义与方向的资源。Palmer 的实践不是“告诉人答案”，而是创造条件，让这个声音更容易被自己听见。</p></div><div class="question"><span class="tag">今日问题</span><p id="cq">此刻我已经隐约知道、却一直没有认真聆听的是什么？</p></div></div></div></div></section>
 
-    <section class="section">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">关键区分</div><h2>三个常被误解的地方</h2></div>
-          <p class="section-intro">Palmer 的语言容易被读成“向内看就好”。但他的写作始终把内在生活、关系、职业角色与制度现实连接在一起。下面三组区分，是进入他思想时最重要的校准。</p>
-        </div>
-        <div class="grid-3">
-          <article class="card reveal"><span class="tag">Wholeness</span><h3>完整，不等于完美</h3><p>“完整性”指的是更诚实地承认并承载自己的全部，包括天赋、局限、阴影、恐惧与矛盾。它强调真实与一致，而不是把自己修炼成没有缺点的人。</p><div class="mini">可延伸阅读：《The Courage to Teach》《A Hidden Wholeness》</div></article>
-          <article class="card reveal"><span class="tag">Community</span><h3>共同体，不等于彼此干预</h3><p>Palmer 所说的共同体，不以给建议、纠正、拯救他人为中心。可信赖的空间反而通过边界、聆听、开放问题与沉默，保护每个人自己发现真相的能力。</p><div class="mini">核心实践：Circle of Trust®、Clearness Committee</div></article>
-          <article class="card reveal"><span class="tag">Vocation</span><h3>召唤，不等于找到理想职业</h3><p>使命并不是先想象一个“应该成为的人”，再努力扮演它。Palmer 更重视倾听生命已经给出的线索：你的气质、限制、经历与真正关心之事，正在把你带向哪里。</p><div class="mini">核心文本：《Let Your Life Speak》</div></article>
-        </div>
-      </div>
-    </section>
+<section class="section"><div class="shell"><div class="head reveal"><div><div class="kicker">Four domains</div><h2>把思想放回四个现实领域</h2></div><p>帕尔默的工作不能缩成“个人成长”。他的内在工作始终要经受现实关系、职业实践、共同体与公共生活的检验。</p></div><div class="grid3">
+<article class="card reveal"><span class="tag">Self</span><h3>生命与使命</h3><p>倾听生命，而不是把一个外在理想强加给生命。失败、限制、关闭的道路与反复出现的吸引，都可能是使命的线索。</p><div class="mini">入口：《Let Your Life Speak》</div></article>
+<article class="card reveal"><span class="tag">Education</span><h3>教育与认识</h3><p>“我们教的是我们自己。”教学不是技巧的堆叠；认识也不是占有对象，而是进入忠实关系。</p><div class="mini">入口：《The Courage to Teach》《To Know as We Are Known》</div></article>
+<article class="card reveal"><span class="tag">Community</span><h3>共同体与辨识</h3><p>好的共同体不侵入人的灵魂。它以边界、沉默、开放问题和第三物，帮助每个人做自己的内在工作。</p><div class="mini">入口：《A Hidden Wholeness》</div></article>
+<article class="card reveal"><span class="tag">Action</span><h3>沉思与行动</h3><p>行动并非越多越好。Palmer 追问行动的阴影、失败、正确行动，以及如何让行动从真实而非焦虑中生长。</p><div class="mini">入口：《The Active Life》</div></article>
+<article class="card reveal"><span class="tag">Public life</span><h3>陌生人与公共生活</h3><p>完整性并不止于私人世界。它还关乎我们如何在差异中与陌生人共处，如何重建公共空间。</p><div class="mini">入口：《The Company of Strangers》</div></article>
+<article class="card reveal"><span class="tag">Democracy</span><h3>心灵与公民生活</h3><p>在政治分歧中保持开放聆听、承载差异与张力，并把内在工作转化为公共参与的能力。</p><div class="mini">入口：《Healing the Heart of Democracy》</div></article>
+</div></div></section>
 
-    <section class="section" id="practice">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">思想如何落地</div><h2>四种实践结构</h2></div>
-          <p class="section-intro">Palmer 希望思想“长出轮子”——能够进入人的生活。Center for Courage & Renewal 后来的实践，把这些观念发展成一套可重复使用的关系结构与辨识方法。</p>
-        </div>
-        <div class="practice-grid">
-          <article class="card practice reveal"><div class="num">01</div><span class="tag">Circle of Trust®</span><h3>信任圈</h3><p>以“保护灵魂出现的空间”为核心。参与者共同维护边界，在群体中做自己的内在工作，而不是互相分析或指导。</p><ul><li>给予欢迎，也接受欢迎</li><li>不急于修理、建议、拯救或纠正</li><li>把分享视为邀请，而不是要求</li><li>让沉默成为对话的一部分</li></ul></article>
-          <article class="card practice reveal"><div class="num">02</div><span class="tag">Clearness Committee</span><h3>澄心会</h3><p>源自贵格会传统的辨识实践。一个人带着真实问题进入小组，其他人主要以开放而诚实的问题陪伴，帮助当事人减少干扰，更清楚地听见自己的内在智慧。</p><ul><li>不替对方做决定</li><li>不把问题变成诊断</li><li>重视保密与边界</li><li>问题服务于当事人的发现</li></ul></article>
-          <article class="card practice reveal"><div class="num">03</div><span class="tag">Third Things</span><h3>第三物</h3><p>诗歌、故事、自然物、图像、音乐等都可以成为“第三物”。人们先共同面对一个对象，再从中照见自己，降低正面自我暴露的压力。</p><ul><li>绕开过度解释</li><li>允许隐喻承载复杂经验</li><li>让不同的人保留不同理解</li><li>把注意力放在共同中心</li></ul></article>
-          <article class="card practice reveal"><div class="num">04</div><span class="tag">Touchstones</span><h3>基石</h3><p>基石不是“管人的规则”，而是让可信赖空间得以成立的共同承诺。它们把抽象的尊重，变成在现场可以观察和练习的关系方式。</p><ul><li>尊重每个人的身份与完整性</li><li>以自己的经验说话</li><li>为停顿、沉默与未知留位置</li><li>相信每个人拥有自己的内在资源</li></ul></article>
-        </div>
-      </div>
-    </section>
+<section class="section" id="practice"><div class="shell"><div class="head reveal"><div><div class="kicker">Practice lab</div><h2>不是“懂了”，而是做一次</h2></div><p>下面的结构把阅读变成经验。它们不是治疗、教练或建议系统，而是尽量减少外部干预，让一个人更能认出自己的内在资源。初学者可先从静默、第三物和双人聆听开始。</p></div><div class="lab">
+<article class="card practice reveal"><div class="num">01</div><span class="tag">Silence</span><h3>三分钟静默</h3><p>不追求放空，只观察：什么念头最急？什么感受最想被避开？什么东西在安静下来后仍然存在？</p><ul><li>计时 3 分钟</li><li>结束后写 5 行，不解释</li><li>圈出一句最“像自己”的话</li></ul></article>
+<article class="card practice reveal"><div class="num">02</div><span class="tag">Third Thing</span><h3>第三物</h3><p>选一首诗、一张图、一件自然物。先描述你真正看到的，再问：它触动了我生命中的什么？</p><ul><li>先面对“物”，不是面对彼此</li><li>允许隐喻，不急于解释</li><li>不同理解可以同时存在</li></ul></article>
+<article class="card practice reveal"><div class="num">03</div><span class="tag">Circle of Trust</span><h3>信任圈</h3><p>共同体的任务不是“修理人”，而是保护一个人能够听见自己。分享是邀请，不是要求；沉默也是对话的一部分。</p><ul><li>以自己的经验说话</li><li>不建议、不拯救、不纠正</li><li>尊重保密与选择权</li></ul></article>
+<article class="card practice reveal"><div class="num">04</div><span class="tag">Clearness Committee</span><h3>澄心会</h3><p>焦点人物带着真实问题进入小组。其他人主要提出开放而诚实的问题，不替对方决定，也不把问题偷偷包装成建议。</p><ul><li>焦点人物拥有节奏</li><li>问题服务于发现，而非好奇</li><li>留白常比追问更重要</li></ul></article>
+<article class="card practice reveal"><div class="num">05</div><span class="tag">Vocation</span><h3>“路关闭”练习</h3><p>写下三次你很想走、却被现实关闭的道路。不要马上问“我失败在哪里”，先问：这些关闭让我更清楚自己不是什么、是什么了吗？</p></article>
+<article class="card practice reveal"><div class="num">06</div><span class="tag">Paradox</span><h3>张力地图</h3><p>把一个困境写成两端：“现实是……”与“我仍然相信可能……”。练习在两端之间停留，不急着用乐观或犬儒解除张力。</p></article>
+</div></div></section>
 
-    <section class="section" id="works">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">著作地图</div><h2>从教育到公共生活</h2></div>
-          <p class="section-intro">他的十本主要著作并不是直线式理论体系，更像同一组母题在不同人生阶段与公共议题中的反复展开。可按主题筛选，也可直接检索书名或关键词。</p>
-        </div>
-        <div class="works-tools reveal">
-          <div class="chips" aria-label="著作筛选">
-            <button class="chip active" data-filter="all">全部</button>
-            <button class="chip" data-filter="education">教育</button>
-            <button class="chip" data-filter="life">生命与使命</button>
-            <button class="chip" data-filter="community">共同体</button>
-            <button class="chip" data-filter="public">公共生活</button>
-          </div>
-          <input id="work-search" class="search" type="search" placeholder="搜索书名或主题，例如“使命”" aria-label="搜索著作" />
-        </div>
-        <div class="works" id="works-grid">
-          <article class="work reveal" data-tags="community public" data-text="The Promise of Paradox 悖论 灵性 社会"><div class="work-year">1980</div><div><h3>The Promise of Paradox</h3><div class="en">悖论、灵性与社会现实</div><p>早期作品，已经出现他后来反复发展的主题：如何不把生命中的张力过早消解成非此即彼。</p></div></article>
-          <article class="work reveal" data-tags="community" data-text="The Company of Strangers 陌生人 共同体 公共"><div class="work-year">1981</div><div><h3>The Company of Strangers</h3><div class="en">陌生人、共同体与公共生活</div><p>讨论现代公共生活中人与人如何在差异与陌生中形成共同体。</p></div></article>
-          <article class="work reveal" data-tags="education" data-text="To Know as We Are Known 认识 教育 灵性 心智"><div class="work-year">1983</div><div><h3>To Know as We Are Known</h3><div class="en">Education as a Spiritual Journey</div><p>把认识论与教育连在一起，追问“我们以怎样的人去认识”，以及心智与心灵如何共同参与学习。</p></div></article>
-          <article class="work reveal" data-tags="life" data-text="The Active Life 行动 沉思 召唤"><div class="work-year">1990</div><div><h3>The Active Life</h3><div class="en">行动、沉思与人的召唤</div><p>重新理解“行动的生命”，讨论工作、创造、照料与公共行动如何与内在生命相连。</p></div></article>
-          <article class="work reveal" data-tags="education" data-text="The Courage to Teach 教学勇气 教师 身份 完整性"><div class="work-year">1998</div><div><h3>The Courage to Teach</h3><div class="en">Exploring the Inner Landscape of a Teacher's Life</div><p>最具影响力的教育著作之一：好教学不能只被还原成技巧，它也来自教师的身份、完整性与关系能力。</p></div></article>
-          <article class="work reveal" data-tags="life" data-text="Let Your Life Speak 让生命说话 使命 召唤 vocation"><div class="work-year">1999</div><div><h3>Let Your Life Speak</h3><div class="en">Listening for the Voice of Vocation</div><p>从“我想让生命做什么”转向“生命正在向我说什么”，把使命理解为对真实自我的倾听与辨识。</p></div></article>
-          <article class="work reveal" data-tags="community life public" data-text="A Hidden Wholeness 内在之光 隐藏的完整性 信任圈 不分裂"><div class="work-year">2004</div><div><h3>A Hidden Wholeness</h3><div class="en">The Journey Toward an Undivided Life</div><p>把个人完整性、共同体、信任圈与社会变迁放进同一框架，是理解 Palmer 成熟思想最核心的入口。</p></div></article>
-          <article class="work reveal" data-tags="education public" data-text="The Heart of Higher Education 高等教育 整全教育"><div class="work-year">2010</div><div><h3>The Heart of Higher Education</h3><div class="en">与 Arthur Zajonc 合著</div><p>讨论高等教育如何超越知识分割，让认知、情感、价值与行动重新建立联系。</p></div></article>
-          <article class="work reveal" data-tags="public community" data-text="Healing the Heart of Democracy 民主 公共生活 公民 悲剧性张力"><div class="work-year">2011</div><div><h3>Healing the Heart of Democracy</h3><div class="en">公共生活、差异与公民心灵</div><p>将“完整性”“张力承载”“关系信任”等主题带入美国民主与公民生活的讨论。2024 年推出更新版。</p></div></article>
-          <article class="work reveal" data-tags="life" data-text="On the Brink of Everything 老年 年龄 恩典 生命回望"><div class="work-year">2018</div><div><h3>On the Brink of Everything</h3><div class="en">Grace, Gravity, and Getting Old</div><p>晚年随笔，回望衰老、失去、幽默、友谊与生命边缘处的学习。</p></div></article>
-        </div>
-      </div>
-    </section>
+<section class="section" id="books"><div class="shell"><div class="head reveal"><div><div class="kicker">Primary texts</div><h2>原著不是书单，是路线图</h2></div><p>按主题筛选。建议不要追求“一次读完 Palmer”，而是围绕一个真实问题，在两三本书之间来回读，并把阅读和实践交替进行。</p></div>
+<div class="booksTools reveal"><div class="chips"><button class="chip active" data-f="all">全部</button><button class="chip" data-f="life">生命</button><button class="chip" data-f="education">教育</button><button class="chip" data-f="community">共同体</button><button class="chip" data-f="public">公共生活</button></div><input id="search" class="search" placeholder="搜索：使命、教育、信任圈……"></div>
+<div class="books" id="bookgrid">
+<article class="card book" data-tags="public community" data-text="company strangers 陌生人 公共生活"><div class="year">1981</div><div><h3>The Company of Strangers</h3><p>从陌生人、共同体与公共空间进入 Palmer 早期公共思想。</p></div></article>
+<article class="card book" data-tags="education" data-text="to know as we are known 认识 真理 教育"><div class="year">1983</div><div><h3>To Know as We Are Known</h3><p>认识即关系；教育是一段灵性与认识论旅程。</p></div></article>
+<article class="card book" data-tags="life" data-text="active life 行动 沉思 工作 创造"><div class="year">1990</div><div><h3>The Active Life</h3><p>沉思与行动、行动的阴影、失败与正确行动。</p></div></article>
+<article class="card book" data-tags="education" data-text="courage to teach 教学勇气 身份 完整性 教师"><div class="year">1998</div><div><h3>The Courage to Teach</h3><p>从教师的身份与完整性重新理解教学与共同体。</p></div></article>
+<article class="card book" data-tags="life" data-text="let your life speak 使命 召唤 vocation"><div class="year">2000</div><div><h3>Let Your Life Speak</h3><p>从“我应该成为谁”转向“生命正在告诉我什么”。</p></div></article>
+<article class="card book" data-tags="life community" data-text="hidden wholeness 内在之光 信任圈 澄心会 完整性"><div class="year">2004</div><div><h3>A Hidden Wholeness</h3><p>成熟期核心：不分裂的生命、灵魂、信任圈与澄心会。</p></div></article>
+<article class="card book" data-tags="public community" data-text="healing heart democracy 民主 公民 张力"><div class="year">2011</div><div><h3>Healing the Heart of Democracy</h3><p>将内在工作带入差异、冲突、公共空间与公民生活。</p></div></article>
+<article class="card book" data-tags="education life" data-text="spiritual educational vision Soto 思想研究 传记"><div class="year">2024</div><div><h3>The Spiritual & Educational Vision of Parker J. Palmer</h3><p>Elena Soto 的系统研究，可作为理解生平、贵格会根源与教育思想的二级文献。</p></div></article>
+</div></div></section>
 
-    <section class="section" id="paths">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">怎么开始</div><h2>三条学习路径</h2></div>
-          <p class="section-intro">不必从第一本书按年代读起。根据你现在最关心的问题，选择一条入口，能更快理解 Palmer 为什么要把“内在工作”与现实角色、关系和公共世界连在一起。</p>
-        </div>
-        <div class="path-grid">
-          <article class="card path reveal"><span class="tag">Path A · 初识</span><h3>我想先理解他在说什么</h3><p>适合第一次接触 Palmer 的读者。</p><ol><li>《Let Your Life Speak》</li><li>《A Hidden Wholeness》前 3 章</li><li>Hidden Wholeness Hub 第 1–4 章视频</li><li>回到自己的一个真实选择，练习辨识</li></ol></article>
-          <article class="card path reveal"><span class="tag">Path B · 带领</span><h3>我想理解信任圈如何工作</h3><p>适合社群带领者、教练、教育者与空间主理人。</p><ol><li>《A Hidden Wholeness》</li><li>基石（Touchstones）与第三物</li><li>澄心会原始文本</li><li>观察“结构如何保护人的主体性”</li></ol></article>
-          <article class="card path reveal"><span class="tag">Path C · 教育</span><h3>我关心教育与职业生命</h3><p>适合教师、培训者与组织中的学习者。</p><ol><li>《The Courage to Teach》</li><li>《To Know as We Are Known》</li><li>身份与完整性的关系</li><li>再读《Let Your Life Speak》处理使命与倦怠</li></ol></article>
-        </div>
-      </div>
-    </section>
+<section class="section" id="path"><div class="shell"><div class="head reveal"><div><div class="kicker">12-week pathway</div><h2>一条真正可以走完的研修路径</h2></div><p>每周保持同一节奏：原著 30–60 分钟 → 10 分钟静默/书写 → 一项微实践 → 与一位伙伴或小组分享。目标不是掌握术语，而是观察思想是否开始改变你的看见、关系与选择。</p></div>
+<div class="weekly reveal">
+<div class="week"><b>WEEK 01</b><strong>倾听生命</strong><span>Let Your Life Speak · 从“应该”转向“正在发生”</span></div><div class="week"><b>WEEK 02</b><strong>真实自我</strong><span>天赋、限制、失败与生命线索</span></div><div class="week"><b>WEEK 03</b><strong>身份与完整性</strong><span>The Courage to Teach · 我把什么带进角色</span></div><div class="week"><b>WEEK 04</b><strong>恐惧与分裂</strong><span>观察内外不一如何形成</span></div>
+<div class="week"><b>WEEK 05</b><strong>隐藏的完整性</strong><span>A Hidden Wholeness · 灵魂与内在导师</span></div><div class="week"><b>WEEK 06</b><strong>信任圈</strong><span>基石、沉默、边界与不修理他人</span></div><div class="week"><b>WEEK 07</b><strong>第三物</strong><span>诗歌、图像、自然与共同中心</span></div><div class="week"><b>WEEK 08</b><strong>澄心会</strong><span>用开放问题支持辨识</span></div>
+<div class="week"><b>WEEK 09</b><strong>认识与真理</strong><span>To Know as We Are Known · 从占有到关系</span></div><div class="week"><b>WEEK 10</b><strong>沉思与行动</strong><span>The Active Life · 行动从哪里来</span></div><div class="week"><b>WEEK 11</b><strong>悲剧性张力</strong><span>在现实与可能之间保持承载力</span></div><div class="week"><b>WEEK 12</b><strong>带回世界</strong><span>选一个真实关系/工作/公共场景，做一次不分裂的行动</span></div>
+</div>
+<div class="grid3" style="margin-top:16px"><article class="card path reveal"><span class="tag">个人研修</span><h3>一个人也能开始</h3><p>以阅读、静默、自由书写和每周一次现实实验为主。不要把网站变成“刷完课程”。</p></article><article class="card path reveal"><span class="tag">双人同行</span><h3>用聆听代替讨论</h3><p>每周 45–60 分钟。两人轮流分享，对方不分析，只用开放问题和复述帮助说话者听见自己。</p></article><article class="card path reveal"><span class="tag">小组共读</span><h3>6–10 人形成共同中心</h3><p>以第三物、静默、轮流分享和基石维持结构；带领者减少解释，让参与者直接与文本和经验相遇。</p></article></div>
+</div></section>
 
-    <section class="section" id="sources">
-      <div class="shell">
-        <div class="section-head reveal">
-          <div><div class="kicker">继续研究</div><h2>优先读原始资料</h2></div>
-          <p class="section-intro">本站的概念梳理以 Palmer 本人著作、Center for Courage & Renewal 的官方资料及出版社信息为主。下面这些入口适合继续核对、扩展与形成自己的理解。</p>
-        </div>
-        <div class="sources reveal">
-          <div>
-            <a class="source" href="https://couragerenewal.org/parker-j-palmer/" target="_blank" rel="noreferrer"><span><strong>Parker J. Palmer 官方人物页</strong><span>生平、著作、访谈与遗产说明</span></span><b>↗</b></a>
-            <a class="source" href="https://couragerenewal.org/hidden-wholeness-hub/" target="_blank" rel="noreferrer"><span><strong>A Hidden Wholeness Hub</strong><span>12 章视频与实践材料，是研究成熟思想的重要入口</span></span><b>↗</b></a>
-            <a class="source" href="https://couragerenewal.org/courage-renewal-approach/" target="_blank" rel="noreferrer"><span><strong>Courage & Renewal Approach</strong><span>原则、基石与方法论的官方说明</span></span><b>↗</b></a>
-            <a class="source" href="https://couragerenewal.org/library/the-clearness-committee-a-communal-approach-to-discernment/" target="_blank" rel="noreferrer"><span><strong>The Clearness Committee</strong><span>Palmer 对澄心会的完整说明与原始文章入口</span></span><b>↗</b></a>
-          </div>
-          <div>
-            <a class="source" href="https://couragerenewal.org/library/the-courage-to-teach-exploring-the-inner-landscape-of-a-teachers-life/" target="_blank" rel="noreferrer"><span><strong>The Courage to Teach</strong><span>教育、身份与完整性的官方导读</span></span><b>↗</b></a>
-            <a class="source" href="https://couragerenewal.org/library/the-broken-open-heart-living-with-faith-and-hope-in-the-tragic-gap/" target="_blank" rel="noreferrer"><span><strong>The Broken-Open Heart</strong><span>理解“悲剧性张力”与承载矛盾的重要文章</span></span><b>↗</b></a>
-            <a class="source" href="https://books.wiley.com/titles/9780787947354/" target="_blank" rel="noreferrer"><span><strong>Wiley：Let Your Life Speak</strong><span>出版社信息、版本与作者资料</span></span><b>↗</b></a>
-            <a class="source" href="https://couragerenewal.org/library/" target="_blank" rel="noreferrer"><span><strong>Center for Courage & Renewal Library</strong><span>书籍、文章、研究评估与视频资料库</span></span><b>↗</b></a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="shell footer-grid">
-      <div><strong>帕克·帕尔默思想研究</strong><p>这是一个面向中文读者的独立研究导览，旨在帮助读者理解概念之间的关系，并回到原始资料继续阅读。Circle of Trust® 与 Courage & Renewal® 为相关权利方的注册标识；本站与 Center for Courage & Renewal 无隶属关系。</p></div>
-      <small>整理于 2026 · 中文研究版 0.1</small>
-    </div>
-  </footer>
-
-  <script>
-    const concepts = {
-      inner: {
-        title: '内在导师',
-        body: 'Palmer 用“内在导师”指向人身上一种能够辨认真实、意义与方向的内在资源。他并不把它限定为某一种宗教语言；在不同文本中，它也会被说成真实自我、灵魂、身份或内在之光。关键不是服从外部权威，而是创造足够安静、诚实的条件，让这个声音变得可辨认。',
-        question: '此刻我真正知道、却还没有认真听见的是什么？',
-        source: 'https://couragerenewal.org/foundations-participant-portfolio-oct-nov-2023/session-one/'
-      },
-      identity: {
-        title: '身份与完整性',
-        body: '身份回答“我是谁”，完整性则关乎我如何让自己的不同部分形成一种较为真实、连贯的关系。Palmer 特别强调：完整并非没有矛盾，而是减少角色、价值与内在真实之间的撕裂。这个概念后来成为他理解教师、领导者与公共人的共同基础。',
-        question: '我现在扮演的角色，在哪些地方支持了真实的我，又在哪些地方让我离自己越来越远？',
-        source: 'https://couragerenewal.org/wp-content/uploads/2022/06/Parker-Palmer_The-Heart-of-a-Teacher.pdf'
-      },
-      vocation: {
-        title: '使命与召唤',
-        body: '在《Let Your Life Speak》中，Palmer 把 vocation 从“我应该成为什么”拉回到“我的生命正在告诉我什么”。天赋固然重要，限制、失败、性格与反复出现的吸引同样是线索。使命因此不是自我包装，而是一种持续辨识。',
-        question: '如果不从“我应该做什么”出发，而从生命已经给我的线索出发，我会看见什么？',
-        source: 'https://books.wiley.com/titles/9780787947354/'
-      },
-      community: {
-        title: '可信赖的共同体',
-        body: 'Palmer 并不认为内在探索只能独自完成。人需要他人，但这种陪伴必须保护主体性。信任圈的核心正是：共同体不是替一个人解释自己，而是以边界、沉默、第三物与开放问题，帮助他更清楚地听见自己。',
-        question: '什么样的关系，会让我更能成为自己，而不是更依赖别人的判断？',
-        source: 'https://couragerenewal.org/hidden-wholeness-hub/'
-      },
-      undivided: {
-        title: '不再分裂地生活',
-        body: '“不再分裂”并不是彻底消除内心冲突，而是停止长期背叛自己最深的价值与认知。Palmer 关心的是：当一个人更能承认自己的真实，他能否在工作、关系与公共角色中逐渐活出一致，而不再把灵魂与角色切成两半。',
-        question: '我在哪一个具体场景里，已经知道自己不想再继续“内外不一”？',
-        source: 'https://couragerenewal.org/library/a-hidden-wholeness-the-journey-toward-an-undivided-life/'
-      },
-      public: {
-        title: '内在工作与公共生活',
-        body: 'Palmer 的内在工作最终会回到外部世界。他关心教育机构、组织、社会运动与民主生活如何受到人的恐惧、分裂、勇气与完整性影响。“悲剧性张力”是其中的重要能力：在现实与可能、失望与希望之间保持承载力，而不是过早坠向犬儒或虚假乐观。',
-        question: '面对一个我无法立刻解决的现实，我能否同时看见“它现在是什么”与“它还可能成为什么”？',
-        source: 'https://couragerenewal.org/library/the-broken-open-heart-living-with-faith-and-hope-in-the-tragic-gap/'
-      }
-    };
-
-    const nodes = [...document.querySelectorAll('.node')];
-    const title = document.getElementById('concept-title');
-    const body = document.getElementById('concept-body');
-    const question = document.getElementById('concept-question');
-    const source = document.getElementById('concept-source');
-    nodes.forEach(node => node.addEventListener('click', () => {
-      nodes.forEach(n => n.classList.remove('active'));
-      node.classList.add('active');
-      const item = concepts[node.dataset.concept];
-      title.textContent = item.title;
-      body.textContent = item.body;
-      question.textContent = item.question;
-      source.href = item.source;
-    }));
-
-    const chips = [...document.querySelectorAll('.chip')];
-    const works = [...document.querySelectorAll('.work')];
-    const search = document.getElementById('work-search');
-    let activeFilter = 'all';
-    function filterWorks() {
-      const q = search.value.trim().toLowerCase();
-      works.forEach(work => {
-        const tagMatch = activeFilter === 'all' || work.dataset.tags.split(' ').includes(activeFilter);
-        const textMatch = !q || (work.dataset.text + ' ' + work.textContent).toLowerCase().includes(q);
-        work.classList.toggle('hidden', !(tagMatch && textMatch));
-      });
-    }
-    chips.forEach(chip => chip.addEventListener('click', () => {
-      activeFilter = chip.dataset.filter;
-      chips.forEach(c => c.classList.toggle('active', c === chip));
-      filterWorks();
-    }));
-    search.addEventListener('input', filterWorks);
-
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: .08 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-  </script>
-</body>
-</html>
+<section class="section" id="sources"><div class="shell sourcebox"><div class="head reveal"><div><div class="kicker">Research library</div><h2>本站如何使用资料库</h2></div><p>研究层级优先采用 Palmer 原著与带领指南，再用学术研究和相关文集建立历史脉络。网页内容以中文解释为主，避免大段复制原文；真正深入时，请回到你拥有的原书。</p></div><div class="sourcegrid reveal">
+<div class="source"><strong>《A Hidden Wholeness》</strong><span>不分裂的生命、灵魂、信任圈、澄心会、沉默。</span></div><div class="source"><strong>《Let Your Life Speak》</strong><span>使命、真实自我、道路关闭、季节与领导。</span></div><div class="source"><strong>《The Courage to Teach》</strong><span>身份与完整性、恐惧、悖论、共同体与第三物。</span></div><div class="source"><strong>《To Know as We Are Known》</strong><span>认识论、真理、教育、关系与共同体。</span></div><div class="source"><strong>《The Active Life》Leader's Guide</strong><span>六次小组研修结构：行动、失败、真理与沉思。</span></div><div class="source"><strong>《Healing the Heart of Democracy》</strong><span>差异、张力、公共空间、公民生活与信任圈。</span></div><div class="source"><strong>《Meeting for Learning》</strong><span>贵格会语境中的 meeting、学习与寻找真理。</span></div><div class="source"><strong>Elena Soto (2024)</strong><span>Palmer 的生平、灵性旅程与教育思想系统研究。</span></div><div class="source"><strong>《Living the Questions》</strong><span>Palmer 思想如何进入教育、领导、组织与社会实践。</span></div>
+</div></div></section>
+</main>
+<footer class="footer"><div class="shell"><strong>帕克·帕尔默思想研究与生命实践</strong><p class="note">独立中文研究项目。网站旨在帮助读者进入原著、形成自己的理解，并把思想带回生活。涉及 Circle of Trust® 等名称时尊重相关权利方标识；本站不冒充官方机构，也不把深度内在工作替代为心理治疗或专业医疗。</p></div></footer>
+<script>
+const data={inner:["内在导师","不是一个替你下命令的神秘声音，而是人内在能够辨认真实、意义与方向的资源。Palmer 的实践不是“告诉人答案”，而是创造条件，让这个声音更容易被自己听见。","此刻我已经隐约知道、却一直没有认真聆听的是什么？"],self:["真实自我","真实自我不是一个完美版本的我，而是生命本身已经显露出来的气质、天赋、限制、渴望与边界。它常常通过吸引与抗拒、成功与失败同时说话。","如果不考虑别人期待我成为谁，我的生命经验已经告诉了我什么？"],integrity:["身份与完整性","身份关乎“我是谁”，完整性关乎我能否让不同部分保持真实关系。完整不是没有矛盾，而是不再长期把角色、价值与内在真实切成彼此敌对的部分。","我现在的哪个角色最容易让我离开真实的自己？"],vocation:["使命与召唤","vocation 的词根指向“声音”。Palmer 把使命从意志工程转回倾听：不是先决定一个宏大目标，而是辨认生命已经在召唤你走向哪里。","我的天赋、限制与反复出现的关切，正在共同指向什么？"],community:["可信赖共同体","人需要他人，但共同体不能侵入人的灵魂。可信赖空间通过边界、沉默、第三物与开放问题，保护每个人自己发现真相的能力。","什么样的陪伴，会让我更成为自己，而不是更依赖别人的判断？"],paradox:["承载张力","Palmer 反复使用悖论：独处与共同体、沉思与行动、现实与可能。成熟不是迅速消灭一端，而是扩大内在空间，让相反力量都能被看见。","我正在急于解决的哪个矛盾，也许首先需要被更完整地承载？"],public:["公共生活","内在工作最终要回到工作、制度、教育与公共生活。完整性若只存在私人世界，还没有完成它的旅程。","今天我可以在哪一个现实场景里，少一点分裂，多一点真实？"]};
+document.querySelectorAll(".node").forEach(n=>n.onclick=()=>{document.querySelectorAll(".node").forEach(x=>x.classList.remove("active"));n.classList.add("active");const d=data[n.dataset.k];ct.textContent=d[0];cb.textContent=d[1];cq.textContent=d[2]});
+let filter="all";const books=[...document.querySelectorAll(".book")],search=document.getElementById("search");function fb(){let q=search.value.toLowerCase();books.forEach(b=>b.classList.toggle("hidden",!((filter==="all"||b.dataset.tags.includes(filter))&&(!q||(b.dataset.text+" "+b.textContent).toLowerCase().includes(q)))))}document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{filter=c.dataset.f;document.querySelectorAll(".chip").forEach(x=>x.classList.toggle("active",x===c));fb()});search.oninput=fb;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.06});document.querySelectorAll(".reveal").forEach(e=>io.observe(e));
+</script></body></html>
