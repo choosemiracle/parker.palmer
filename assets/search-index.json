@@ -291,19 +291,43 @@
     "title": "自修中心",
     "url": "self-study/",
     "type": "自修",
-    "summary": "静默、自由书写、第三物、开放问题、专题模块与个人记录组成的练习空间。"
+    "summary": "静默、自由书写、第三物、开放问题、六个专题深读与个人记录组成的练习空间。"
+  },
+  {
+    "title": "聆听生命",
+    "url": "self-study/listening-life.html",
+    "type": "专题深读",
+    "summary": "从真实自我、使命、内在导师到身份与完整性，理解帕尔默如何从“设计人生”转向“聆听生命”。"
+  },
+  {
+    "title": "认识即关系",
+    "url": "self-study/knowing-as-relation.html",
+    "type": "专题深读",
+    "summary": "从 To Know as We Are Known 到 The Courage to Teach，理解认识、真理、共同体与第三物背后的关系认识论。"
+  },
+  {
+    "title": "悖论与张力",
+    "url": "self-study/paradox.html",
+    "type": "专题深读",
+    "summary": "从 both-and、六组教学空间悖论到悲剧性张力与第三条路，学习承载两种同时真实的力量。"
   },
   {
     "title": "默观与行动",
     "url": "self-study/contemplation-action.html",
-    "type": "专题自修",
+    "type": "专题深读",
     "summary": "跨读 The Company of Strangers、The Active Life、The Courage to Teach 与 A Hidden Wholeness，理解默观与行动如何共同形成完整生命。"
   },
   {
-    "title": "悖论思想",
-    "url": "self-study/paradox.html",
-    "type": "专题自修",
-    "summary": "从 both-and、六组教学空间悖论到悲剧性张力与第三条路，学习承载两种同时真实的力量。"
+    "title": "可信赖的共同体",
+    "url": "self-study/trustworthy-community.html",
+    "type": "专题深读",
+    "summary": "从认识共同体到 Circle of Trust，理解独处与共同体、边界、聆听与共同中心如何彼此支撑。"
+  },
+  {
+    "title": "从内在完整到公共生活",
+    "url": "self-study/inner-to-public.html",
+    "type": "专题深读",
+    "summary": "从 The Company of Strangers 到 Healing the Heart of Democracy，追踪内在完整如何进入共同体、公民生活与公共世界。"
   },
   {
     "title": "第三物素材库",
