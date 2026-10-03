@@ -330,8 +330,9 @@ h3{font-weight:650}
 .relationPulse{stroke-dasharray:5 7;animation:dashMove 8s linear infinite}.subjectLink{stroke-dasharray:90;stroke-dashoffset:90;animation:drawPath 2.2s ease forwards}.balanceNode{transform-box:fill-box;transform-origin:center;animation:balanceNode 5s ease-in-out infinite}
 .publicStage{animation:fadeNode 1.2s ease both}.publicStage.s2{animation-delay:.3s}.publicStage.s3{animation-delay:.6s}.publicStage.s4{animation-delay:.9s}
 @keyframes drawPath{to{stroke-dashoffset:0}}@keyframes pulseNode{0%,100%{opacity:.58;transform:scale(.94)}50%{opacity:1;transform:scale(1.08)}}@keyframes fadeNode{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes whisper{0%,100%{opacity:.28;transform:translateY(0)}50%{opacity:.72;transform:translateY(-4px)}}@keyframes integrityLeft{0%,100%{transform:translateX(-9px)}50%{transform:translateX(7px)}}@keyframes integrityRight{0%,100%{transform:translateX(9px)}50%{transform:translateX(-7px)}}@keyframes communityPerson{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}@keyframes balanceNode{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
-.mobiusWrap{position:relative;width:min(100%,620px);margin:auto;perspective:1300px;isolation:isolate}.mobiusWrap svg{display:block;width:100%;height:auto;overflow:visible}.mobiusSculpture{transform-box:fill-box;transform-origin:center;transform-style:preserve-3d;animation:mobiusOrbit 12s cubic-bezier(.45,.05,.55,.95) infinite}.mobiusGround{fill:#1e2d27;opacity:.12;animation:mobiusGround 12s ease-in-out infinite}.mobiusOuter,.mobiusFace,.mobiusFrontOuter,.mobiusFrontFace,.mobiusRim,.mobiusRimShade,.mobiusTravelLight,.mobiusFrontLight{fill:none;stroke-linecap:round;stroke-linejoin:round}.mobiusOuter,.mobiusFrontOuter{stroke-width:82}.mobiusFace,.mobiusFrontFace{stroke-width:70}.mobiusRim{stroke-width:2.4;opacity:.78}.mobiusRimShade{stroke-width:2;opacity:.58}.mobiusTravelLight{stroke:#fff1cf;stroke-width:8;stroke-dasharray:54 860;opacity:.48;filter:blur(.2px);animation:mobiusGlint 8.4s linear infinite}.mobiusFrontLight{stroke:#fff7df;stroke-width:5;stroke-dasharray:34 300;opacity:.6;animation:mobiusFrontGlint 5.8s linear infinite}.mobiusLabel{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;letter-spacing:.055em;fill:#53645b}.mobiusLabel.accent{fill:#95532f;font-weight:700}.mobiusCaption{font-size:12px;fill:#66736c;letter-spacing:.02em}.mobiusBreath{animation:mobiusBreath 7s ease-in-out infinite}
-@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusGlint{to{stroke-dashoffset:-914}}@keyframes mobiusFrontGlint{to{stroke-dashoffset:-334}}@keyframes mobiusOrbit{0%,100%{transform:rotateX(3deg) rotateY(-5deg) rotateZ(-.8deg) translateY(1px)}25%{transform:rotateX(5deg) rotateY(2deg) rotateZ(.4deg) translateY(-4px)}50%{transform:rotateX(2deg) rotateY(6deg) rotateZ(.8deg) translateY(-2px)}75%{transform:rotateX(4deg) rotateY(-1deg) rotateZ(-.2deg) translateY(-5px)}}@keyframes mobiusGround{0%,100%{transform:translateY(1px) scaleX(.98);opacity:.11}50%{transform:translateY(5px) scaleX(1.03);opacity:.075}}@keyframes mobiusBreath{0%,100%{opacity:.72}50%{opacity:1}}
+.mobiusWrap{position:relative;width:min(100%,620px);margin:auto;isolation:isolate}.mobiusWrap svg{display:block;width:100%;height:auto;overflow:visible}.mobiusMonoForm{transform-box:fill-box;transform-origin:center;animation:mobiusMonoBreath 11s ease-in-out infinite}.mobiusHalo{fill:#111;opacity:.035;transform-box:fill-box;transform-origin:center;animation:mobiusHalo 11s ease-in-out infinite}.mobiusMonoShadow,.mobiusMonoBase,.mobiusMonoFace,.mobiusMonoEdge,.mobiusMonoFlow,.mobiusMonoInk,.mobiusMonoFrontShadow,.mobiusMonoFront,.mobiusMonoFrontEdge{fill:none;stroke-linecap:round;stroke-linejoin:round}.mobiusMonoShadow{stroke:#111;stroke-width:66;opacity:.09;filter:blur(9px)}.mobiusMonoBase{stroke:#151515;stroke-width:62;opacity:.9}.mobiusMonoFace{stroke-width:54}.mobiusMonoEdge{stroke:#fff;stroke-width:1.6;opacity:.62}.mobiusMonoFlow{stroke:#fff;stroke-width:11;stroke-dasharray:116 780;opacity:.16;filter:blur(1.2px);animation:mobiusMonoLight 15s linear infinite}.mobiusMonoInk{stroke:#000;stroke-width:7;stroke-dasharray:150 746;opacity:.08;filter:blur(.8px);animation:mobiusMonoInk 18s linear infinite reverse}.mobiusMonoFrontShadow{stroke:#111;stroke-width:68;opacity:.14;filter:blur(5px)}.mobiusMonoFront{stroke-width:56}.mobiusMonoFrontEdge{stroke:#fff;stroke-width:1.7;opacity:.68}.mobiusQuietMark{fill:#171717;opacity:.52;animation:mobiusQuietMark 11s ease-in-out infinite}
+@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusMonoBreath{0%,100%{transform:translateY(1px) scale(.992)}50%{transform:translateY(-3px) scale(1.008)}}@keyframes mobiusHalo{0%,100%{transform:scaleX(.96);opacity:.028}50%{transform:scaleX(1.04);opacity:.05}}@keyframes mobiusMonoLight{to{stroke-dashoffset:-896}}@keyframes mobiusMonoInk{to{stroke-dashoffset:896}}@keyframes mobiusQuietMark{0%,100%{opacity:.34}50%{opacity:.62}}
+@media(prefers-reduced-motion:reduce){.mobiusMonoForm,.mobiusHalo,.mobiusMonoFlow,.mobiusMonoInk,.mobiusQuietMark{animation:none!important}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
 .bioIntro{display:grid;grid-template-columns:minmax(0,680px) minmax(300px,420px);gap:72px;align-items:start;justify-content:space-between}
@@ -648,83 +649,48 @@ def svg_mobius():
     global MOBIUS_SEQ
     MOBIUS_SEQ += 1
     uid=f"mobius-{MOBIUS_SEQ}"
-    path="M74,160 C124,61 210,57 270,158 C329,259 414,255 486,160 C418,63 331,60 270,158 C208,257 121,252 74,160"
-    front="M208,86 C233,105 252,137 270,158 C289,181 307,211 333,231"
-    back_cut="M242,198 C254,181 264,166 270,158 C277,147 285,132 297,115"
-    return f'''<div class="mobiusWrap"><svg viewBox="0 0 560 330" role="img" aria-label="立体莫比乌斯带：内在生命与外在世界彼此连续、彼此塑造" data-animated-svg>
+    path="M78,160 C132,62 214,60 280,160 C346,260 428,258 482,160 C428,62 346,60 280,160 C214,260 132,258 78,160"
+    front="M214,91 C239,108 258,138 280,160 C302,183 321,214 346,231"
+    back_cut="M246,201 C260,181 271,166 280,160 C289,151 300,133 314,113"
+    return f'''<div class="mobiusWrap"><svg viewBox="0 0 560 320" role="img" aria-label="抽象莫比乌斯带：内在与外在持续流动、彼此转化" data-animated-svg>
       <defs>
-        <linearGradient id="{uid}-outer" x1="0%" y1="15%" x2="100%" y2="85%">
-          <stop offset="0%" stop-color="#5d3323"/>
-          <stop offset="14%" stop-color="#a85b32"/>
-          <stop offset="31%" stop-color="#d9894e"/>
-          <stop offset="45%" stop-color="#b96f43"/>
-          <stop offset="57%" stop-color="#3c4c3f"/>
-          <stop offset="74%" stop-color="#1f3c33"/>
-          <stop offset="89%" stop-color="#65766b"/>
-          <stop offset="100%" stop-color="#9f9c83"/>
+        <linearGradient id="{uid}-mono" x1="0%" y1="5%" x2="100%" y2="95%">
+          <stop offset="0%" stop-color="#111111"/>
+          <stop offset="18%" stop-color="#343434"/>
+          <stop offset="36%" stop-color="#d8d8d4"/>
+          <stop offset="50%" stop-color="#f5f4f0"/>
+          <stop offset="64%" stop-color="#8b8b87"/>
+          <stop offset="82%" stop-color="#2f2f2f"/>
+          <stop offset="100%" stop-color="#111111"/>
         </linearGradient>
-        <linearGradient id="{uid}-face" x1="3%" y1="8%" x2="97%" y2="91%">
-          <stop offset="0%" stop-color="#f0b273"/>
-          <stop offset="14%" stop-color="#f6c68e"/>
-          <stop offset="31%" stop-color="#d98249"/>
-          <stop offset="45%" stop-color="#9a5837"/>
-          <stop offset="57%" stop-color="#284239"/>
-          <stop offset="75%" stop-color="#315247"/>
-          <stop offset="90%" stop-color="#8f9b86"/>
-          <stop offset="100%" stop-color="#eee0bf"/>
+        <linearGradient id="{uid}-front" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f3f2ed"/>
+          <stop offset="35%" stop-color="#d7d6d1"/>
+          <stop offset="67%" stop-color="#777773"/>
+          <stop offset="100%" stop-color="#151515"/>
         </linearGradient>
-        <linearGradient id="{uid}-front-outer" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#c56f3d"/>
-          <stop offset="34%" stop-color="#e8a466"/>
-          <stop offset="58%" stop-color="#8a5338"/>
-          <stop offset="100%" stop-color="#18382f"/>
-        </linearGradient>
-        <linearGradient id="{uid}-front-face" x1="4%" y1="0%" x2="96%" y2="100%">
-          <stop offset="0%" stop-color="#ffd49c"/>
-          <stop offset="31%" stop-color="#efab6f"/>
-          <stop offset="59%" stop-color="#b66b45"/>
-          <stop offset="100%" stop-color="#27483e"/>
-        </linearGradient>
-        <linearGradient id="{uid}-rim" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#fff2d5" stop-opacity=".98"/>
-          <stop offset="32%" stop-color="#ffe0b8" stop-opacity=".82"/>
-          <stop offset="58%" stop-color="#dcb18a" stop-opacity=".26"/>
-          <stop offset="100%" stop-color="#eff3df" stop-opacity=".74"/>
-        </linearGradient>
-        <linearGradient id="{uid}-shade" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#6a3827" stop-opacity=".5"/>
-          <stop offset="50%" stop-color="#243a32" stop-opacity=".58"/>
-          <stop offset="100%" stop-color="#53675c" stop-opacity=".42"/>
-        </linearGradient>
-        <filter id="{uid}-shadow" x="-30%" y="-35%" width="160%" height="180%">
-          <feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#23322b" flood-opacity=".24"/>
-        </filter>
-        <filter id="{uid}-ground-blur" x="-30%" y="-120%" width="160%" height="340%"><feGaussianBlur stdDeviation="9"/></filter>
         <mask id="{uid}-cross-mask">
-          <rect x="0" y="0" width="560" height="330" fill="white"/>
-          <path d="{back_cut}" fill="none" stroke="black" stroke-width="92" stroke-linecap="round"/>
+          <rect x="0" y="0" width="560" height="320" fill="white"/>
+          <path d="{back_cut}" fill="none" stroke="black" stroke-width="76" stroke-linecap="round"/>
         </mask>
       </defs>
-      <ellipse class="mobiusGround" cx="280" cy="247" rx="190" ry="18" filter="url(#{uid}-ground-blur)"/>
-      <g class="mobiusSculpture">
-        <g mask="url(#{uid}-cross-mask)" filter="url(#{uid}-shadow)">
-          <path class="mobiusOuter" d="{path}" stroke="url(#{uid}-outer)"/>
-          <path class="mobiusFace" d="{path}" stroke="url(#{uid}-face)"/>
-          <path class="mobiusRim mobiusBreath" d="{path}" stroke="url(#{uid}-rim)"/>
-          <path class="mobiusRimShade" d="{path}" stroke="url(#{uid}-shade)"/>
-          <path class="mobiusTravelLight" d="{path}"/>
+      <ellipse class="mobiusHalo" cx="280" cy="165" rx="215" ry="96"/>
+      <g class="mobiusMonoForm">
+        <g mask="url(#{uid}-cross-mask)">
+          <path class="mobiusMonoShadow" d="{path}"/>
+          <path class="mobiusMonoBase" d="{path}"/>
+          <path class="mobiusMonoFace" d="{path}" stroke="url(#{uid}-mono)"/>
+          <path class="mobiusMonoEdge" d="{path}"/>
+          <path class="mobiusMonoFlow" d="{path}"/>
+          <path class="mobiusMonoInk" d="{path}"/>
         </g>
-        <g filter="url(#{uid}-shadow)">
-          <path class="mobiusFrontOuter" d="{front}" stroke="url(#{uid}-front-outer)"/>
-          <path class="mobiusFrontFace" d="{front}" stroke="url(#{uid}-front-face)"/>
-          <path class="mobiusRim mobiusBreath" d="{front}" stroke="url(#{uid}-rim)"/>
-          <path class="mobiusRimShade" d="{front}" stroke="url(#{uid}-shade)"/>
-          <path class="mobiusFrontLight" d="{front}"/>
+        <g>
+          <path class="mobiusMonoFrontShadow" d="{front}"/>
+          <path class="mobiusMonoFront" d="{front}" stroke="url(#{uid}-front)"/>
+          <path class="mobiusMonoFrontEdge" d="{front}"/>
         </g>
+        <circle class="mobiusQuietMark" cx="280" cy="160" r="2.8"/>
       </g>
-      <text class="mobiusLabel accent" x="80" y="42">INNER · 内在</text>
-      <text class="mobiusLabel" x="398" y="283">OUTER · 外在</text>
-      <text class="mobiusLabel mobiusCaption" x="171" y="315">沿着同一条带前行，内与外会彼此转化</text>
     </svg></div>'''
 
 def svg_split_whole():
