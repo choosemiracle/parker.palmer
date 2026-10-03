@@ -60,7 +60,7 @@ a{color:inherit}
 }
 .topin{min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:22px}
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-weight:400}
-.mark{width:36px;height:36px;border:1px solid var(--accent);border-radius:50%;display:grid;place-items:center;color:var(--accent);font-size:22px;line-height:1}
+.mark{width:38px;height:38px;border:1px solid rgba(138,79,45,.48);border-radius:50%;display:grid;place-items:center;overflow:hidden;background:var(--white);box-shadow:0 2px 8px rgba(48,41,33,.08);flex:0 0 auto}.mark img{width:100%;height:100%;display:block;object-fit:cover;border-radius:50%}
 .brandText strong{display:block;font-size:15px;letter-spacing:.08em;font-weight:700}
 .brandText small{display:block;color:var(--muted);font-size:11px;letter-spacing:.12em;margin-top:1px}
 nav{display:flex;gap:22px;align-items:center}
@@ -580,7 +580,7 @@ def nav(pref):
 
 def wrap(title, body, depth=0, desc=""):
     pref="../"*depth
-    return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f4efe5"><title>{html.escape(title)}｜帕克·帕尔默思想研究</title><meta name="description" content="{html.escape(desc or title)}"><link rel="stylesheet" href="{pref}assets/site.css"></head><body><header class="top"><div class="shell topin"><a class="brand" href="{pref}index.html" aria-label="返回首页"><span class="mark" aria-hidden="true">◌</span><span class="brandText"><strong>帕克·帕尔默</strong><small>思想 · 原著 · 实践</small></span></a>{nav(pref)}</div></header>{body}<footer class="footer"><div class="shell"><strong>帕克·帕尔默：思想、原著与生命实践</strong><p>独立中文研究项目。内容以帕克·帕尔默原著、带领指南与相关研究文献为基础；本站将“原著思想”“后续实践发展”“本站整理与应用”尽量分开呈现。Circle of Trust® 等相关名称归其权利方所有。</p></div></footer><script src="{pref}assets/site.js"></script></body></html>'''
+    return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f4efe5"><title>{html.escape(title)}｜帕克·帕尔默思想研究</title><meta name="description" content="{html.escape(desc or title)}"><link rel="icon" type="image/png" href="{pref}assets/images/parker-palmer-icon.png"><link rel="apple-touch-icon" href="{pref}assets/images/parker-palmer-icon.png"><link rel="stylesheet" href="{pref}assets/site.css"></head><body><header class="top"><div class="shell topin"><a class="brand" href="{pref}index.html" aria-label="返回首页"><span class="mark" aria-hidden="true"><img src="{pref}assets/images/parker-palmer-icon.png" alt=""></span><span class="brandText"><strong>帕克·帕尔默</strong><small>思想 · 原著 · 实践</small></span></a>{nav(pref)}</div></header>{body}<footer class="footer"><div class="shell"><strong>帕克·帕尔默：思想、原著与生命实践</strong><p>独立中文研究项目。内容以帕克·帕尔默原著、带领指南与相关研究文献为基础；本站将“原著思想”“后续实践发展”“本站整理与应用”尽量分开呈现。Circle of Trust® 等相关名称归其权利方所有。</p></div></footer><script src="{pref}assets/site.js"></script></body></html>'''
 
 def crumbs(depth, parts):
     pref="../"*depth
