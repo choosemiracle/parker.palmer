@@ -80,6 +80,7 @@ h3{font-weight:650}
 .semanticTitle{display:block;max-width:100%;text-wrap:pretty}
 .semanticTitle .titleLine{display:block;width:max-content;max-width:100%;white-space:nowrap}
 .semanticTitle .titleLine+.titleLine{margin-top:.03em}
+.semanticTitleDesigned .titleLineHighlight{font-size:1.08em;line-height:1.16;letter-spacing:-.035em}
 .semanticTitleFit{transition:none}
 .eyebrow,.kicker,.tag{
   font-family:ui-sans-serif,system-ui,sans-serif;
@@ -397,6 +398,7 @@ h3{font-weight:650}
   .semanticTitle{width:100%;max-width:100%}
   .semanticTitle .titleLine{width:auto;max-width:100%;white-space:normal;text-wrap:pretty;overflow-wrap:anywhere;word-break:normal}
   .semanticTitleDesigned .titleLine{display:block}
+  .semanticTitleDesigned .titleLineHighlight{font-size:1.05em}
   .semanticTitleNatural .titleLine{display:inline}
   .card h3{font-size:22px;line-height:1.44;text-wrap:pretty}
   .sideCard h3,.practiceBox h3{text-wrap:pretty}
@@ -609,11 +611,18 @@ def _visible_cjk(text):
     return sum(1 for ch in plain if '\u3400' <= ch <= '\u9fff')
 
 def sem_title(*lines):
-    """Use semantic breaks only for genuinely long titles; short titles flow naturally."""
+    """Use semantic breaks for long titles and for intentional highlighted second lines."""
     joined=''.join(lines)
-    if _visible_cjk(joined) <= 16:
+    highlighted_followup=len(lines) > 1 and any('<em' in line for line in lines[1:])
+    if _visible_cjk(joined) <= 16 and not highlighted_followup:
         return f'<span class="semanticTitle semanticTitleNatural"><span class="titleLine">{joined}</span></span>'
-    return '<span class="semanticTitle semanticTitleDesigned">' + ''.join(f'<span class="titleLine">{line}</span>' for line in lines) + '</span>'
+    rendered=[]
+    for i,line in enumerate(lines):
+        classes=["titleLine"]
+        if i > 0 and '<em' in line:
+            classes.append("titleLineHighlight")
+        rendered.append(f'<span class="{" ".join(classes)}">{line}</span>')
+    return '<span class="semanticTitle semanticTitleDesigned">' + ''.join(rendered) + '</span>'
 
 def sem_title_auto(title):
     """Split trusted internal titles only when they are long enough to benefit."""
