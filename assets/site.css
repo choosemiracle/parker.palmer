@@ -254,7 +254,7 @@ h3{font-weight:650}
 .portraitFrame{position:relative;max-width:420px;justify-self:end}
 .portraitFrame:before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1px solid var(--line);border-radius:50% 50% 44% 56%/46% 52% 48% 54%;z-index:0}
 .portraitFrame img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:48% 48% 43% 57%/42% 50% 50% 58%;filter:saturate(.78) sepia(.08);box-shadow:var(--shadow)}
-.credit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;color:#7a756e;margin-top:12px;line-height:1.5}
+.credit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;color:#7a756e;margin-top:12px;line-height:1.5}.credit a{text-decoration:none;border-bottom:1px dotted rgba(122,117,110,.5)}
 .storyLead{max-width:780px;font-size:20px;line-height:1.9;color:#465149}
 .storyGrid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
 .visualPanel{background:rgba(255,253,248,.52);border:1px solid var(--line);border-radius:24px;padding:28px;min-height:320px;display:grid;place-items:center;overflow:hidden;position:relative}
@@ -307,6 +307,19 @@ h3{font-weight:650}
 @keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusGlint{to{stroke-dashoffset:-550}}@keyframes mobiusFloat{0%,100%{transform:rotateX(7deg) rotateZ(-1.5deg) translateY(0)}50%{transform:rotateX(3deg) rotateZ(1deg) translateY(-5px)}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
+.bioIntro{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:64px;align-items:start}
+.bioHero h1{max-width:10.8em}
+.bioIntro .storyLead{font-size:21px}
+.bioFacts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.bioFact{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.54)}.bioFact b{display:block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}.bioFact span{font-size:17px;line-height:1.6}
+.bioNav{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,253,248,.62)}.bioNav a{display:block;padding:17px 14px;text-decoration:none;border-right:1px solid var(--line);min-height:76px}.bioNav a:last-child{border-right:0}.bioNav small{display:block;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--accent);margin-bottom:5px}.bioNav strong{font-size:14px;line-height:1.4}.bioNav a:hover{background:var(--white)}
+.bioChapter{padding:74px 0;border-top:1px solid var(--line);scroll-margin-top:88px}.bioChapter:nth-of-type(even){background:rgba(255,253,248,.25)}
+.bioChapterGrid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(320px,1.08fr);gap:62px;align-items:center}.bioChapter.reverse .bioText{order:2}.bioChapter.reverse .bioMedia{order:1}
+.bioYear{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}.bioText h2{font-size:clamp(32px,4vw,52px);line-height:1.38;margin:10px 0 20px}.bioText p{font-size:17px;line-height:1.95;color:var(--muted)}.bioText p:first-of-type{font-size:20px;color:#465149}
+.bioMedia{min-height:320px;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.55);overflow:hidden;display:grid;place-items:center;position:relative}.bioMedia img{width:100%;height:100%;min-height:320px;max-height:500px;object-fit:cover;filter:saturate(.76) sepia(.08)}.bioMedia .credit{padding:0 16px 14px}.bioMedia .visualPanel{width:100%;height:100%;border:0;border-radius:0;background:transparent}
+.bioPull{font-size:clamp(25px,3vw,39px);line-height:1.58;margin:24px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)}
+.bioMilestones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bioMilestone{padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.55)}.bioMilestone b{display:block;font-size:27px;color:var(--accent);margin-bottom:6px}.bioMilestone span{font-size:14px;color:var(--muted)}
+.bioResources{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.bioResource{display:block;text-decoration:none;padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.62);min-height:190px}.bioResource:hover{background:var(--white);box-shadow:var(--shadow);transform:translateY(-2px)}.bioResource h3{font-size:22px;margin:10px 0}.bioResource p{font-size:15px;color:var(--muted)}
+.bioSources{display:grid;gap:10px}.bioSource{padding:18px 20px;border-left:2px solid var(--accent);background:rgba(255,253,248,.48)}.bioSource b{display:block;margin-bottom:4px}.bioSource span{font-size:14px;color:var(--muted)}
 .hideOnMain{display:none!important}
 
 @media(prefers-reduced-motion:reduce){
@@ -317,7 +330,10 @@ h3{font-weight:650}
 
 @media(max-width:1000px){
   nav{display:none}
-  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand{grid-template-columns:minmax(0,1fr)}
+  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand,.bioIntro,.bioChapterGrid{grid-template-columns:minmax(0,1fr)}
+  .bioChapter.reverse .bioText,.bioChapter.reverse .bioMedia{order:initial}
+  .bioMilestones{grid-template-columns:repeat(2,1fr)}
+  .bioResources{grid-template-columns:repeat(2,1fr)}
   .toc,.lessonNav{position:static}
   .heroMain{padding-bottom:74px}
   .heroSide{padding-top:0}
@@ -344,7 +360,16 @@ h3{font-weight:650}
   .heroMain,.heroMain.compact{min-height:auto;padding:58px 0 78px}
   .heroFoot{bottom:22px}
   .heroSide{padding:0 0 48px}
-  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid{grid-template-columns:1fr}
+  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid,.bioMilestones,.bioResources,.bioFacts{grid-template-columns:1fr}
+  .bioChapter{padding:58px 0}
+  .bioChapterGrid{gap:28px}
+  .bioMedia{min-height:240px}
+  .bioMedia img{min-height:240px}
+  .bioHero h1{font-size:clamp(34px,8.5vw,38px);max-width:none;letter-spacing:-.04em}
+  .bioNav{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+  .bioNav a{min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .bioNav a:nth-child(2n){border-right:0}
+  .bioNav a:last-child{grid-column:1/-1;border-right:0;border-bottom:0}
   .section{padding:70px 0}
   .head{gap:18px;margin-bottom:34px}
   .table{font-size:13px;display:block;overflow-x:auto}

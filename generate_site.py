@@ -278,7 +278,7 @@ h3{font-weight:650}
 .portraitFrame{position:relative;max-width:420px;justify-self:end}
 .portraitFrame:before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1px solid var(--line);border-radius:50% 50% 44% 56%/46% 52% 48% 54%;z-index:0}
 .portraitFrame img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:48% 48% 43% 57%/42% 50% 50% 58%;filter:saturate(.78) sepia(.08);box-shadow:var(--shadow)}
-.credit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;color:#7a756e;margin-top:12px;line-height:1.5}
+.credit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;color:#7a756e;margin-top:12px;line-height:1.5}.credit a{text-decoration:none;border-bottom:1px dotted rgba(122,117,110,.5)}
 .storyLead{max-width:780px;font-size:20px;line-height:1.9;color:#465149}
 .storyGrid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
 .visualPanel{background:rgba(255,253,248,.52);border:1px solid var(--line);border-radius:24px;padding:28px;min-height:320px;display:grid;place-items:center;overflow:hidden;position:relative}
@@ -331,6 +331,19 @@ h3{font-weight:650}
 @keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusGlint{to{stroke-dashoffset:-550}}@keyframes mobiusFloat{0%,100%{transform:rotateX(7deg) rotateZ(-1.5deg) translateY(0)}50%{transform:rotateX(3deg) rotateZ(1deg) translateY(-5px)}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
+.bioIntro{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:64px;align-items:start}
+.bioHero h1{max-width:10.8em}
+.bioIntro .storyLead{font-size:21px}
+.bioFacts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.bioFact{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.54)}.bioFact b{display:block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}.bioFact span{font-size:17px;line-height:1.6}
+.bioNav{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,253,248,.62)}.bioNav a{display:block;padding:17px 14px;text-decoration:none;border-right:1px solid var(--line);min-height:76px}.bioNav a:last-child{border-right:0}.bioNav small{display:block;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--accent);margin-bottom:5px}.bioNav strong{font-size:14px;line-height:1.4}.bioNav a:hover{background:var(--white)}
+.bioChapter{padding:74px 0;border-top:1px solid var(--line);scroll-margin-top:88px}.bioChapter:nth-of-type(even){background:rgba(255,253,248,.25)}
+.bioChapterGrid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(320px,1.08fr);gap:62px;align-items:center}.bioChapter.reverse .bioText{order:2}.bioChapter.reverse .bioMedia{order:1}
+.bioYear{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}.bioText h2{font-size:clamp(32px,4vw,52px);line-height:1.38;margin:10px 0 20px}.bioText p{font-size:17px;line-height:1.95;color:var(--muted)}.bioText p:first-of-type{font-size:20px;color:#465149}
+.bioMedia{min-height:320px;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.55);overflow:hidden;display:grid;place-items:center;position:relative}.bioMedia img{width:100%;height:100%;min-height:320px;max-height:500px;object-fit:cover;filter:saturate(.76) sepia(.08)}.bioMedia .credit{padding:0 16px 14px}.bioMedia .visualPanel{width:100%;height:100%;border:0;border-radius:0;background:transparent}
+.bioPull{font-size:clamp(25px,3vw,39px);line-height:1.58;margin:24px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)}
+.bioMilestones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bioMilestone{padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.55)}.bioMilestone b{display:block;font-size:27px;color:var(--accent);margin-bottom:6px}.bioMilestone span{font-size:14px;color:var(--muted)}
+.bioResources{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.bioResource{display:block;text-decoration:none;padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.62);min-height:190px}.bioResource:hover{background:var(--white);box-shadow:var(--shadow);transform:translateY(-2px)}.bioResource h3{font-size:22px;margin:10px 0}.bioResource p{font-size:15px;color:var(--muted)}
+.bioSources{display:grid;gap:10px}.bioSource{padding:18px 20px;border-left:2px solid var(--accent);background:rgba(255,253,248,.48)}.bioSource b{display:block;margin-bottom:4px}.bioSource span{font-size:14px;color:var(--muted)}
 .hideOnMain{display:none!important}
 
 @media(prefers-reduced-motion:reduce){
@@ -341,7 +354,10 @@ h3{font-weight:650}
 
 @media(max-width:1000px){
   nav{display:none}
-  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand{grid-template-columns:minmax(0,1fr)}
+  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand,.bioIntro,.bioChapterGrid{grid-template-columns:minmax(0,1fr)}
+  .bioChapter.reverse .bioText,.bioChapter.reverse .bioMedia{order:initial}
+  .bioMilestones{grid-template-columns:repeat(2,1fr)}
+  .bioResources{grid-template-columns:repeat(2,1fr)}
   .toc,.lessonNav{position:static}
   .heroMain{padding-bottom:74px}
   .heroSide{padding-top:0}
@@ -368,7 +384,16 @@ h3{font-weight:650}
   .heroMain,.heroMain.compact{min-height:auto;padding:58px 0 78px}
   .heroFoot{bottom:22px}
   .heroSide{padding:0 0 48px}
-  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid{grid-template-columns:1fr}
+  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid,.bioMilestones,.bioResources,.bioFacts{grid-template-columns:1fr}
+  .bioChapter{padding:58px 0}
+  .bioChapterGrid{gap:28px}
+  .bioMedia{min-height:240px}
+  .bioMedia img{min-height:240px}
+  .bioHero h1{font-size:clamp(34px,8.5vw,38px);max-width:none;letter-spacing:-.04em}
+  .bioNav{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+  .bioNav a{min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .bioNav a:nth-child(2n){border-right:0}
+  .bioNav a:last-child{grid-column:1/-1;border-right:0;border-bottom:0}
   .section{padding:70px 0}
   .head{gap:18px;margin-bottom:34px}
   .table{font-size:13px;display:block;overflow-x:auto}
@@ -1396,7 +1421,7 @@ for item in PALMER["books"]:
     book_river+=f'<a class="bookStep" href="../books/{item["slug"]}.html"><span>{item["title"]}</span><strong>{zh}</strong><span>{item["question"]}</span></a>'
 
 palmer_page=f'''<main>{crumbs(1,[("帕克·帕尔默",None)])}
-<section class="hero"><div class="shell"><div class="portraitHero"><div class="heroMain"><div class="eyebrow">Parker J. Palmer</div><h1>{sem_title("一个不断把思想","<em>带回生命的人</em>")}</h1><p class="lead">教师 · 作家 · 教育思想家 · 公共知识分子。理解帕尔默，不能只从概念开始。他的许多思想，都从亲身经历过的矛盾、共同体、静默、失败、诗歌与重新开始中长出来。</p><div class="actions"><a class="btn primary" href="#life">沿生命线认识他</a><a class="btn" href="../worldview/">进入思想总图</a></div></div><div class="heroSide"><figure class="portraitFrame"><img src="../assets/images/parker-j-palmer.jpg" alt="Parker J. Palmer 2010 年肖像"><figcaption class="credit">Sharon L. Palmer 摄，2010 · CC BY-SA 3.0 · Wikimedia Commons</figcaption></figure></div></div></div></section>
+<section class="hero"><div class="shell"><div class="portraitHero"><div class="heroMain"><div class="eyebrow">Parker J. Palmer</div><h1>{sem_title("一个不断把思想","<em>带回生命的人</em>")}</h1><p class="lead">教师 · 作家 · 教育思想家 · 公共知识分子。理解帕尔默，不能只从概念开始。他的许多思想，都从亲身经历过的矛盾、共同体、静默、失败、诗歌与重新开始中长出来。</p><div class="actions"><a class="btn primary" href="biography.html">阅读详细传记</a><a class="btn" href="#life">看思想形成线</a><a class="btn" href="../worldview/">进入思想总图</a></div></div><div class="heroSide"><figure class="portraitFrame"><img src="../assets/images/parker-j-palmer.jpg" alt="Parker J. Palmer 2010 年肖像"><figcaption class="credit">Sharon L. Palmer 摄，2010 · CC BY-SA 3.0 · Wikimedia Commons</figcaption></figure></div></div></div></section>
 
 <section class="section"><div class="shell"><div class="head"><div><span class="kicker">A Life Behind The Ideas</span><h2>{sem_title("不是先有一套理论，","然后再拿去生活")}</h2></div><p>Elena Soto 的研究把帕尔默的生命经历与教育思想放在同一条线上：他的写作，来自长期追寻真实与完整的生命实践，而不是一套脱离经验、先行完成的理论体系。</p></div><div class="storyGrid"><div><p class="storyLead">帕尔默曾在学术、教学与社区工作中追求改变，也逐渐发现：一个人可以在理念上谈“共同体”，却还没有真正学会怎样与人共同生活；可以非常擅长外在角色，却越来越远离自己。Pendle Hill 的长期共同生活，让工作、学习、静默、诗歌与非暴力从思想变成日常经验。</p><p class="storyLead">后来，他把问题一再带回教育：如果教学是一项真正的人类活动，那么教师的内在状态也会进入课堂。再往后，这条线继续进入领导、公共生活与民主——完整性从来不只是私人的。</p><div class="sourceNote">人物与思想脉络主要参考：Elena Soto, <em>The Spiritual and Educational Vision of Parker J. Palmer: The Birthright Gift of Self</em>；概念解释同时回到帕尔默原著。</div></div><div class="visualPanel">{svg_mobius()}</div></div></div></section>
 
@@ -1413,6 +1438,68 @@ palmer_page=f'''<main>{crumbs(1,[("帕克·帕尔默",None)])}
 <section class="section"><div class="shell"><div class="questionBand"><span class="kicker">Continue</span><h2>{sem_title("从“这个人”，","继续进入“这套思想”")}</h2><p>人物页帮助你理解这些概念为什么会出现；思想总图则把它们重新放回从“分裂的生命”到公共生活的整体脉络中。</p><div class="actions"><a class="btn primary" href="../worldview/">进入思想总图</a><a class="btn" href="../books/">浏览原著地图</a><a class="btn" href="../genealogy/">继续看思想谱系</a></div></div></div></section>
 </main>'''
 (ROOT/"parker-palmer/index.html").write_text(wrap("帕克·帕尔默",palmer_page,1,"从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer"),encoding="utf-8")
+
+# ---------- detailed Parker J. Palmer biography ----------
+bio_book_river=""
+for item in PALMER["books"]:
+    b=next((x for x in books if x["slug"]==item["slug"]),None)
+    zh=b["zh"] if b else item["title"]
+    bio_book_river+=f'<a class="bookStep" href="../books/{item["slug"]}.html"><span>{item["title"]}</span><strong>{zh}</strong><span>{item["question"]}</span></a>'
+
+bio_page=f'''<main>{crumbs(1,[("帕克·帕尔默","index.html"),("详细传记",None)])}
+<section class="hero bioHero"><div class="shell"><div class="portraitHero"><div class="heroMain"><div class="eyebrow">Biography · Parker J. Palmer</div><h1>{sem_title("走近帕克·帕尔默，","<em>看见思想背后的生命</em>")}</h1><p class="lead">1939 年出生于芝加哥的帕克·J·帕尔默，后来成为美国重要的教育思想家、作家、演讲者与社会行动者。他的道路并不笔直：离开神学院、对学术世界的疏离、共同体生活、抑郁的黑夜、贵格会静默、教育实践与公共行动，一次次使他重新回答同一个问题：<strong>我是谁？我怎样活得不再分裂？</strong></p><div class="actions"><a class="btn primary" href="#story">从生命故事开始</a><a class="btn" href="../worldview/">进入思想总图</a><a class="btn" href="index.html">回到人物页</a></div></div><div class="heroSide"><figure class="portraitFrame"><img src="../assets/images/parker-j-palmer.jpg" alt="Parker J. Palmer 2010 年肖像"><figcaption class="credit"><a href="https://commons.wikimedia.org/wiki/File:Parker_J._Palmer.jpg" target="_blank" rel="noopener">Sharon L. Palmer 摄，2010</a> · CC BY-SA 3.0 · Wikimedia Commons</figcaption></figure></div></div></div></section>
+
+<section class="section" id="story"><div class="shell"><div class="bioIntro"><div><span class="kicker">The Person Before The Ideas</span><h2>{sem_title("先认识这个人，","再理解他的思想")}</h2><p class="storyLead">如果只读帕尔默的概念，很容易把“真实自我”“内在导师”“完整性”“可信赖共同体”理解成一套成熟理论。但从他的生命往回看，会发现这些词几乎都带着经历的痕迹：它们不是从书桌上凭空出现，而是在选择、失望、关系、静默、黑夜与重新开始中慢慢长出来。</p><p>Elena Soto 对帕尔默生命与教育思想的系统研究特别强调这一点：他的思想史，同时也是一部不断学习“怎样成为自己”的生命史。官方资料则显示，他后来成为 Center for Courage & Renewal 的创始人与荣休高级合伙人，长期工作横跨教育、共同体、领导力、灵性与社会变革。</p></div><div class="bioFacts"><div class="bioFact"><b>出生</b><span>1939 年<br>美国芝加哥</span></div><div class="bioFact"><b>学术训练</b><span>Carleton College<br>UC Berkeley 社会学博士</span></div><div class="bioFact"><b>实践传统</b><span>贵格会<br>Religious Society of Friends</span></div><div class="bioFact"><b>长期主题</b><span>教育 · 使命 · 共同体 · 完整性 · 公共生活</span></div></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="bioMilestones"><div class="bioMilestone"><b>10</b><span>本主要著作，横跨教育、灵性、领导与公共生活</span></div><div class="bioMilestone"><b>2.5M+</b><span>官方资料所列累计销量超过 250 万册</span></div><div class="bioMilestone"><b>10</b><span>种语言译本，影响跨出英语世界</span></div><div class="bioMilestone"><b>14</b><span>个荣誉博士学位，另获多项教育与公共领域荣誉</span></div></div><div class="bioNav" style="margin-top:22px"><a href="#early"><small>1939–1961</small><strong>芝加哥与 Carleton</strong></a><a href="#turning"><small>1961–1969</small><strong>神学院与 Berkeley</strong></a><a href="#pendle"><small>1974–1985</small><strong>Pendle Hill</strong></a><a href="#teaching"><small>1980s–2000s</small><strong>教育与写作</strong></a><a href="#public-life"><small>Later Years</small><strong>公共生活与晚年</strong></a></div></div></section>
+
+<section class="bioChapter" id="early"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">1939–1961 · Chicago → Carleton</span><h2>{sem_title("一个并不把自己","想成“思想家”的年轻人")}</h2><p>帕尔默出生于芝加哥，在伊利诺伊州北郊长大。进入 Carleton College 后，他最初并没有一条明确的“思想家”路线。按 Soto 的研究，他来自一个以商人和手艺人为主的家庭，是家中第一位大学毕业生；早年甚至想过海军与广告行业。</p><p>真正改变他的，是几位老师。在 Carleton，他同时学习哲学与社会学，逐渐发现，好的教育不只是把知识交给学生，而是有人以自己的完整性，让另一个人开始相信：我也可以长成自己的样子。后来他反复写“教师是谁”，很大程度上可以追溯到这些早年的师生关系。</p><div class="bioPull">他后来关于“身份与完整性”的教育思想，最早并不是一个抽象命题，而是来自被好老师真实看见的经验。</div></div><figure class="bioMedia"><img src="../assets/images/biography/carleton-skinner-chapel.jpg" alt="Carleton College 的 Skinner Memorial Chapel"><figcaption class="credit"><a href="https://commons.wikimedia.org/wiki/File:Skinner_Memorial_Chapel_-_Carleton_College_-_Northfield,_Minnesota_(25932797228).jpg" target="_blank" rel="noopener">Skinner Memorial Chapel, Carleton College</a> · Tony Webster 摄 · CC BY-SA 2.0</figcaption></figure></div></div></section>
+
+<section class="bioChapter reverse" id="turning"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">1961–1969 · Seminary → Berkeley</span><h2>{sem_title("当一条路关上，","使命开始换一种方式说话")}</h2><p>大学毕业后，帕尔默进入纽约 Union Theological Seminary，一度相信自己将走向牧职。但持续的不协调感，使他逐渐意识到：成为牧师并不是自己的道路。后来他转往加州大学伯克利分校攻读社会学，把兴趣放在宗教、制度与社会生活之间的关系上。</p><p>这段经历后来成为《让生命说话》中“路打开 / 路关闭”的重要底色：使命不是靠意志替自己设计一个宏大身份，也包括认真听见那些“不适合我”的讯号。伯克利时期，他研究宗教象征与社会变迁，也与 Robert Bellah 等学者工作，最终完成社会学博士训练。</p></div><div class="bioMedia"><div class="visualPanel">{svg_paths()}</div></div></div></div></section>
+
+<section class="bioChapter" id="georgetown"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">Late 1960s–1974 · Teaching · Community Organizing · Georgetown</span><h2>{sem_title("从“研究社会”，","走向真实的社会关系")}</h2><p>帕尔默并没有满足于留在学院里研究社会。他投入社区组织工作，面对种族、城市与制度问题；随后进入 Georgetown University 任教。Soto 的研究显示，这一阶段他越来越强烈地感到学术世界中的孤立，也越来越渴望一种能把工作、家庭、关系与价值重新连起来的共同生活。</p><p>这也是一个关键转折：他开始发现，“共同体”不能只是课堂里谈论的概念。一个人如果自己还没有真正生活在共同体里，就很难诚实地教别人什么是共同体。</p></div><figure class="bioMedia"><img src="../assets/images/biography/georgetown-healy-hall.jpg" alt="Georgetown University 的 Healy Hall"><figcaption class="credit"><a href="https://commons.wikimedia.org/wiki/File:Healy_Hall_at_Georgetown_University.jpg" target="_blank" rel="noopener">Healy Hall, Georgetown University</a> · Gtownsfs 摄 · CC BY-SA 3.0</figcaption></figure></div></div></section>
+
+<section class="bioChapter reverse" id="pendle"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">1974–1985 · Pendle Hill</span><h2>{sem_title("十一年共同生活，","成为他真正的“隐形学校”")}</h2><p>1974 年，帕尔默带着家人来到宾夕法尼亚州 Wallingford 的 Pendle Hill——一个贵格会生活与学习共同体。原本只是一次休假式停留，后来却成为长达十一年的生命时期。他担任 Dean of Studies，也和其他居民一起学习、劳动、吃饭、礼拜与生活。</p><p>每天的静默聚会一开始让他不适。他习惯的是讲道、解释、思想与语言，而贵格会把人放进没有主持人、没有预设答案的共同静默里。正是在这种静默中，他开始区分：哪些信念只是“听来的”，哪些东西真正从自己的经验里长出来。后来“内在导师”“可信赖空间”“不替别人修理人生”的关系伦理，都与这段生活密不可分。</p><div class="sourceNote">Pendle Hill 是帕尔默思想形成的重要现场：日常劳动、共同吃饭、学习与静默并不是课程之外的背景，而本身就是教育。</div></div><figure class="bioMedia"><img src="../assets/images/biography/pendle-hill-barn.jpg" alt="Pendle Hill 位于宾夕法尼亚州 Wallingford 的建筑"><figcaption class="credit"><a href="https://commons.wikimedia.org/wiki/Category:Quakers_in_Pennsylvania" target="_blank" rel="noopener">Pendle Hill, Wallingford, Pennsylvania</a> · Smallbones 摄 · CC0</figcaption></figure></div></div></section>
+
+<section class="bioChapter" id="influences"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">Thomas Merton · Henri Nouwen · Quaker Silence</span><h2>{sem_title("静默不是退避，","而是重新学习从哪里出发")}</h2><p>在 Pendle Hill 前后，帕尔默持续深入 Thomas Merton 的作品，也与 Henri Nouwen 建立长期友谊与合作。Merton 关于真实自我、静默、独处与隐藏完整性的语言，为他提供了重要思想资源；Nouwen 则在教育、共同体与灵性生命上持续影响他。</p><p>帕尔默后来常把内在生命画成莫比乌斯带：内与外并不是两个彼此隔绝的世界。我们里面的恐惧、希望、阴影与爱，会不断进入关系和制度；外部世界也持续进入我们里面。所谓“内在工作”，不是把世界关在门外，而是更诚实地辨认：我正在把什么带进世界？</p></div><div class="bioMedia"><div class="visualPanel">{svg_mobius()}</div></div></div></div></section>
+
+<section class="bioChapter reverse" id="dark-night"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">Dark Nights · Depression</span><h2>{sem_title("生命的黑夜，","也进入了他的思想")}</h2><p>帕尔默曾公开谈到自己经历严重的临床抑郁。Soto 的研究也把这些经历视为理解他后来思想的重要线索。这里不把抑郁浪漫化成“灵性成长”，而只是尊重他本人反复公开讲述的事实：那是一段自我感、价值感与意义感几乎被掏空的生命黑夜。</p><p>这段生命史让他的“灵魂”语言有了完全不同的重量：真正的陪伴不是急着劝说一个人振作，也不是替他解释，而是在不入侵、不接管的前提下，帮助一个人慢慢重新和生命建立联系。后来信任圈里那种克制、尊重与“不修理别人”的伦理，也因此不只是技巧。</p><div class="sourceNote">本节依据帕尔默本人公开自述与 Soto 的研究整理，不对其健康状况作额外推断。</div></div><div class="bioMedia"><div class="visualPanel">{svg_inner_teacher()}</div></div></div></div></section>
+
+<section class="bioChapter" id="teaching"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">1980s–2000s · Writer · Teacher of Teachers</span><h2>{sem_title("从“怎样教”，","转向“谁在教”")}</h2><p>离开 Pendle Hill 后，帕尔默的写作逐渐进入更广泛的教育世界。《To Know as We Are Known》讨论认识与关系，《The Active Life》重新连接行动与沉思，而《The Courage to Teach》则把一个问题推到教育讨论中心：好的教学是否可以只靠技巧？</p><p>他的回答是否定的。教学当然需要方法，但教师会把自己的恐惧、身份、完整性，以及与学科的关系一起带进课堂。1998 年，一项覆盖 10,000 名教育工作者的全国调查把他列为美国高等教育中最有影响力的资深领导者之一。自 2002 年起，ACGME 还以他的名字设立 “Courage to Teach” 与 “Courage to Lead” 奖项，把这种“内在完整性进入专业实践”的思想带进医学教育。</p></div><div class="bioMedia"><div class="visualPanel">{svg_subject_centered()}</div></div></div></div></section>
+
+<section class="bioChapter reverse" id="courage"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">1997–Present · Courage & Renewal</span><h2>{sem_title("让思想“长出轮子”，","进入真实的人与组织")}</h2><p>帕尔默不希望自己的思想只停在书架上。1997 年，他与 Marcy Jackson、Rick Jackson 一起创立了后来成为 Center for Courage & Renewal 的组织。最早的 Courage to Teach 项目帮助教师重新连接“灵魂与角色”；后来这一方法逐渐进入医疗、宗教、非营利、领导与社会行动等领域。</p><p>官方页面里，他把自己的“遗产”理解成一件共同完成的事：重要的不是写过多少页，而是这些思想有没有被人带进自己的生命、共同体、机构与社会。也正因此，他的影响既是一套思想，也是一种实践传统。</p></div><div class="bioMedia"><div class="visualPanel">{svg_integrity()}</div></div></div></div></section>
+
+<section class="bioChapter" id="public-life"><div class="shell"><div class="bioChapterGrid"><div class="bioText"><span class="bioYear">Public Life · Democracy · Aging</span><h2>{sem_title("越往内走，","越要重新回到世界")}</h2><p>帕尔默后期的写作越来越明确地进入公共生活。《Healing the Heart of Democracy》讨论政治分裂、差异与公民心灵；《On the Brink of Everything》则把视线转向老年、失去、爱与生命回望。但这并不是离开早期主题，而是把“完整性”推向更大的尺度。</p><p>一个人能不能在差异中保留自己的声音，又不把对方变成敌人？能不能承载悲剧性张力，而不是急着消灭其中一端？能不能让内在真实进入公共世界，却不把“内在”变成逃避现实的理由？这些问题，让帕尔默从教育思想家逐渐成为一个持续讨论公共生活的人。</p></div><div class="bioMedia"><div class="visualPanel">{svg_public()}</div></div></div></div></section>
+
+<section class="section" id="legacy"><div class="shell"><div class="head wideHead"><div><span class="kicker">Influence & Legacy</span><h2>{sem_title("他的影响，不只留在书里，","而是进入教育、医疗与公共生活")}</h2></div><p>帕尔默晚年谈“遗产”时，刻意不把它理解成个人成就。他更在意的是：这些思想有没有被别人带进自己的生命，再继续带进共同体、机构与更大的社会。</p></div><div class="grid4">
+<div class="card"><span class="tag">1998</span><h3>高等教育中的影响力</h3><p>Center for Courage & Renewal 的官方资料记载，一项覆盖 10,000 名教育工作者的全国调查，把帕尔默列为高等教育中最有影响力的资深领导者之一，并列入过去十年的关键“议题设定者”。</p></div>
+<div class="card"><span class="tag">2002—Today</span><h3>ACGME 以他的名字设奖</h3><p>美国毕业后医学教育认证委员会持续颁发 Parker J. Palmer “Courage to Teach” 与 “Courage to Lead” 奖，把他的教育与领导思想带进医学训练体系。</p><a class="externalLink" href="https://www.acgme.org/initiatives/awards/parker-j-palmer-courage-to-teach-award/" target="_blank" rel="noopener">查看 ACGME 奖项 ↗</a></div>
+<div class="card"><span class="tag">2010 · 2017 · 2021</span><h3>跨越教育与沉思传统的荣誉</h3><p>他先后获得 William Rainey Harper Award、Shalem Institute 的 Contemplative Voices Award，以及 Freedom of Spirit Fund 的终身成就奖。</p></div>
+<div class="card"><span class="tag">Legacy</span><h3>“这不是我的遗产，是我们的”</h3><p>在官方人物页中，帕尔默把真正的遗产理解为一种活的传递：人们把文字带进自己的生命，再带进共同体、机构和社会。如今他与妻子 Sharon 居住在威斯康星州 Madison。</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="head wideHead"><div><span class="kicker">Books As Biography</span><h2>{sem_title("如果把他的书按时间排开，","会看见一条不断扩大的生命轨迹")}</h2></div><p>从“我们怎样认识”，到“我如何听见使命”，再到“我们怎样共同生活”，每一本书都像前一个问题向外迈出的一步。</p></div><div class="bookRiver">{bio_book_river}</div></div></section>
+
+<section class="section" id="resources"><div class="shell"><div class="head"><div><span class="kicker">Listen · Watch · Read</span><h2>{sem_title("如果想继续走近他，","从这些第一手资源开始")}</h2></div><p>下面优先链接官方机构与帕尔默本人的公开演讲、文章和视频，避免只停留在二手介绍。</p></div><div class="bioResources">
+<a class="bioResource" href="https://couragerenewal.org/parker-j-palmer/" target="_blank" rel="noopener"><span class="tag">Official Bio</span><h3>Center for Courage & Renewal · Parker J. Palmer</h3><p>官方人物页：生平简介、著作、荣誉与帕尔默本人对“legacy”的回望。</p></a>
+<a class="bioResource" href="https://couragerenewal.org/library/what-is-an-undivided-life/" target="_blank" rel="noopener"><span class="tag">Video</span><h3>What is an Undivided Life?</h3><p>由帕尔默本人简要说明：什么叫“不再分裂地活”。</p></a>
+<a class="bioResource" href="https://couragerenewal.org/wp-content/uploads/2022/06/Parker-Palmer_The-Heart-of-a-Teacher.pdf" target="_blank" rel="noopener"><span class="tag">Essay</span><h3>The Heart of a Teacher</h3><p>进入“教师的内在风景”最直接的一篇文章，也是理解《教学的勇气》的好入口。</p></a>
+<a class="bioResource" href="https://onbeing.org/programs/parker-palmer-courtney-martin-the-inner-life-of-rebellion/" target="_blank" rel="noopener"><span class="tag">Conversation</span><h3>The Inner Life of Rebellion</h3><p>帕尔默回忆神学院、Berkeley、社区组织与 Pendle Hill，能直接听见他的生命故事如何进入思想。</p></a>
+<a class="bioResource" href="https://onbeing.org/blog/a-seedbed-for-the-growing-to-come/" target="_blank" rel="noopener"><span class="tag">Personal Essay</span><h3>A Seedbed for the Growing To Come</h3><p>帕尔默本人谈抑郁与生命黑夜。适合与《让生命说话》第四章一起阅读。</p></a>
+<a class="bioResource" href="https://couragerenewal.org/library/25th-anniversary-celebration-recording/" target="_blank" rel="noopener"><span class="tag">History</span><h3>Courage & Renewal 25 周年</h3><p>帕尔默、Marcy Jackson、Rick Jackson 等共同回望这项工作的形成、传承与未来。</p></a>
+<a class="bioResource" href="https://www.acgme.org/initiatives/awards/parker-j-palmer-courage-to-teach-award/" target="_blank" rel="noopener"><span class="tag">Living Legacy</span><h3>Parker J. Palmer Courage to Teach Award</h3><p>一个很具体的例子：他的“教学勇气”如何离开书本，进入今天的医学教育与专业实践。</p></a>
+</div></div></section>
+
+<section class="section" id="sources"><div class="shell"><div class="head"><div><span class="kicker">Sources</span><h2>这页传记依据什么</h2></div><p>人物事实与思想解释分层使用来源：生命史优先使用研究传记与官方资料，思想判断再回到帕尔默原著。</p></div><div class="bioSources">
+<div class="bioSource"><b>Elena Soto, <em>The Spiritual and Educational Vision of Parker J. Palmer: The Birthright Gift of Self</em>（2024）</b><span>本页关于 Carleton、Berkeley、Georgetown、Pendle Hill、贵格会实践、导师关系及思想形成过程的主要二级研究来源。</span></div>
+<div class="bioSource"><b>Center for Courage & Renewal · Parker J. Palmer 官方人物页</b><span>用于核对职业身份、著作数量、荣誉、影响范围与其晚年对“legacy”的公开说明。</span></div>
+<div class="bioSource"><b>Parker J. Palmer 原著与公开访谈</b><span>用于理解使命、分裂生命、内在导师、完整性、教育与公共生活等概念，以及他本人公开谈及的生命经验。</span></div>
+<div class="bioSource"><b>Wikimedia Commons</b><span>肖像采用 Sharon L. Palmer 2010 年照片；Carleton、Georgetown 与 Pendle Hill 实景用于帮助读者进入具体历史场景。</span></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="questionBand"><span class="kicker">Continue</span><h2>{sem_title("读完一个人的故事，","再进入他的思想世界")}</h2><p>帕尔默的传记不是思想的“背景资料”。它本身就是理解这套思想的入口：为什么他那么重视静默？为什么反复谈“分裂”？为什么共同体必须既靠近、又不侵入？下一步，可以带着这些生命经验进入思想总图。</p><div class="actions"><a class="btn primary" href="../worldview/">进入思想总图</a><a class="btn" href="../books/">浏览原著地图</a><a class="btn" href="index.html">回到人物页</a></div></div></div></section>
+</main>'''
+(ROOT/"parker-palmer/biography.html").write_text(wrap("帕克·帕尔默详细传记",bio_page,1,"帕克·J·帕尔默详细中文传记：从成长、学术、Pendle Hill、贵格会静默、教育思想、Courage & Renewal 到公共生活。"),encoding="utf-8")
 
 # ---------- concepts index + pages ----------
 concept_tiles=""
@@ -1665,6 +1752,7 @@ for p in visible_practices:index.append({"title":p["title"],"url":f'practice/{p[
 for slug,title,summary,_ in applications:index.append({"title":title,"url":f'applications/{slug}.html',"type":"应用","summary":summary})
 index.extend([
 {"title":"帕克·帕尔默","url":"parker-palmer/","type":"人物","summary":"从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer。"},
+{"title":"帕克·帕尔默详细传记","url":"parker-palmer/biography.html","type":"人物传记","summary":"从芝加哥、Carleton、Berkeley、Georgetown、Pendle Hill、贵格会静默与抑郁的黑夜，一路读到教育思想、Courage & Renewal 与公共生活。"},
 {"title":"思想总图","url":"worldview/","type":"思想","summary":"从分裂生命、内在导师、真实自我与使命，一直走到教育、悖论、不再分裂与公共生活。"},
 {"title":"自修中心","url":"self-study/","type":"自修","summary":"静默、自由书写、第三物、开放问题与个人记录组成的轻量练习空间。"},
 {"title":"第三物素材库","url":"self-study/third-things.html","type":"自修工具","summary":"使用物件、意象与隐喻，从侧面进入内在经验。"},
