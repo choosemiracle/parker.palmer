@@ -330,9 +330,9 @@ h3{font-weight:650}
 .relationPulse{stroke-dasharray:5 7;animation:dashMove 8s linear infinite}.subjectLink{stroke-dasharray:90;stroke-dashoffset:90;animation:drawPath 2.2s ease forwards}.balanceNode{transform-box:fill-box;transform-origin:center;animation:balanceNode 5s ease-in-out infinite}
 .publicStage{animation:fadeNode 1.2s ease both}.publicStage.s2{animation-delay:.3s}.publicStage.s3{animation-delay:.6s}.publicStage.s4{animation-delay:.9s}
 @keyframes drawPath{to{stroke-dashoffset:0}}@keyframes pulseNode{0%,100%{opacity:.58;transform:scale(.94)}50%{opacity:1;transform:scale(1.08)}}@keyframes fadeNode{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes whisper{0%,100%{opacity:.28;transform:translateY(0)}50%{opacity:.72;transform:translateY(-4px)}}@keyframes integrityLeft{0%,100%{transform:translateX(-9px)}50%{transform:translateX(7px)}}@keyframes integrityRight{0%,100%{transform:translateX(9px)}50%{transform:translateX(-7px)}}@keyframes communityPerson{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}@keyframes balanceNode{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
-.mobiusWrap{position:relative;width:min(100%,620px);margin:auto;isolation:isolate}.mobiusWrap svg{display:block;width:100%;height:auto;overflow:visible}.mobiusMonoForm{transform-box:fill-box;transform-origin:center;animation:mobiusMonoBreath 11s ease-in-out infinite}.mobiusHalo{fill:#111;opacity:.035;transform-box:fill-box;transform-origin:center;animation:mobiusHalo 11s ease-in-out infinite}.mobiusMonoShadow,.mobiusMonoBase,.mobiusMonoFace,.mobiusMonoEdge,.mobiusMonoFlow,.mobiusMonoInk,.mobiusMonoFrontShadow,.mobiusMonoFront,.mobiusMonoFrontEdge{fill:none;stroke-linecap:round;stroke-linejoin:round}.mobiusMonoShadow{stroke:#111;stroke-width:66;opacity:.09;filter:blur(9px)}.mobiusMonoBase{stroke:#151515;stroke-width:62;opacity:.9}.mobiusMonoFace{stroke-width:54}.mobiusMonoEdge{stroke:#fff;stroke-width:1.6;opacity:.62}.mobiusMonoFlow{stroke:#fff;stroke-width:11;stroke-dasharray:116 780;opacity:.16;filter:blur(1.2px);animation:mobiusMonoLight 15s linear infinite}.mobiusMonoInk{stroke:#000;stroke-width:7;stroke-dasharray:150 746;opacity:.08;filter:blur(.8px);animation:mobiusMonoInk 18s linear infinite reverse}.mobiusMonoFrontShadow{stroke:#111;stroke-width:68;opacity:.14;filter:blur(5px)}.mobiusMonoFront{stroke-width:56}.mobiusMonoFrontEdge{stroke:#fff;stroke-width:1.7;opacity:.68}.mobiusQuietMark{fill:#171717;opacity:.52;animation:mobiusQuietMark 11s ease-in-out infinite}
-@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusMonoBreath{0%,100%{transform:translateY(1px) scale(.992)}50%{transform:translateY(-3px) scale(1.008)}}@keyframes mobiusHalo{0%,100%{transform:scaleX(.96);opacity:.028}50%{transform:scaleX(1.04);opacity:.05}}@keyframes mobiusMonoLight{to{stroke-dashoffset:-896}}@keyframes mobiusMonoInk{to{stroke-dashoffset:896}}@keyframes mobiusQuietMark{0%,100%{opacity:.34}50%{opacity:.62}}
-@media(prefers-reduced-motion:reduce){.mobiusMonoForm,.mobiusHalo,.mobiusMonoFlow,.mobiusMonoInk,.mobiusQuietMark{animation:none!important}}
+.mobiusWrap{position:relative;width:min(100%,620px);margin:auto;isolation:isolate}.mobiusWrap svg{display:block;width:100%;height:auto;overflow:visible}.mobiusMonoForm{transform-box:fill-box;transform-origin:center}.mobiusMonoShadow,.mobiusMonoBase,.mobiusMonoFace,.mobiusMonoFlow,.mobiusMonoCrossBase,.mobiusMonoCross{fill:none;stroke-linejoin:round}.mobiusMonoShadow{stroke:#111;stroke-width:54;stroke-linecap:round;opacity:.055;filter:blur(7px)}.mobiusMonoBase{stroke:#161616;stroke-width:52;stroke-linecap:round;opacity:.95}.mobiusMonoFace{stroke-width:46;stroke-linecap:round}.mobiusMonoFlow{stroke:#fff;stroke-width:15;stroke-linecap:round;stroke-dasharray:94 802;opacity:.075;filter:blur(5px);animation:mobiusMonoLight 20s linear infinite}.mobiusMonoCrossBase{stroke:#161616;stroke-width:52;stroke-linecap:butt;opacity:.96}.mobiusMonoCross{stroke-width:46;stroke-linecap:butt}
+@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusMonoLight{to{stroke-dashoffset:-896}}
+@media(prefers-reduced-motion:reduce){.mobiusMonoFlow{animation:none!important}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
 .bioIntro{display:grid;grid-template-columns:minmax(0,680px) minmax(300px,420px);gap:72px;align-items:start;justify-content:space-between}
@@ -650,46 +650,43 @@ def svg_mobius():
     MOBIUS_SEQ += 1
     uid=f"mobius-{MOBIUS_SEQ}"
     path="M78,160 C132,62 214,60 280,160 C346,260 428,258 482,160 C428,62 346,60 280,160 C214,260 132,258 78,160"
-    front="M214,91 C239,108 258,138 280,160 C302,183 321,214 346,231"
-    back_cut="M246,201 C260,181 271,166 280,160 C289,151 300,133 314,113"
+    cross="M196,72 C235,100 258,137 280,160 C303,184 326,223 365,250"
     return f'''<div class="mobiusWrap"><svg viewBox="0 0 560 320" role="img" aria-label="抽象莫比乌斯带：内在与外在持续流动、彼此转化" data-animated-svg>
       <defs>
-        <linearGradient id="{uid}-mono" x1="0%" y1="5%" x2="100%" y2="95%">
-          <stop offset="0%" stop-color="#111111"/>
-          <stop offset="18%" stop-color="#343434"/>
-          <stop offset="36%" stop-color="#d8d8d4"/>
-          <stop offset="50%" stop-color="#f5f4f0"/>
-          <stop offset="64%" stop-color="#8b8b87"/>
-          <stop offset="82%" stop-color="#2f2f2f"/>
-          <stop offset="100%" stop-color="#111111"/>
+        <linearGradient id="{uid}-mono" x1="0%" y1="12%" x2="100%" y2="88%">
+          <stop offset="0%" stop-color="#171717"/>
+          <stop offset="18%" stop-color="#414141"/>
+          <stop offset="36%" stop-color="#b9b9b6"/>
+          <stop offset="50%" stop-color="#ecebe7"/>
+          <stop offset="64%" stop-color="#9a9a96"/>
+          <stop offset="82%" stop-color="#3f3f3f"/>
+          <stop offset="100%" stop-color="#171717"/>
         </linearGradient>
-        <linearGradient id="{uid}-front" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#f3f2ed"/>
-          <stop offset="35%" stop-color="#d7d6d1"/>
-          <stop offset="67%" stop-color="#777773"/>
-          <stop offset="100%" stop-color="#151515"/>
+        <linearGradient id="{uid}-cross" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#d9d8d4"/>
+          <stop offset="34%" stop-color="#f2f1ed"/>
+          <stop offset="62%" stop-color="#8f8f8b"/>
+          <stop offset="100%" stop-color="#1a1a1a"/>
         </linearGradient>
+        <radialGradient id="{uid}-cross-fade" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="white"/>
+          <stop offset="58%" stop-color="white"/>
+          <stop offset="100%" stop-color="black"/>
+        </radialGradient>
         <mask id="{uid}-cross-mask">
-          <rect x="0" y="0" width="560" height="320" fill="white"/>
-          <path d="{back_cut}" fill="none" stroke="black" stroke-width="76" stroke-linecap="round"/>
+          <rect x="0" y="0" width="560" height="320" fill="black"/>
+          <ellipse cx="280" cy="160" rx="92" ry="82" fill="url(#{uid}-cross-fade)"/>
         </mask>
       </defs>
-      <ellipse class="mobiusHalo" cx="280" cy="165" rx="215" ry="96"/>
       <g class="mobiusMonoForm">
+        <path class="mobiusMonoShadow" d="{path}"/>
+        <path class="mobiusMonoBase" d="{path}"/>
+        <path class="mobiusMonoFace" d="{path}" stroke="url(#{uid}-mono)"/>
+        <path class="mobiusMonoFlow" d="{path}"/>
         <g mask="url(#{uid}-cross-mask)">
-          <path class="mobiusMonoShadow" d="{path}"/>
-          <path class="mobiusMonoBase" d="{path}"/>
-          <path class="mobiusMonoFace" d="{path}" stroke="url(#{uid}-mono)"/>
-          <path class="mobiusMonoEdge" d="{path}"/>
-          <path class="mobiusMonoFlow" d="{path}"/>
-          <path class="mobiusMonoInk" d="{path}"/>
+          <path class="mobiusMonoCrossBase" d="{cross}"/>
+          <path class="mobiusMonoCross" d="{cross}" stroke="url(#{uid}-cross)"/>
         </g>
-        <g>
-          <path class="mobiusMonoFrontShadow" d="{front}"/>
-          <path class="mobiusMonoFront" d="{front}" stroke="url(#{uid}-front)"/>
-          <path class="mobiusMonoFrontEdge" d="{front}"/>
-        </g>
-        <circle class="mobiusQuietMark" cx="280" cy="160" r="2.8"/>
       </g>
     </svg></div>'''
 
