@@ -540,7 +540,7 @@ def practice_url(slug, prefix=""):
 home_tiles=[
 ("worldview/","思想总图","先看 Palmer 的整套思想如何从内在真实走向教育、共同体与公共世界。"),
 ("genealogy/","思想谱系","理解 Pendle Hill、贵格会、Thomas Merton 与教育经验如何塑造他的语言。"),
-("concepts/","核心概念","18 个互相关联的概念页，不把思想拆成孤立术语。"),
+("concepts/","核心概念","20 个互相关联的概念页，不把思想拆成孤立术语。"),
 ("books/","原著研读","9 部主要文本的章节地图、关键命题与操练入口。"),
 ("practice/","操练方法","13 套可直接执行的练习，含时间、人数、步骤、带领提醒与复盘问题。"),
 ("applications/","应用场景","个人、教育、领导、社群、公共生活五条应用路径。"),
@@ -591,7 +591,7 @@ gene=f'''<main>{crumbs(1,[("思想谱系",None)])}<section class="hero"><div cla
 
 # ---------- concepts index + pages ----------
 concept_tiles="".join(tile(f'{c["slug"]}.html',c["en"],c["cn"],c["summary"],c["cn"]+" "+c["en"]+" "+c["summary"]) for c in concepts)
-concept_index=f'''<main>{crumbs(1,[("核心概念",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Concept Library</div><h1>18 个概念<br>不是词典，而是<em>关系网络</em></h1><p class="lead">每个页面都包含：概念位置、原著脉络、常见误读、个人操练与相关概念。搜索一个你当下最在意的问题进入。</p><div class="heroFoot">建议入口：使命 / 完整性 / 信任圈 / 沉思与行动 / 悲剧性张力。</div></div></div></section>
+concept_index=f'''<main>{crumbs(1,[("核心概念",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Concept Library</div><h1>20 个概念<br>不是词典，而是<em>关系网络</em></h1><p class="lead">每个页面都包含：概念位置、原著脉络、常见误读、个人操练与相关概念。搜索一个你当下最在意的问题进入。</p><div class="heroFoot">建议入口：使命 / 完整性 / 信任圈 / 沉思与行动 / 悲剧性张力。</div></div></div></section>
 <section class="section"><div class="shell"><div class="searchbar"><input data-site-search placeholder="搜索：使命、灵魂、教育、沉默、张力、公共生活……"></div><div class="grid3">{concept_tiles}</div></div></section></main>'''
 (ROOT/"concepts/index.html").write_text(wrap("核心概念",concept_index,1),encoding="utf-8")
 
