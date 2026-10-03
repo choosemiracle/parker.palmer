@@ -50,7 +50,7 @@ const recordsRoot=document.querySelector('[data-record-list]');
 if(recordsRoot){
   const renderRecords=()=>{
     const records=load('palmer:records',[]);
-    recordsRoot.innerHTML=records.length?records.map(r=>'<div class="recordItem"><time>'+new Date(r.time).toLocaleString()+'</time><h4>'+esc(r.title)+'</h4><p>'+esc(r.text)+'</p><button class="toolButton" data-delete-record="'+r.id+'">删除</button></div>').join(''):'<div class="card"><p>还没有记录。你在概念页或课程页保存的书写，会出现在这里。</p></div>';
+    recordsRoot.innerHTML=records.length?records.map(r=>'<div class="recordItem"><time>'+new Date(r.time).toLocaleString()+'</time><h4>'+esc(r.title)+'</h4><p>'+esc(r.text)+'</p><button class="toolButton" data-delete-record="'+r.id+'">删除</button></div>').join(''):'<div class="card"><p>还没有记录。你在概念页或自修工具里保存的书写，会出现在这里。</p></div>';
     recordsRoot.querySelectorAll('[data-delete-record]').forEach(b=>b.addEventListener('click',()=>{store('palmer:records',load('palmer:records',[]).filter(r=>String(r.id)!==b.dataset.deleteRecord));renderRecords()}));
   };
   renderRecords();
@@ -85,3 +85,7 @@ document.querySelectorAll('[data-course-progress]').forEach(el=>{
 });
 document.querySelectorAll('[data-study-record-count]').forEach(el=>el.textContent=load('palmer:records',[]).length);
 document.querySelectorAll('[data-study-course-count]').forEach(el=>el.textContent=load('palmer:course:hidden-wholeness',[]).length);
+const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduceMotion){
+  document.querySelectorAll('[data-animated-svg]').forEach(svg=>{try{svg.pauseAnimations&&svg.pauseAnimations()}catch(e){}});
+}

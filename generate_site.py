@@ -6,13 +6,21 @@ import shutil
 ROOT = Path(__file__).resolve().parent
 GENERATED_DIRS = [
     "assets", "worldview", "genealogy", "concepts", "books", "practice",
-    "applications", "pathways", "glossary", "sources", "self-study"
+    "applications", "pathways", "glossary", "sources", "self-study", "parker-palmer"
 ]
 for name in GENERATED_DIRS:
     p = ROOT / name
     if p.exists():
         shutil.rmtree(p)
     p.mkdir(parents=True, exist_ok=True)
+
+# Copy curated static media after generated directories are reset.
+if (ROOT / "static").exists():
+    shutil.copytree(ROOT / "static", ROOT / "assets", dirs_exist_ok=True)
+
+KNOWLEDGE = json.loads((ROOT / "data/knowledge.json").read_text(encoding="utf-8"))
+PALMER = json.loads((ROOT / "data/parker-palmer.json").read_text(encoding="utf-8"))
+CIRCLE_SITE = KNOWLEDGE["special_sites"]["circle_of_trust"]["url"]
 
 CSS = r"""
 :root{
@@ -39,6 +47,7 @@ body{
   font-family:"Noto Serif SC","Songti SC","STSong","Source Han Serif SC",serif;
   line-height:1.78;
   letter-spacing:.01em;
+  overflow-x:hidden;
 }
 button,a,input,textarea{font:inherit}
 a{color:inherit}
@@ -94,6 +103,7 @@ h3{font-weight:650}
 }
 .hero>.shell{position:relative;z-index:1}
 .heroGrid{display:grid;grid-template-columns:1.18fr .82fr;gap:34px;align-items:stretch}
+.heroGrid>*,.portraitHero>*,.storyGrid>*,.chapterGrid>*,.studyDock>*,.labGrid>*{min-width:0}
 .heroMain,.heroSide{box-shadow:none}
 .heroMain{min-height:510px;padding:82px 0 78px;background:transparent;color:var(--ink);position:relative}
 .heroMain.compact{min-height:390px;padding-top:72px;padding-bottom:72px}
@@ -121,7 +131,7 @@ h3{font-weight:650}
 
 .section{padding:96px 0}
 .head{display:grid;grid-template-columns:1.1fr .9fr;gap:70px;align-items:end;margin-bottom:46px}
-.head h2{font-size:clamp(29px,3.2vw,44px);line-height:1.4;letter-spacing:-.018em;margin:8px 0 0;max-width:21em}
+.head h2{font-size:clamp(29px,3.2vw,44px);line-height:1.4;letter-spacing:-.018em;margin:8px 0 0;max-width:21em;text-wrap:balance}
 .head p{margin:0;color:var(--muted);font-size:17px;line-height:1.85}
 .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
@@ -134,6 +144,8 @@ h3{font-weight:650}
 .tile:hover{transform:translateY(-2px);box-shadow:var(--shadow);background:var(--white)}
 .tile .arrow{position:absolute;right:18px;bottom:15px;color:var(--accent);font-size:20px}
 .tile small{display:block;color:#888;margin-top:12px}
+.tileVisual{height:138px;margin:12px 0 16px;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:rgba(238,229,215,.48);border:1px solid rgba(207,196,179,.7)}
+.tileVisual>svg,.tileVisual .miniDiagram{width:100%;height:100%;max-height:138px}.tileVisual .mobiusWrap{width:100%;transform:scale(.72)}.tileVisual .mobiusWrap svg{max-height:160px}
 .dark{background:var(--deep);color:#fff;border-color:var(--deep)}
 .dark p,.dark li{color:#d9dfdb}.dark .mini{border-color:rgba(255,255,255,.14);color:#c8cfca}.dark .tag{color:#e4b379}
 .quote{border-left:3px solid var(--accent);padding:6px 0 6px 18px;font-size:20px;line-height:1.72;color:#354139}
@@ -254,9 +266,66 @@ h3{font-weight:650}
 .recordList{display:grid;gap:10px}.recordItem{background:rgba(255,253,248,.58);border:1px solid var(--line);border-radius:16px;padding:18px}.recordItem time{font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;color:#77746e}.recordItem h4{margin:5px 0;font-size:20px}.recordItem p{white-space:pre-wrap;color:#4e5851}
 .externalLink{display:inline-block;margin-top:10px;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;color:var(--accent);text-decoration:none}
 
+/* V3 visual storytelling */
+.portraitHero{display:grid;grid-template-columns:1.08fr .92fr;gap:54px;align-items:center}
+.portraitFrame{position:relative;max-width:420px;justify-self:end}
+.portraitFrame:before{content:"";position:absolute;inset:18px -18px -18px 18px;border:1px solid var(--line);border-radius:50% 50% 44% 56%/46% 52% 48% 54%;z-index:0}
+.portraitFrame img{position:relative;z-index:1;display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:48% 48% 43% 57%/42% 50% 50% 58%;filter:saturate(.78) sepia(.08);box-shadow:var(--shadow)}
+.credit{font-family:ui-sans-serif,system-ui,sans-serif;font-size:10px;color:#7a756e;margin-top:12px;line-height:1.5}
+.storyLead{max-width:780px;font-size:20px;line-height:1.9;color:#465149}
+.storyGrid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+.visualPanel{background:rgba(255,253,248,.52);border:1px solid var(--line);border-radius:24px;padding:28px;min-height:320px;display:grid;place-items:center;overflow:hidden;position:relative}
+.visualPanel.darkVisual{background:var(--deep);border-color:var(--deep)}
+.visualPanel svg{width:100%;height:auto;max-height:360px;overflow:visible}
+.visualCaption{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;margin-top:10px;line-height:1.65}
+.longArc{display:grid;grid-template-columns:110px 1fr;gap:28px;padding:30px 0;border-top:1px solid var(--line)}
+.longArc:last-child{border-bottom:1px solid var(--line)}
+.longArc .arcNo{font-family:ui-monospace,monospace;font-size:13px;color:var(--accent);padding-top:8px}
+.longArc h3{font-size:clamp(27px,3vw,40px);line-height:1.36;margin:0 0 12px}
+.longArc p{font-size:17px;color:var(--muted);max-width:780px;margin:0}
+.timeline{position:relative;margin-top:30px}
+.timeline:before{content:"";position:absolute;left:25px;top:0;bottom:0;width:1px;background:var(--line)}
+.timelineItem{position:relative;display:grid;grid-template-columns:54px 1fr;gap:24px;padding:0 0 44px}
+.timelineDot{width:16px;height:16px;border-radius:50%;background:var(--paper);border:2px solid var(--accent);margin:5px 0 0 18px;position:relative;z-index:2}
+.timelineBody{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(220px,.8fr);gap:28px;padding-bottom:34px;border-bottom:1px solid var(--line)}
+.timelineBody h3{font-size:25px;line-height:1.45;margin:5px 0 10px}.timelineBody p{margin:0;color:var(--muted);font-size:16px}
+.timelineVisual{min-height:170px;border-radius:18px;background:#eee5d7;border:1px solid var(--line);display:grid;place-items:center;padding:18px}
+.timelineVisual svg{width:100%;max-height:150px}
+.influenceMap{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:relative}
+.influenceNode{background:rgba(255,253,248,.6);border:1px solid var(--line);border-radius:18px;padding:18px;min-height:210px}
+.influenceNode h3{font-size:20px;margin:8px 0 8px}.influenceNode p{font-size:14px;color:var(--muted)}
+.bookRiver{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;align-items:stretch}
+.bookStep{background:rgba(255,253,248,.6);border:1px solid var(--line);padding:18px 14px;border-radius:16px;text-decoration:none;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.bookStep:after{content:"→";position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--accent);z-index:3}
+.bookStep:last-child:after{display:none}.bookStep strong{font-size:17px;line-height:1.45}.bookStep span{font-size:13px;color:var(--muted)}
+.conceptTrail{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:18px 0}
+.conceptTrail a{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;text-decoration:none;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.45)}
+.conceptTrail i{font-style:normal;color:var(--accent)}
+.worldChapter{padding:84px 0;border-top:1px solid var(--line)}
+.worldChapter:nth-child(even){background:rgba(255,253,248,.28)}
+.chapterGrid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:70px;align-items:center}
+.chapterNo{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.1em;color:var(--accent)}
+.chapterText h2{font-size:clamp(30px,3.7vw,49px);line-height:1.38;margin:10px 0 18px;letter-spacing:-.02em}
+.chapterText p{font-size:17px;color:var(--muted);line-height:1.9}
+.chapterText .coreQuestion{font-size:22px;line-height:1.65;color:var(--ink);border-left:2px solid var(--accent);padding-left:18px;margin:24px 0}
+.contrastGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.contrastCard{padding:22px;border-radius:18px;border:1px solid var(--line);background:rgba(255,253,248,.62)}.contrastCard.alt{background:#eee5d7}.contrastCard h3{margin:5px 0 12px;font-size:21px}.contrastCard ul{padding-left:18px;margin:0;color:var(--muted)}
+.externalCta{background:var(--deep);color:white;border-radius:24px;padding:32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;margin-top:26px}.externalCta h3{margin:4px 0 8px;font-size:25px}.externalCta p{margin:0;color:#d5dcd7}.externalCta .btn{border-color:#f2e6d5;color:var(--deep);background:#f2e6d5}
+.miniDiagram{width:100%;height:260px}.miniDiagram .line{fill:none;stroke:#8a4f2d;stroke-width:2}.miniDiagram .soft{fill:none;stroke:#cfc4b3;stroke-width:1.2}.miniDiagram text{font-family:ui-sans-serif,system-ui,sans-serif;fill:#445149;font-size:12px}.miniDiagram .accentText{fill:#8a4f2d;font-weight:700}
+.drawPath{stroke-dasharray:900;stroke-dashoffset:900;animation:drawPath 2.6s ease forwards}.pulseNode{transform-origin:center;animation:pulseNode 4s ease-in-out infinite}.fadeNode{animation:fadeNode 2.2s ease both}
+@keyframes drawPath{to{stroke-dashoffset:0}}@keyframes pulseNode{0%,100%{opacity:.55;transform:scale(.95)}50%{opacity:1;transform:scale(1.05)}}@keyframes fadeNode{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.mobiusWrap{position:relative;width:min(100%,520px);margin:auto}.mobiusWrap svg{overflow:visible}.mobiusLoop{fill:none;stroke:url(#mobiusGrad);stroke-width:18;stroke-linecap:round;opacity:.88}.mobiusEdge{fill:none;stroke:#8a4f2d;stroke-width:1.5;stroke-dasharray:5 8;animation:dashMove 12s linear infinite}.mobiusDot{fill:#e0a34b;filter:drop-shadow(0 0 8px rgba(224,163,75,.65));animation:mobiusDot 9s ease-in-out infinite}.mobiusLabel{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;fill:#526059}.mobiusLabel.accent{fill:#8a4f2d;font-weight:700}@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusDot{0%,100%{transform:translate(-105px,12px)}50%{transform:translate(110px,-16px)}}
+.photoBand{display:grid;grid-template-columns:420px 1fr;gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.5vw,47px);line-height:1.4;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
+.sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
+.hideOnMain{display:none!important}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .drawPath{stroke-dashoffset:0}
+}
+
 @media(max-width:1000px){
   nav{display:none}
-  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock{grid-template-columns:1fr}
+  .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand{grid-template-columns:minmax(0,1fr)}
   .toc,.lessonNav{position:static}
   .heroMain{padding-bottom:74px}
   .heroSide{padding-top:0}
@@ -265,15 +334,24 @@ h3{font-weight:650}
   .pathwayFlow{grid-template-columns:repeat(3,1fr)}
   .networkGrid{grid-template-columns:repeat(2,1fr)}
   .thirdGrid{grid-template-columns:repeat(2,1fr)}
+  .influenceMap,.bookRiver{grid-template-columns:repeat(2,1fr)}
+  .bookStep:after{display:none}
+  .portraitFrame{justify-self:start;max-width:330px}
+  .timelineBody{grid-template-columns:1fr}
+  .externalCta{grid-template-columns:1fr}
   .experienceHero .stage:after,.experienceHero .stage:before{opacity:.45}
 }
 @media(max-width:680px){
   .shell{width:min(var(--max),calc(100% - 32px))}
+  h1,h2,h3{word-break:normal!important;overflow-wrap:anywhere;line-break:auto;text-wrap:balance}
+  p,.lead,.storyLead{overflow-wrap:anywhere}
+  .actions{max-width:100%;min-width:0}
+  .btn,.toolButton{max-width:100%;white-space:normal;text-align:center}
   h1{font-size:clamp(34px,11vw,48px)}
   .heroMain,.heroMain.compact{min-height:auto;padding:58px 0 78px}
   .heroFoot{bottom:22px}
   .heroSide{padding:0 0 48px}
-  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid{grid-template-columns:1fr}
+  .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid{grid-template-columns:1fr}
   .section{padding:70px 0}
   .head{gap:18px;margin-bottom:34px}
   .table{font-size:13px;display:block;overflow-x:auto}
@@ -281,12 +359,16 @@ h3{font-weight:650}
   .experienceHero .stage{min-height:620px;padding:68px 0 76px;justify-content:flex-start}
   .experienceHero .stage:after{width:280px;height:280px;right:-120px;top:70%}
   .experienceHero .stage:before{display:none}
-  .experienceHero h1{font-size:clamp(40px,12vw,56px)}
+  .experienceHero h1{font-size:clamp(39px,9.5vw,43px)}
   .pathwayFlow{grid-template-columns:1fr}
   .moduleCard{grid-template-columns:48px 1fr}.moduleCard .done{grid-column:2}
   .questionBand{padding:30px 24px}
   .courseHero{padding:34px 24px}
   .article section,.lessonMain>section{margin-bottom:56px}
+  .worldChapter{padding:64px 0}.chapterGrid{gap:34px}
+  .timelineBody{gap:16px}.timelineVisual{min-height:140px}
+  .longArc{grid-template-columns:1fr;gap:8px}
+  .photoBand{padding:24px;gap:26px}
 }
 """
 (ROOT/"assets/site.css").write_text(CSS, encoding="utf-8")
@@ -343,7 +425,7 @@ const recordsRoot=document.querySelector('[data-record-list]');
 if(recordsRoot){
   const renderRecords=()=>{
     const records=load('palmer:records',[]);
-    recordsRoot.innerHTML=records.length?records.map(r=>'<div class="recordItem"><time>'+new Date(r.time).toLocaleString()+'</time><h4>'+esc(r.title)+'</h4><p>'+esc(r.text)+'</p><button class="toolButton" data-delete-record="'+r.id+'">删除</button></div>').join(''):'<div class="card"><p>还没有记录。你在概念页或课程页保存的书写，会出现在这里。</p></div>';
+    recordsRoot.innerHTML=records.length?records.map(r=>'<div class="recordItem"><time>'+new Date(r.time).toLocaleString()+'</time><h4>'+esc(r.title)+'</h4><p>'+esc(r.text)+'</p><button class="toolButton" data-delete-record="'+r.id+'">删除</button></div>').join(''):'<div class="card"><p>还没有记录。你在概念页或自修工具里保存的书写，会出现在这里。</p></div>';
     recordsRoot.querySelectorAll('[data-delete-record]').forEach(b=>b.addEventListener('click',()=>{store('palmer:records',load('palmer:records',[]).filter(r=>String(r.id)!==b.dataset.deleteRecord));renderRecords()}));
   };
   renderRecords();
@@ -378,15 +460,26 @@ document.querySelectorAll('[data-course-progress]').forEach(el=>{
 });
 document.querySelectorAll('[data-study-record-count]').forEach(el=>el.textContent=load('palmer:records',[]).length);
 document.querySelectorAll('[data-study-course-count]').forEach(el=>el.textContent=load('palmer:course:hidden-wholeness',[]).length);
+const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduceMotion){
+  document.querySelectorAll('[data-animated-svg]').forEach(svg=>{try{svg.pauseAnimations&&svg.pauseAnimations()}catch(e){}});
+}
 """
 (ROOT/"assets/site.js").write_text(JS, encoding="utf-8")
 
 def nav(pref):
     items=[
-        ("self-study/","开始自修"),("worldview/","思想总图"),("concepts/","核心概念"),("books/","原著研读"),
-        ("practice/","操练方法"),("applications/","应用场景"),("pathways/","研修路径"),("sources/","资料说明")
+        ("parker-palmer/","帕克·帕尔默"),("worldview/","思想总图"),("concepts/","核心思想"),("books/","原著地图"),
+        ("applications/","教育与生命"),("practice/","实践"),("self-study/","开始探索"),
+        (CIRCLE_SITE,"信任圈专题 ↗")
     ]
-    return "<nav>"+"".join(f'<a href="{pref}{u}">{t}</a>' for u,t in items)+"</nav>"
+    links=[]
+    for u,t in items:
+        if u.startswith("http"):
+            links.append(f'<a href="{u}" target="_blank" rel="noopener">{t}</a>')
+        else:
+            links.append(f'<a href="{pref}{u}">{t}</a>')
+    return "<nav>"+"".join(links)+"</nav>"
 
 def wrap(title, body, depth=0, desc=""):
     pref="../"*depth
@@ -405,6 +498,146 @@ def cards(items, cls="grid3"):
 def tile(url, tag, title, summary, search=""):
     s=html.escape((search+" "+title+" "+summary).lower())
     return f'<a class="card tile reveal" data-search-card="{s}" href="{url}"><span class="tag">{tag}</span><h3>{title}</h3><p>{summary}</p><span class="arrow">→</span></a>'
+
+def svg_mobius():
+    return '''<div class="mobiusWrap"><svg viewBox="0 0 520 300" role="img" aria-label="莫比乌斯带示意：内在生命与外在世界彼此连续" data-animated-svg>
+      <defs><linearGradient id="mobiusGrad" x1="0" x2="1"><stop offset="0" stop-color="#d7c3ad"/><stop offset=".48" stop-color="#8a4f2d"/><stop offset=".52" stop-color="#28362f"/><stop offset="1" stop-color="#d7c3ad"/></linearGradient></defs>
+      <path class="mobiusLoop" d="M65,150 C130,50 205,55 260,150 C315,245 390,250 455,150 C390,50 315,55 260,150 C205,245 130,250 65,150"/>
+      <path class="mobiusEdge" d="M65,150 C130,50 205,55 260,150 C315,245 390,250 455,150 C390,50 315,55 260,150 C205,245 130,250 65,150"/>
+      <circle class="mobiusDot" cx="260" cy="150" r="8"/>
+      <text class="mobiusLabel accent" x="70" y="52">INNER · 内在</text><text class="mobiusLabel" x="356" y="268">OUTER · 外在</text>
+      <text class="mobiusLabel" x="188" y="286">不是两面，而是一条连续的生命带</text>
+    </svg></div>'''
+
+def svg_split_whole():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="从分裂生命走向完整性的示意图">
+      <path class="soft" d="M90 55 C165 85 165 175 90 205"/><path class="soft" d="M200 55 C125 85 125 175 200 205"/>
+      <text x="58" y="38">INNER</text><text x="184" y="38">ROLE</text>
+      <path class="line drawPath" d="M305 130 C335 55 415 55 445 130 C415 205 335 205 305 130"/>
+      <circle class="pulseNode" cx="375" cy="130" r="24" fill="#e2c89f" opacity=".8"/>
+      <text class="accentText" x="332" y="235">WHOLENESS</text><text x="88" y="235">DIVIDED</text>
+    </svg>'''
+
+def svg_inner_teacher():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="外部声音变淡，中心内在声音浮现">
+      <circle class="soft" cx="260" cy="130" r="94"/><circle class="soft" cx="260" cy="130" r="68"/><circle class="pulseNode" cx="260" cy="130" r="18" fill="#d89b48"/>
+      <text x="78" y="56">评价</text><text x="404" y="78">期待</text><text x="60" y="205">角色</text><text x="405" y="210">成功</text>
+      <text class="accentText" x="211" y="175">INNER TEACHER</text>
+    </svg>'''
+
+def svg_tree():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="理想化自我与真实生长的对照">
+      <path class="soft" d="M130 220V80M95 120L130 95L165 120M100 155L130 130L160 155"/><rect x="88" y="62" width="84" height="165" rx="42" fill="none" stroke="#cfc4b3"/>
+      <path class="line" d="M365 222 C360 180 370 150 360 120 C340 108 325 92 320 68 M360 120 C385 105 405 87 410 63 M355 152 C330 138 315 125 300 104 M360 162 C390 148 407 130 425 112"/>
+      <path class="soft" d="M300 225 C325 205 340 205 360 225 C382 205 400 207 424 225"/>
+      <text x="84" y="246">应该成为的人</text><text class="accentText" x="328" y="246">真实生长</text>
+    </svg>'''
+
+def svg_paths():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="使命不是单一路线，打开与关闭的道路共同提供线索">
+      <path class="line" d="M260 230 C260 190 235 170 205 145 C170 115 145 93 128 54"/><path class="soft" d="M260 230 C275 185 315 166 342 140 C378 105 389 78 391 48"/><path class="soft" d="M260 230 C235 190 200 190 164 186 C126 181 90 171 64 146"/>
+      <circle cx="128" cy="54" r="8" fill="#8a4f2d"/><line x1="380" y1="39" x2="402" y2="59" stroke="#86514a" stroke-width="2"/><line x1="402" y1="39" x2="380" y2="59" stroke="#86514a" stroke-width="2"/>
+      <text class="accentText" x="72" y="32">WAY OPENS</text><text x="350" y="30">WAY CLOSES</text><text x="205" y="250">VOCATION</text>
+    </svg>'''
+
+def svg_integrity():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="身份与生活逐渐形成真实关系">
+      <circle cx="205" cy="125" r="82" fill="none" stroke="#8a4f2d" stroke-width="2"/><circle cx="315" cy="125" r="82" fill="none" stroke="#28362f" stroke-width="2"/>
+      <text class="accentText" x="130" y="128">WHO I AM</text><text x="318" y="128">HOW I LIVE</text><text x="222" y="220">INTEGRITY</text>
+    </svg>'''
+
+def svg_community():
+    people=''.join(f'<circle cx="{x}" cy="{y}" r="18" fill="none" stroke="#8a4f2d" stroke-width="1.7"/>' for x,y in [(260,42),(370,88),(408,165),(335,222),(185,222),(112,165),(150,88)])
+    return f'''<svg class="miniDiagram" viewBox="0 0 520 270" role="img" aria-label="围绕共同中心、保留个人空间的可信赖共同体">{people}<circle class="soft" cx="260" cy="140" r="55"/><circle class="pulseNode" cx="260" cy="140" r="11" fill="#d89b48"/><text class="accentText" x="205" y="168">COMMON CENTER</text></svg>'''
+
+def svg_knowing():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="从关于对象的知识转向在关系中的认识">
+      <rect x="54" y="62" width="170" height="130" rx="16" fill="none" stroke="#cfc4b3"/><circle cx="96" cy="126" r="22" fill="none" stroke="#8a4f2d"/><circle cx="181" cy="126" r="22" fill="none" stroke="#28362f"/><line x1="120" y1="126" x2="157" y2="126" stroke="#cfc4b3" stroke-dasharray="4 5"/>
+      <text x="72" y="220">KNOWING ABOUT</text>
+      <circle cx="360" cy="126" r="52" fill="none" stroke="#8a4f2d"/><circle cx="398" cy="126" r="52" fill="none" stroke="#28362f"/><text class="accentText" x="318" y="220">IN RELATIONSHIP</text>
+    </svg>'''
+
+def svg_subject_centered():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="教师、学生共同围绕主题形成学习共同体">
+      <circle cx="260" cy="130" r="44" fill="#eee5d7" stroke="#8a4f2d"/><text class="accentText" x="228" y="134">SUBJECT</text>
+      <circle cx="120" cy="78" r="38" fill="none" stroke="#28362f"/><text x="95" y="82">教师</text>
+      <circle cx="400" cy="78" r="38" fill="none" stroke="#28362f"/><text x="375" y="82">学生</text>
+      <circle cx="260" cy="225" r="28" fill="none" stroke="#cfc4b3"/><text x="239" y="229">世界</text>
+      <path class="soft" d="M154 91L218 116M366 91L302 116M260 174V197"/>
+    </svg>'''
+
+def svg_paradox():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="在两种真实之间承载张力">
+      <line x1="90" y1="130" x2="430" y2="130" stroke="#cfc4b3" stroke-width="2"/><circle cx="90" cy="130" r="26" fill="#eee5d7" stroke="#8a4f2d"/><circle cx="430" cy="130" r="26" fill="#eee5d7" stroke="#28362f"/><circle class="pulseNode" cx="260" cy="130" r="17" fill="#d89b48"/>
+      <text x="57" y="185">SOLITUDE</text><text x="397" y="185">COMMUNITY</text><text class="accentText" x="210" y="95">HOLD THE TENSION</text>
+    </svg>'''
+
+def svg_public():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 260" role="img" aria-label="内在工作进入关系、工作、制度与公共生活">
+      <circle cx="66" cy="130" r="25" fill="#eee5d7" stroke="#8a4f2d"/><circle cx="172" cy="130" r="32" fill="none" stroke="#8a4f2d"/><rect x="246" y="99" width="72" height="62" rx="10" fill="none" stroke="#28362f"/><rect x="370" y="85" width="96" height="90" rx="8" fill="none" stroke="#cfc4b3"/>
+      <path class="line drawPath" d="M92 130H139M205 130H246M318 130H370"/>
+      <text x="40" y="185">SELF</text><text x="134" y="185">RELATION</text><text x="248" y="185">WORK</text><text class="accentText" x="369" y="200">PUBLIC LIFE</text>
+    </svg>'''
+
+def svg_influences():
+    return '''<svg class="miniDiagram" viewBox="0 0 520 290" role="img" aria-label="影响 Palmer 思想的多个来源围绕其核心主题">
+      <circle cx="260" cy="145" r="54" fill="#eee5d7" stroke="#8a4f2d" stroke-width="1.8"/><text class="accentText" x="218" y="140">PARKER</text><text x="223" y="160">PALMER</text>
+      <circle class="soft" cx="260" cy="145" r="112"/>
+      <circle cx="260" cy="30" r="29" fill="#fffdf8" stroke="#cfc4b3"/><text x="235" y="34">Quaker</text>
+      <circle cx="415" cy="92" r="31" fill="#fffdf8" stroke="#cfc4b3"/><text x="392" y="96">Merton</text>
+      <circle cx="390" cy="228" r="31" fill="#fffdf8" stroke="#cfc4b3"/><text x="370" y="232">Poetry</text>
+      <circle cx="130" cy="228" r="34" fill="#fffdf8" stroke="#cfc4b3"/><text x="94" y="232">Community</text>
+      <circle cx="105" cy="92" r="36" fill="#fffdf8" stroke="#cfc4b3"/><text x="72" y="96">Nonviolence</text>
+      <path class="soft" d="M260 84V58M310 121L382 99M302 180L366 213M218 180L158 211M208 121L139 100"/>
+    </svg>'''
+
+def timeline_visual(kind):
+    if kind=="mobius": return svg_mobius()
+    if kind=="teaching": return svg_subject_centered()
+    if kind=="public": return svg_public()
+    if kind=="community" or kind=="pendle": return svg_community()
+    if kind=="merton": return svg_inner_teacher()
+    if kind=="study": return svg_knowing()
+    return svg_tree()
+
+def concept_visual(slug):
+    visual=KNOWLEDGE["concepts"].get(slug,{}).get("visual","inner-light")
+    return {
+        "inner-light":svg_inner_teacher,
+        "tree":svg_tree,
+        "paths":svg_paths,
+        "integrity":svg_integrity,
+        "split":svg_split_whole,
+        "mobius":svg_mobius,
+        "circle":svg_community,
+        "third-thing":svg_tree,
+        "questions":svg_inner_teacher,
+        "conversation":svg_knowing,
+        "knowing":svg_knowing,
+        "subject-centered":svg_subject_centered,
+        "paradox":svg_paradox,
+        "action":svg_public,
+        "tragic-gap":svg_paradox,
+        "bridge":svg_public,
+        "public":svg_public,
+        "seasons":svg_tree
+    }.get(visual,svg_inner_teacher)()
+
+def practice_visual(slug):
+    mapping={
+        "silence":svg_inner_teacher,"journaling":svg_tree,"third-things":svg_tree,
+        "honest-open-questions":svg_inner_teacher,"paired-listening":svg_community,
+        "seasons":svg_tree,"way-closes":svg_paths,"tragic-gap":svg_paradox,
+        "action-reaction":svg_public,"failure":svg_split_whole,
+        "meeting-for-learning":svg_subject_centered
+    }
+    return mapping.get(slug,svg_integrity)()
+
+def application_visual(slug):
+    return {
+        "personal":svg_tree,"education":svg_subject_centered,"leadership":svg_integrity,
+        "community":svg_community,"public":svg_public
+    }.get(slug,svg_mobius)()
 
 # ---------- Thought architecture ----------
 world_movements=[
@@ -901,53 +1134,113 @@ def practice_lab(key,title,prompt,minutes=10):
     return f'''<div class="practiceLab"><span class="kicker">Self Practice</span><h3>现在就做一次，不必等“读懂了”</h3><p class="practicePrompt">{safe}</p><div class="labGrid"><div class="timerBox" data-timer data-default-seconds="{minutes*60}"><span class="tag">静默 / 书写计时</span><div class="timerDisplay" data-timer-display></div><div class="timerPresets"><button data-minutes="5">5 分钟</button><button data-minutes="10">10 分钟</button><button data-minutes="15">15 分钟</button><button class="toolButton primary" data-timer-start>开始</button><button class="toolButton" data-timer-reset>重置</button></div><p class="smallNote">计时器只帮助你守住一段不被打断的时间，不要求进入任何特殊状态。</p></div><div class="journalBox"><span class="tag">自由书写</span><textarea data-journal-key="{key}" placeholder="从第一句真实的话开始。这里的内容只保存在你当前浏览器的本地存储中。"></textarea><div class="saveState" data-save-state>自动保存在这台设备</div><div style="margin-top:10px"><button class="toolButton primary" data-record-save="{key}" data-record-title="{html.escape(title)}">加入我的记录</button> <span class="saveState" data-record-state></span></div></div></div></div>'''
 
 def relation_panel(c):
+    data=KNOWLEDGE["concepts"].get(c["slug"],{})
     book_links=[]
-    for slug in concept_book_map.get(c["slug"],[]):
-        b=next(x for x in books if x["slug"]==slug)
-        book_links.append(f'<a href="../books/{slug}.html">{b["zh"]}</a>')
+    for slug in data.get("books",[]):
+        b=next((x for x in books if x["slug"]==slug),None)
+        if b:
+            book_links.append(f'<a href="../books/{slug}.html">{b["zh"]}</a>')
     practice_links=[]
-    for slug in concept_practice_map.get(c["slug"],[])[:4]:
+    for slug in data.get("practices",[])[:4]:
         if slug in practice_lookup:
             practice_links.append(f'<a href="../practice/{slug}.html">{practice_lookup[slug]["title"]}</a>')
-    course_links=[]
-    for m in course_by_concept.get(c["slug"],[])[:4]:
-        course_links.append(f'<a href="../self-study/hidden-wholeness/{m["slug"]}.html">{m["id"]} · {m["title"]}</a>')
-    return f'''<div class="relationMap"><div class="relationCol"><h4>在这些原著中继续</h4>{''.join(book_links) or '<span class="smallNote">暂无单独映射</span>'}</div><div class="relationCol"><h4>用这些方法亲自练</h4>{''.join(practice_links) or '<span class="smallNote">从自由书写开始</span>'}</div><div class="relationCol"><h4>在《内在之光》课程里遇见</h4>{''.join(course_links) or '<span class="smallNote">课程中作为背景概念出现</span>'}</div></div>'''
+    related_links=[]
+    for slug in data.get("related",[])[:4]:
+        if slug in concept_lookup:
+            related_links.append(f'<a href="{slug}.html">{concept_lookup[slug]["cn"]}</a>')
+    if c["slug"] in {"trustworthy-community","third-things","honest-open-questions","soul"}:
+        related_links.append(f'<a href="{CIRCLE_SITE}" target="_blank" rel="noopener">信任圈 /《内在之光》专题 ↗</a>')
+    return f'''<div class="relationMap"><div class="relationCol"><h4>在这些原著中继续</h4>{''.join(book_links) or '<span class="smallNote">暂无单独映射</span>'}</div><div class="relationCol"><h4>用这些方法亲自练</h4>{''.join(practice_links) or '<span class="smallNote">从自由书写开始</span>'}</div><div class="relationCol"><h4>沿着知识关系继续</h4>{''.join(related_links) or '<span class="smallNote">回到思想总图继续探索</span>'}</div></div>'''
 
 # ---------- home ----------
+home_books=""
+for item in PALMER["books"]:
+    b=next((x for x in books if x["slug"]==item["slug"]),None)
+    zh=b["zh"] if b else item["title"]
+    home_books+=f'<a class="bookStep" href="books/{item["slug"]}.html"><span>{item["title"]}</span><strong>{zh}</strong><span>{item["question"]}</span></a>'
+
 home=f'''<main>
-<section class="experienceHero"><div class="shell"><div class="stage"><div class="eyebrow">Parker J. Palmer · Thought × Practice × Life</div><h1>不是知道更多<br>而是<em>活得更完整</em></h1><p class="lead">从内在导师、真实自我和使命，到信任圈、教学、行动与公共生活——这里把帕克·帕尔默的思想组织成一条可以阅读、停留、书写、操练并带回现实的旅程。</p><div class="actions"><a class="btn primary" href="self-study/">开始自修</a><a class="btn light" href="self-study/hidden-wholeness/">共读《内在之光》</a><a class="btn" href="worldview/">先理解思想总图</a></div></div>
-<div class="journeyStrip"><div class="journeyGrid"><a class="journeyCard" href="concepts/"><span class="num">01 · UNDERSTAND</span><h3>我想理解 Palmer</h3><p>从一个真实问题进入概念网络，再回到原著与思想谱系。</p></a><a class="journeyCard" href="self-study/practice-now.html"><span class="num">02 · PRACTICE</span><h3>我想先做一次操练</h3><p>给自己 10 分钟：静默、第三物、自由书写，或练习一个开放问题。</p></a><a class="journeyCard" href="self-study/hidden-wholeness/"><span class="num">03 · JOURNEY</span><h3>我想系统走一遍《内在之光》</h3><p>Prelude + 十章，每课都有阅读抓手、第三物、书写、操练和现实行动。</p></a></div></div></div></section>
-<section class="section"><div class="shell"><div class="questionBand"><span class="kicker">Start With A Living Question</span><h2>此刻，什么问题最贴近你的生命？</h2><p>不要先决定“我该读哪本书”。Palmer 的方法更适合从当下真实的张力进入。</p><div class="grid3" style="margin-top:20px">
-{tile("concepts/vocation.html","方向","我不知道下一步该往哪里走","从使命、关闭的道路与生命线索开始。")}
-{tile("concepts/divided-life.html","内外不一","我知道什么是真实的，却没有照着活","看见分裂的代价，也看见“不再分裂”的最小一步。")}
-{tile("concepts/trustworthy-community.html","关系","我想陪伴别人，却不想替他做决定","学习可信赖共同体、开放问题与澄心会。")}
-</div></div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">One Living System</div><h2>他的思想不是一组孤立概念</h2></div><p>从“听见内在”到“进入世界”，每一步都需要上一层的支持，也会反过来检验上一层是否真实。</p></div><div class="pathwayFlow">
-<div class="flowNode"><b>听见</b><small>内在导师 · 灵魂</small></div><div class="flowNode"><b>认出</b><small>真实自我 · 使命</small></div><div class="flowNode"><b>对齐</b><small>身份 · 完整性</small></div><div class="flowNode"><b>相遇</b><small>信任圈 · 第三物</small></div><div class="flowNode"><b>承载</b><small>悖论 · 悲剧性张力</small></div><div class="flowNode"><b>行动</b><small>不再分裂 · 公共生活</small></div>
-</div><div class="actions" style="margin-top:22px"><a class="toolButton primary" href="concepts/network.html">打开知识关系图</a><a class="toolButton" href="worldview/">阅读思想总图</a></div></div></section>
-<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">Your Study Space</span><h2>把网站变成你的个人研修空间</h2><p>概念页和课程页都可以直接计时、自由书写并保存个人记录。所有记录默认只存在当前浏览器的本地存储，不上传服务器。</p><div class="actions"><a class="toolButton primary" href="self-study/">进入自修中心</a><a class="toolButton" href="self-study/records.html">查看我的记录</a></div></div><div class="studyStat"><div><strong data-study-course-count>0</strong><span>已完成《内在之光》课程</span></div><div><strong data-study-record-count>0</strong><span>条个人记录</span></div></div></div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Explore Further</div><h2>当你准备深入</h2></div><p>原著、操练、应用与思想史彼此相连，而不是四个分离栏目。</p></div><div class="grid4">
-{tile("books/","原著","原著研读","从章节地图进入 Palmer 的九部主要文本。")}
-{tile("practice/","操练","实践方法","把抽象原则转成可执行的空间与关系结构。")}
-{tile("self-study/third-things.html","素材","第三物素材库","用图像、自然物与隐喻间接进入经验。")}
-{tile("self-study/questions.html","工具","开放问题生成器","练习把建议与诊断改写成真正开放的问题。")}
+<section class="experienceHero"><div class="shell"><div class="stage"><div class="portraitHero"><div><div class="eyebrow">Parker J. Palmer · Thought × Life × World</div><h1>如何成为自己，<br>又<em>不离开这个世界</em></h1><p class="lead">Parker J. Palmer 一生反复追问：我是谁？我怎样知道什么是真实的？我怎样教、怎样工作、怎样与人共同生活？这些问题最终都通向同一个主题——<strong>活出一个更完整的生命。</strong></p><div class="actions"><a class="btn primary" href="parker-palmer/">认识帕克·帕尔默</a><a class="btn" href="worldview/">打开思想总图</a><a class="btn" href="self-study/practice-now.html">从一个练习开始</a></div></div><div class="visualPanel">{svg_mobius()}<div class="visualCaption">Palmer 常用莫比乌斯带说明：内在生命与外在世界并非互相隔绝，而是在持续共同塑造现实。</div></div></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="photoBand"><div><img src="assets/images/parker-j-palmer.jpg" alt="Parker J. Palmer 2010 年在明尼苏达北部 Boundary Waters 的照片"><div class="credit">Parker J. Palmer，Sharon L. Palmer 摄，2010 · CC BY-SA 3.0 · Wikimedia Commons</div></div><div><span class="kicker">Who Is Parker Palmer?</span><h2>一个教师，一个思想者，<br>一个持续探索完整生命的人</h2><p>Palmer 写教育，却很少从“教学技巧”开始；他谈使命，却不是告诉人怎样规划职业；他谈内在生命，也从不把人带离关系与公共世界。他真正关心的是：一个人怎样知道自己是谁，并让这个真实的自己进入教学、工作、关系与社会生活。</p><div class="grid2" style="margin-top:24px"><div class="card"><span class="tag">教师</span><p>教育不仅发生在方法里，也发生在“谁在教”。</p></div><div class="card"><span class="tag">作家</span><p>用故事、诗歌、隐喻与生命经验谈复杂思想。</p></div><div class="card"><span class="tag">探索者</span><p>持续追问真实自我、使命、完整性与内在导师。</p></div><div class="card"><span class="tag">公共知识分子</span><p>把内在生命带入教育、领导、民主与公共世界。</p></div></div><div class="actions"><a class="toolButton primary" href="parker-palmer/">完整认识 Palmer →</a></div></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Three Long Arcs</span><h2>如果只抓三条思想长线</h2></div><p>不要先记住二十个术语。先看见 Palmer 如何把“成为自己”“不再分裂”和“带回世界”连成一条生命路径。</p></div>
+<div class="grid3"><a class="card tile" href="concepts/vocation.html"><span class="tag">01 · 成为自己</span><div class="visualPanel" style="min-height:220px;margin:18px 0">{svg_tree()}</div><h3>Inner Teacher → True Self → Vocation</h3><p>不是先问“我应该成为谁”，而是学习辨认：生命本身正在要求我成为什么。</p><span class="arrow">→</span></a>
+<a class="card tile" href="concepts/undivided-life.html"><span class="tag">02 · 不再分裂</span><div class="visualPanel" style="min-height:220px;margin:18px 0">{svg_split_whole()}</div><h3>Divided Life → Wholeness → Divided No More</h3><p>完整不是完美，而是让内在真实逐渐有勇气进入外在生活。</p><span class="arrow">→</span></a>
+<a class="card tile" href="concepts/public-life.html"><span class="tag">03 · 带回世界</span><div class="visualPanel" style="min-height:220px;margin:18px 0">{svg_public()}</div><h3>Community → Action → Public Life</h3><p>内在工作如果只停在自己身上还没有完成；它最终要接受关系与现实世界的检验。</p><span class="arrow">→</span></a></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Worldview Preview</span><h2>一张图，看见 Palmer 思想如何向外展开</h2></div><p>中心不是“自我优化”，而是 wholeness：内在、关系、认识、行动与公共生活之间重新建立联系。</p></div><div class="visualPanel" style="min-height:420px">
+<svg class="miniDiagram" viewBox="0 0 900 360" role="img" aria-label="Palmer 思想总图预览">
+<circle cx="450" cy="180" r="54" fill="#eee5d7" stroke="#8a4f2d" stroke-width="2"/><text class="accentText" x="410" y="176">WHOLENESS</text><text x="424" y="197">完整生命</text>
+<circle class="soft" cx="450" cy="180" r="104"/><circle class="soft" cx="450" cy="180" r="154"/>
+<text x="417" y="72">内在生命</text><text x="590" y="130">辨识</text><text x="596" y="245">关系</text><text x="216" y="248">行动</text><text x="218" y="128">公共世界</text>
+<path class="line drawPath" d="M450 126 C520 112 570 120 610 151 C650 184 635 238 592 269 C540 306 455 300 385 285 C314 269 251 230 246 180 C241 132 296 96 365 89"/>
+</svg></div><div class="actions"><a class="toolButton primary" href="worldview/">进入完整思想总图</a><a class="toolButton" href="concepts/network.html">打开知识关系图</a></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Books As Questions</span><h2>六本代表作，不是六个孤岛</h2></div><p>把书名放回 Palmer 长期追问的问题中，会更容易理解他的思想演进。</p></div><div class="bookRiver">{home_books}</div></div></section>
+
+<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">Practice</span><h2>先不用读完一整套理论</h2><p>给自己十分钟：让外部声音稍微退后，记录此刻有什么是你已经隐约知道，却一直没有认真聆听的。概念页仍保留计时器、自由书写与本地个人记录。</p><div class="actions"><a class="toolButton primary" href="self-study/practice-now.html">开始 10 分钟练习</a><a class="toolButton" href="self-study/">进入自修工具</a></div></div><div class="visualPanel">{svg_inner_teacher()}</div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Where To Go Next</span><h2>你可以从这里继续</h2></div><p>主站负责 Palmer 的整体思想；《内在之光》与信任圈的深入学习，则进入独立专题站。</p></div><div class="grid4">
+{tile("parker-palmer/","人物","帕克·帕尔默","从生命经历、影响来源与著作演进理解这个人。")}
+{tile("worldview/","思想","思想总图","从分裂生命一直走到公共生活，看清整套思想结构。")}
+{tile("books/","原著","原著地图","沿着“我们怎样知道、行动、教学、共同生活”进入主要文本。")}
+<a class="card tile reveal" href="{CIRCLE_SITE}" target="_blank" rel="noopener"><span class="tag">专题站 ↗</span><h3>《内在之光》与信任圈</h3><p>章节导读、11 条基石、第三物、澄心会及 Circle of Trust 深度实践统一在专题站展开。</p><span class="arrow">↗</span></a>
 </div></div></section>
 </main>'''
-(ROOT/"index.html").write_text(wrap("首页",home,0,"从体验、阅读与操练进入帕克·帕尔默的完整思想体系"),encoding="utf-8")
+(ROOT/"index.html").write_text(wrap("首页",home,0,"从人物、思想总图、原著与生命实践进入帕克·帕尔默的思想世界"),encoding="utf-8")
 
 # ---------- worldview ----------
-movement_html="".join(f'<div class="card"><span class="tag">{n}</span><h3>{t}</h3><p>{d}</p><div class="mini">主要文本：{src}</div></div>' for n,t,d,src in world_movements)
-world=f'''<main>{crumbs(1,[("思想总图",None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Worldview</div><h1>Palmer 的思想<br>可以看成<em>八次转向</em></h1><p class="lead">这些转向把个人内在、教育、共同体、行动与公共世界连成一体。它们不是线性阶段，而是反复往返的生命练习。</p><div class="actions"><a class="btn primary" href="courage-renewal.html">看思想如何变成实践框架</a><a class="btn" href="../concepts/network.html">打开知识关系图</a></div><div class="heroFoot">如果只记住一句：真正的内在工作，会让一个人更能进入关系与世界，而不是更远离它们。</div></div><div class="heroSide"><div class="orb"><div class="r"><span>8<br>MOVES</span></div></div><div class="sideCard"><h3>从“我应该是谁”到“我怎样真实地活在世界里”</h3><p>这条线贯穿 Palmer 四十多年的写作。</p></div></div></div></section>
-<section class="section"><div class="shell"><div class="grid2">{movement_html}</div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">System Map</div><h2>五个层次彼此嵌套</h2></div><p>网站后续所有内容，都可以放回这五层里理解。</p></div><div class="grid3">
-<div class="card dark"><h3>1. 内在</h3><p>灵魂、内在导师、真实自我、使命、完整性。</p></div>
-<div class="card dark"><h3>2. 关系</h3><p>可信赖共同体、第三物、开放问题、沉默、澄心会。</p></div>
-<div class="card dark"><h3>3. 认识</h3><p>knowing as loving、community of truth、教学即创造空间。</p></div>
-<div class="card dark"><h3>4. 行动</h3><p>沉思与行动、失败、非暴力、悲剧性张力。</p></div>
-<div class="card dark"><h3>5. 公共</h3><p>教育改革、专业生命、陌生人、公共空间、公民习惯。</p></div>
-</div></div></section></main>'''
-(ROOT/"worldview/index.html").write_text(wrap("思想总图",world,1),encoding="utf-8")
+world_chapters=[
+{"no":"01","eyebrow":"DIVIDED LIFE","title":"我们为什么会变得分裂？","question":"当外在角色越来越熟练，内在的自己去了哪里？","body":"Palmer 所说的 divided life，不只是“虚伪”或偶尔妥协。一个人为了适应学校、职业、家庭与社会评价，会逐渐学会隐藏某些真实经验。外在的角色仍能运作，内在却越来越难说出自己真正知道、真正重视的是什么。分裂之所以危险，不只因为痛苦，更因为我们会把这种断裂带进关系、课堂、组织与制度。","visual":"split","links":["divided-life","identity-integrity"],"books":["courage-to-teach","hidden-wholeness"]},
+{"no":"02","eyebrow":"INNER TEACHER","title":"第一步不是改变，而是重新聆听","question":"如果外部声音安静一些，我里面还有什么声音？","body":"Palmer 不急着给人一个新的成功方案。他更先关心：一个人是否还有能力辨认自己内在的经验。inner teacher 不是第一冲动，也不是拒绝理性或他人，而是一种能够分辨生命力、意义、边界与方向的内在资源。静默的作用，不是制造神秘体验，而是让那些长期被评价、角色和焦虑盖住的东西重新可被听见。","visual":"inner","links":["inner-teacher","soul"],"books":["let-your-life-speak","hidden-wholeness"]},
+{"no":"03","eyebrow":"TRUE SELF","title":"真实自我不是理想自我","question":"如果不再把自己修剪成“应该的样子”，什么会继续生长？","body":"true self 不是一个完美、纯净、永远确定的核心。它包含天赋，也包含限制；包含热情，也包含不适合自己的道路。Palmer 一再提醒：人的自我不是无限有弹性的。认识自己，因此不是把所有可能性都扩张，而是更诚实地辨认哪些经验使生命变得有生气，哪些长期让自己枯竭。","visual":"tree","links":["true-self","vocation"],"books":["let-your-life-speak","courage-to-teach"]},
+{"no":"04","eyebrow":"VOCATION","title":"使命不是职业规划","question":"生命已经在告诉我什么，而我是否愿意听？","body":"在 Palmer 的语境里，vocation 与 voice 紧密相连。使命不是先想象一个宏大的未来，再靠意志征服现实；它更像从一生反复出现的天赋、限制、吸引、失败与“道路关闭”中逐渐辨认方向。关上的门并不总是失败，它有时在帮助我们停止成为一个并不属于自己的角色。","visual":"paths","links":["vocation","seasons"],"books":["let-your-life-speak"]},
+{"no":"05","eyebrow":"IDENTITY & INTEGRITY","title":"完整性不是“永远一致”","question":"我是谁，与我怎样生活，能否形成更真实的关系？","body":"identity 回答“哪些力量构成了我”；integrity 则关乎我怎样与这些力量相处。完整性并不要求消灭矛盾，也不是把自己固定成一种人格。它更像让内在的天赋、限制、恐惧、历史与价值，不再长期被外在角色切断。真正的对齐往往不是一次剧烈决定，而是让日常生活中的内外差距一点点缩小。","visual":"integrity","links":["identity-integrity","wholeness","undivided-life"],"books":["courage-to-teach"]},
+{"no":"06","eyebrow":"TRUSTWORTHY COMMUNITY","title":"内在旅程必须自己走，却很难完全独自完成","question":"什么样的共同体能陪伴我，却不占领我？","body":"Palmer 的共同体思想包含一个关键悖论：最终的辨识必须由个人完成，但人又需要关系来保护这项工作。可信赖共同体不是彼此给答案，也不是把亲密当作目标；它创造边界、邀请、共同中心和足够的沉默，使每个人能够在陪伴中仍保有自己的主体性。Circle of Trust 是这一思想的重要实践发展，但它只是更大思想体系中的一个节点。","visual":"community","links":["trustworthy-community","third-things","honest-open-questions"],"books":["hidden-wholeness"]},
+{"no":"07","eyebrow":"KNOWING IN RELATIONSHIP","title":"认识世界，也是在决定怎样与世界相处","question":"知识是占有一个对象，还是进入一段会改变彼此的关系？","body":"在《To Know as We Are Known》中，Palmer 把问题推进到认识论：如果知识只意味着把对象拉开距离、分类、预测和控制，我们也会被这种认识方式塑造成更疏离的人。他并不反对事实与分析，而是追问：能不能有一种认识，同时包含严谨、关系、责任和被所知之物改变的可能？","visual":"knowing","links":["knowing-loving","truth-conversation"],"books":["to-know-as-we-are-known"]},
+{"no":"08","eyebrow":"SUBJECT-CENTERED EDUCATION","title":"教育的中心既不是教师，也不是学生","question":"我们究竟为了什么而相聚？","body":"Palmer 反对把课堂简化成“教师中心”与“学生中心”的二选一。他提出把值得共同面对的主题、文本、问题或现实放在中心：教师带来专业、经验与边界，学生带来问题与生命经验，双方都要向一个比彼此更大的共同中心负责。这样，课堂才可能成为 community of truth，而不是知识输送或需求迎合。","visual":"subject","links":["education-space","knowing-loving","identity-integrity"],"books":["courage-to-teach","to-know-as-we-are-known","meeting-for-learning"]},
+{"no":"09","eyebrow":"PARADOX","title":"成熟不总是选对一边","question":"我能否让两种都真实的东西，同时留在眼前？","body":"独处与共同体、自由与纪律、沉思与行动、现实与可能——Palmer 经常把重要问题放进悖论结构中。paradox 不是含糊，也不是拒绝判断，而是扩大容器，不让恐惧迫使我们过早消灭其中一端。很多真正的决定，只有在张力被承载一段时间之后，才会显出更有生命力的方向。","visual":"paradox","links":["paradox","tragic-gap","active-life"],"books":["courage-to-teach","active-life"]},
+{"no":"10","eyebrow":"DIVIDED NO MORE","title":"如果已经知道什么是真实的，接下来怎么办？","question":"我愿不愿意让内在知道的东西，进入一个可以承担后果的现实行动？","body":"“不再分裂”不是一次戏剧性的宣言，也不是从此毫无矛盾。它意味着停止长期参与自己的缩小：在工作、关系或制度中，逐渐把已经认出的真实带回行动。Palmer 很重视支持共同体，因为真正的完整性不是个人英雄主义；人需要关系来帮助自己在风险、失败与反作用中持续学习。","visual":"whole","links":["undivided-life","active-life","nonviolence"],"books":["hidden-wholeness","courage-to-teach"]},
+{"no":"11","eyebrow":"PUBLIC LIFE","title":"从“我是谁”走向“我们怎样共同生活”","question":"我的内在生命，正在帮助共同创造一个怎样的世界？","body":"Palmer 的思想最终不是一条向内撤退的道路。相反，他不断把完整性推向教育、领导、组织、陌生人关系与公共生活。一个人越能承载自己的恐惧、张力与不确定性，越有可能在差异中保留声音而不把对方去人化。内在工作在这里接受最重要的检验：它是否让我们更能进入现实，而不是更擅长躲开现实。","visual":"public","links":["public-life","tragic-gap","nonviolence"],"books":["company-of-strangers","healing-democracy","going-public"]}
+]
+
+world_real={
+"01":"你在会议里一次次说“都可以”，身体却持续收紧；你在职业角色里表现熟练，却越来越难回答“这真的是我愿意参与的吗？”——分裂常以这种日常、可维持的方式存在。",
+"02":"当一个选择被十几种建议包围时，Palmer 式的第一步往往不是再找一个意见，而是创造一段不必马上回应的时间，观察哪些念头、身体反应与关切反复回来。",
+"03":"一个人可能很擅长某件事，却长期被它耗尽；也可能在某些不被评价的活动中自然投入、时间感消失。true self 的线索往往藏在这些“有生命 / 失去生命”的差异里。",
+"04":"职业、关系或项目中的“路关闭”，不必被浪漫化成命运安排，但它可以成为信息：什么不属于我？什么限制需要承认？什么关切即使失败后仍然会回来？",
+"05":"完整性很少从“把人生全部重做”开始。更常见的是在一次会议、一段关系、一个边界里，让自己真正知道的东西多出现一点，让角色与真实之间的距离缩小一点。",
+"06":"当朋友陷入困境时，我们很容易迅速给建议、解释原因、讲自己的类似经历。可信赖共同体训练的是另一种能力：陪伴一个人继续拥有他自己的问题。",
+"07":"在教育、管理或帮助行业里，知识很容易变成标签：这个学生“缺乏动力”、这个同事“抗拒改变”。关系性的认识会追问：我的分类让我看见了什么，又让我看不见什么？",
+"08":"如果一堂课所有问题最终都回到“老师想听什么”，教师仍是中心；如果只回到“学生喜欢什么”，学生成了中心。subject-centered 的问题是：这个主题本身正在要求我们认真面对什么？",
+"09":"“我需要独处”与“我需要共同体”可能同时是真的；“现实很糟”与“仍值得行动”也可能同时是真的。承载悖论，是在行动之前不急着把一半现实删掉。",
+"10":"不再分裂有时只是一次小小的“不再配合”：说出一个保留意见、拒绝一个持续伤害自己的安排、为真正重视的工作腾出时间。重点不是戏剧性，而是可持续地让内外重新连接。",
+"11":"公共生活不只发生在选举与宏大议题里。家庭会议、学校、团队、社区、邻里和与陌生人的相处，都是练习“既保留自己的声音，又不把对方变成敌人”的地方。"
+}
+
+def world_visual(kind):
+    return {
+        "split":svg_split_whole(),"inner":svg_inner_teacher(),"tree":svg_tree(),"paths":svg_paths(),
+        "integrity":svg_integrity(),"whole":svg_mobius(),"community":svg_community(),"knowing":svg_knowing(),
+        "subject":svg_subject_centered(),"paradox":svg_paradox(),"public":svg_public()
+    }[kind]
+
+world_sections=""
+for ch in world_chapters:
+    concept_links='<i>→</i>'.join(f'<a href="../concepts/{s}.html">{concept_lookup[s]["cn"]}</a>' for s in ch["links"])
+    book_links=''.join(f'<a class="badge" href="../books/{s}.html">{next((b["zh"] for b in books if b["slug"]==s),s)}</a>' for s in ch["books"])
+    extra=""
+    if ch["no"]=="06":
+        extra=f'''<div class="externalCta"><div><span class="tag">深入专题</span><h3>《内在之光》与信任圈不在主站重复展开</h3><p>11 条基石、澄心会、第三物、Circle of Trust 历史与实践流程，统一进入独立专题网站。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入信任圈专题 ↗</a></div>'''
+    world_sections+=f'''<section class="worldChapter"><div class="shell"><div class="chapterGrid"><div class="chapterText"><span class="chapterNo">{ch["no"]} · {ch["eyebrow"]}</span><h2>{ch["title"]}</h2><div class="coreQuestion">{ch["question"]}</div><p>{ch["body"]}</p><div class="practiceBox"><span class="tag">现实中怎样看见</span><p>{world_real[ch["no"]]}</p></div><div class="conceptTrail">{concept_links}</div><div class="mini">主要文本：{book_links}</div>{extra}</div><div class="visualPanel">{world_visual(ch["visual"])}</div></div></div></section>'''
+
+world=f'''<main>{crumbs(1,[("思想总图",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Parker Palmer · Worldview</div><h1>从“我是谁”<br>到<em>我们怎样共同生活</em></h1><p class="lead">Palmer 的写作跨越使命、教育、灵性、共同体、领导与民主。把书名一个个看，它们似乎分散；沿着更深的一条线来看，他几十年来持续探索的是同一个问题：<strong>我们怎样从分裂走向完整，并让这份完整进入真实世界？</strong></p><div class="actions"><a class="btn primary" href="#map">从总图开始</a><a class="btn" href="../parker-palmer/">先认识 Palmer</a></div><div class="heroFoot">阅读建议：不要把 11 个节点当成线性等级。它们更像彼此往返、互相检验的生命运动。</div></div></div></section>
+<section class="section" id="map"><div class="shell"><div class="head"><div><span class="kicker">The Whole Map</span><h2>中心不是“自我成长”，而是完整性</h2></div><p>一个概念只有放在“内在—关系—认识—行动—公共”的往返运动中，才不会被读成孤立的灵性词汇。</p></div><div class="visualPanel" style="min-height:500px">{svg_mobius()}<div class="pathwayFlow" style="width:100%;margin-top:18px"><div class="flowNode"><b>分裂</b><small>Divided Life</small></div><div class="flowNode"><b>聆听</b><small>Inner Teacher</small></div><div class="flowNode"><b>辨识</b><small>True Self · Vocation</small></div><div class="flowNode"><b>关系</b><small>Community · Knowing</small></div><div class="flowNode"><b>承载</b><small>Paradox · Tension</small></div><div class="flowNode"><b>进入世界</b><small>Divided No More · Public Life</small></div></div></div></div></section>
+{world_sections}
+<section class="section"><div class="shell"><div class="questionBand"><span class="kicker">A Reading Key</span><h2>不要把 Palmer 读成一些漂亮句子</h2><p>他的思想有一条清楚的运动：<strong>内在分辨 → 完整生命 → 教育与关系 → 共同体 → 公共世界。</strong> 越深入内在，越需要返回现实；越进入公共世界，越需要能够承载自己的恐惧、限制与张力。</p><div class="actions"><a class="btn primary" href="../concepts/network.html">打开知识关系图</a><a class="btn" href="../books/">进入原著地图</a><a class="btn" href="../self-study/practice-now.html">做一个十分钟练习</a></div></div></div></section>
+</main>'''
+(ROOT/"worldview/index.html").write_text(wrap("思想总图",world,1,"深入理解帕克·帕尔默从分裂生命、内在导师、真实自我与使命，到教育、悖论、不再分裂与公共生活的完整思想结构"),encoding="utf-8")
 
 principles=[
 ("01","每个人都有内在导师","Inner teacher",["inner-teacher","soul"]),
@@ -961,11 +1254,11 @@ principles=[
 principle_cards=""
 for n,zh,en,slugs in principles:
     principle_cards+=f'<div class="card"><span class="tag">{n}</span><h3>{zh}</h3><p>{en}</p><div class="mini">'+''.join(f'<a class="badge" href="../concepts/{s}.html">{concept_lookup[s]["cn"]}</a>' for s in slugs)+'</div></div>'
-cr_page=f'''<main>{crumbs(1,[("思想总图","index.html"),("Courage & Renewal 实践框架",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">From Palmer to Courage & Renewal</div><h1>思想如何成为<br><em>一种可重复的实践框架</em></h1><p class="lead">今天的 Center for Courage & Renewal 把 Palmer 长期发展的思想整理成 values、touchstones、principles 与 practices。这里把其中七条原则与本站概念网络对接，帮助看见“思想 → 空间条件 → 实践”的连续性。</p><div class="heroFoot">这是 Courage & Renewal 当前实践框架的整理，不等同于把七条原则逐字追溯为 Palmer 某一本原著中的原始清单。</div></div></div></section><section class="section"><div class="shell"><div class="grid2">{principle_cards}</div></div></section><section class="section"><div class="shell"><div class="questionBand"><h2>为什么这对自修网站重要？</h2><p>因为自修不该只是“我一个人看内容”。Palmer 的内在工作需要独处，也需要关系；需要邀请，而不是强迫；需要季节和悖论的节律；最后还要回到完整性与现实世界。因此本站把计时器、自由书写、第三物、开放问题、个人记录与课程路径放在同一系统里，而不是做成六个互不相干的小工具。</p><div class="actions"><a class="btn primary" href="../self-study/">进入自修中心</a><a class="btn" href="https://couragerenewal.org/courage-renewal-approach/" target="_blank" rel="noopener">查看官方实践框架 ↗</a></div></div></div></section></main>'''
+cr_page=f'''<main>{crumbs(1,[("思想总图","index.html"),("Courage & Renewal 实践框架",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">From Palmer to Courage & Renewal</div><h1>思想如何成为<br><em>一种可重复的实践框架</em></h1><p class="lead">今天的 Center for Courage & Renewal 把 Palmer 长期发展的思想整理成 values、touchstones、principles 与 practices。这里把其中七条原则与本站概念网络对接，帮助看见“思想 → 空间条件 → 实践”的连续性。</p><div class="heroFoot">这是 Courage & Renewal 当前实践框架的整理，不等同于把七条原则逐字追溯为 Palmer 某一本原著中的原始清单。</div></div></div></section><section class="section"><div class="shell"><div class="grid2">{principle_cards}</div></div></section><section class="section"><div class="shell"><div class="questionBand"><h2>为什么这对自修网站重要？</h2><p>因为自修不该只是“我一个人看内容”。Palmer 的内在工作需要独处，也需要关系；需要邀请，而不是强迫；需要季节和悖论的节律；最后还要回到完整性与现实世界。因此本站把计时器、自由书写、第三物、开放问题、个人记录与知识关系放在同一系统里，而不是做成六个互不相干的小工具。</p><div class="actions"><a class="btn primary" href="../self-study/">进入自修中心</a><a class="btn" href="https://couragerenewal.org/courage-renewal-approach/" target="_blank" rel="noopener">查看官方实践框架 ↗</a></div></div></div></section></main>'''
 (ROOT/"worldview/courage-renewal.html").write_text(wrap("Courage & Renewal 实践框架",cr_page,1),encoding="utf-8")
 
 # ---------- genealogy ----------
-gene=f'''<main>{crumbs(1,[("思想谱系",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Genealogy</div><h1>思想不是凭空出现的<br>它有<em>生命史</em></h1><p class="lead">Palmer 的语言生长在社会学、社区行动、Pendle Hill 的贵格会共同体、Thomas Merton、Henri Nouwen、教育工作和公共参与之间。</p><div class="heroFoot">这一页帮助理解：为什么“inner light、meeting、wholeness、community”在 Palmer 那里不是泛化的灵性词汇。</div></div></div></section>
+gene=f'''<main>{crumbs(1,[("思想谱系",None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Genealogy</div><h1>思想不是凭空出现的<br>它有<em>生命史</em></h1><p class="lead">Palmer 的语言生长在社会学、社区行动、Pendle Hill 的贵格会共同体、Thomas Merton、Henri Nouwen、教育工作和公共参与之间。</p><div class="heroFoot">这一页帮助理解：为什么“inner light、meeting、wholeness、community”在 Palmer 那里不是泛化的灵性词汇。</div></div><div class="heroSide"><div class="visualPanel">{svg_influences()}</div></div></div></section>
 <section class="section"><div class="shell"><div class="grid2">
 <div class="card"><span class="tag">Sociology</span><h3>社会学与公共世界</h3><p>早期社会学训练与社区工作使 Palmer 一开始就关心制度、差异和社会现实，而不是只做私人灵性。</p></div>
 <div class="card"><span class="tag">Pendle Hill</span><h3>从二手信念回到亲身经验</h3><p>贵格会的共同生活、工作、学习与静默让他开始追问：哪些只是“听来的”，哪些是自己真实活过、能够从经验中说出的？</p></div>
@@ -978,9 +1271,47 @@ gene=f'''<main>{crumbs(1,[("思想谱系",None)])}<section class="hero"><div cla
 </div></div></section></main>'''
 (ROOT/"genealogy/index.html").write_text(wrap("思想谱系",gene,1),encoding="utf-8")
 
+# ---------- Parker Palmer profile ----------
+timeline_html=""
+for item in PALMER["timeline"]:
+    timeline_html+=f'''<div class="timelineItem reveal"><div class="timelineDot"></div><div class="timelineBody"><div><span class="tag">{item["stage"]}</span><h3>{item["title"]}</h3><p>{item["text"]}</p></div><div class="timelineVisual">{timeline_visual(item["visual"])}</div></div></div>'''
+
+influence_html=""
+for item in PALMER["influences"]:
+    concept_badges=''.join(f'<a class="badge" href="../concepts/{s}.html">{concept_lookup[s]["cn"]}</a>' for s in item["concepts"] if s in concept_lookup)
+    influence_html+=f'''<div class="influenceNode reveal"><span class="tag">{item["title"]}</span><h3>{item["cn"]}</h3><p>{item["text"]}</p><div class="mini">{concept_badges}</div></div>'''
+
+book_river=""
+for item in PALMER["books"]:
+    b=next((x for x in books if x["slug"]==item["slug"]),None)
+    zh=b["zh"] if b else item["title"]
+    book_river+=f'<a class="bookStep" href="../books/{item["slug"]}.html"><span>{item["title"]}</span><strong>{zh}</strong><span>{item["question"]}</span></a>'
+
+palmer_page=f'''<main>{crumbs(1,[("帕克·帕尔默",None)])}
+<section class="hero"><div class="shell"><div class="portraitHero"><div class="heroMain"><div class="eyebrow">Parker J. Palmer</div><h1>一个不断把思想<br><em>带回生命的人</em></h1><p class="lead">教师 · 作家 · 教育思想家 · 公共知识分子。理解 Palmer，不能只从概念开始。很多思想，是从他亲身经历过的矛盾、共同体、静默、失败、诗歌与重新开始中长出来的。</p><div class="actions"><a class="btn primary" href="#life">沿生命线认识他</a><a class="btn" href="../worldview/">进入思想总图</a></div></div><div class="heroSide"><figure class="portraitFrame"><img src="../assets/images/parker-j-palmer.jpg" alt="Parker J. Palmer 2010 年肖像"><figcaption class="credit">Sharon L. Palmer 摄，2010 · CC BY-SA 3.0 · Wikimedia Commons</figcaption></figure></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">A Life Behind The Ideas</span><h2>不是先有一套理论，然后拿去生活</h2></div><p>Elena Soto 的研究把 Palmer 的人物经历与教育思想放在同一条线上：他的写作，是长期追求 authenticity 与 wholeness 的结果，而不是脱离生命经验的概念体系。</p></div><div class="storyGrid"><div><p class="storyLead">Palmer 曾在学术、教学与社区工作中追求改变，也逐渐发现：一个人可以在理念上谈“共同体”，却还没有真正学会怎样与人共同生活；可以非常擅长外在角色，却越来越远离自己。Pendle Hill 的长期共同生活，让工作、学习、静默、诗歌与非暴力从思想变成日常经验。</p><p class="storyLead">后来，他把问题一再带回教育：如果教学是一项真正的人类活动，那么教师的内在状态也会进入课堂。再往后，这条线继续进入领导、公共生活与民主——完整性从来不只是私人的。</p><div class="sourceNote">人物与思想脉络主要参考：Elena Soto, <em>The Spiritual and Educational Vision of Parker J. Palmer: The Birthright Gift of Self</em>；概念解释同时回到 Palmer 原著。</div></div><div class="visualPanel">{svg_mobius()}</div></div></div></section>
+
+<section class="section" id="life"><div class="shell"><div class="head"><div><span class="kicker">Life → Thought</span><h2>思想如何从生命经历中长出来</h2></div><p>这里不是完整传记，而是一条“思想形成线”：哪些经历让 Palmer 后来反复使用 true self、wholeness、community、paradox 与 public life 这些语言。</p></div><div class="timeline">{timeline_html}</div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Five Sources</span><h2>五个重要影响来源</h2></div><p>这些不是简单的“师承名单”。它们分别改变了 Palmer 对认识、静默、共同体、隐喻和社会行动的理解。</p></div><div class="influenceMap">{influence_html}</div></div></section>
+
+<section class="section"><div class="shell"><div class="storyGrid"><div><span class="kicker">The Quaker PowerPoint</span><h2 style="font-size:clamp(32px,4vw,50px);line-height:1.4;margin:10px 0 18px">莫比乌斯带：理解 Palmer 最好的入口之一</h2><p class="storyLead">Palmer 用一条扭转后首尾相接的纸带来说明内外关系：沿着它一直走，你无法找到明确的“这一面是内在、另一面是外在”。里面的东西不断流向世界，世界也不断进入我们里面。</p><p class="storyLead">这使“内在工作”获得完全不同的意义：它不是逃离世界的避难所，而是在参与现实之前，学习辨认自己正在把什么带进现实。</p><div class="conceptTrail"><a href="../concepts/wholeness.html">隐藏的完整性</a><i>→</i><a href="../concepts/identity-integrity.html">身份与完整性</a><i>→</i><a href="../concepts/public-life.html">公共生活</a></div></div><div class="visualPanel">{svg_mobius()}</div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Education</span><h2>教育思想：问题不只是“怎样教”</h2></div><p>Palmer 的一个重要贡献，是把常被忽略的教师自身重新放回教学讨论。学生与学科都很复杂，而教师的身份、恐惧、完整性和内在生命同样会进入课堂。</p></div><div class="storyGrid"><div class="visualPanel">{svg_subject_centered()}</div><div><div class="quote">我们不仅用方法教学，也用“自己是谁”在教学。</div><p>这不是否定教学技术，而是把技术放回一个更大的问题：什么样的方法与你的身份、学科和学生形成真实关系？Soto 对 Palmer 的研究特别指出，identity 与 integrity 并不只包含优点，也包含限制、经历与阴影；认识自己，是看见学生与学科的重要前提。</p><div class="grid2" style="margin-top:20px"><div class="card"><span class="tag">IDENTITY</span><h3>我是谁</h3><p>构成我的天赋、历史、恐惧、限制与价值。</p></div><div class="card"><span class="tag">INTEGRITY</span><h3>我怎样活</h3><p>让这些真实力量彼此形成更有生命力的关系。</p></div><div class="card"><span class="tag">SUBJECT</span><h3>我们面对什么</h3><p>把值得学习的主题重新放在共同中心。</p></div><div class="card"><span class="tag">COMMUNITY</span><h3>我们怎样一起寻找</h3><p>让认识发生在关系中，而不是只做信息传递。</p></div></div></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Books As A Journey</span><h2>主要著作，其实在接力追问同一件事</h2></div><p>从认识、行动、教学、使命、完整性到公共生活，主题不断扩大，但“内在如何进入外在”的问题一直在。</p></div><div class="bookRiver">{book_river}</div><div class="quote" style="margin-top:30px">六本书可以被读成同一条长线：<strong>怎样让内在真实进入外在世界。</strong></div></div></section>
+
+<section class="section"><div class="shell"><div class="questionBand"><span class="kicker">Continue</span><h2>从“这个人”继续进入“这套思想”</h2><p>人物页帮助你理解这些概念为什么会出现；思想总图则把它们重新组织成从分裂生命到公共生活的一套整体结构。</p><div class="actions"><a class="btn primary" href="../worldview/">进入思想总图</a><a class="btn" href="../books/">浏览原著地图</a><a class="btn" href="../genealogy/">继续看思想谱系</a></div></div></div></section>
+</main>'''
+(ROOT/"parker-palmer/index.html").write_text(wrap("帕克·帕尔默",palmer_page,1,"从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer"),encoding="utf-8")
+
 # ---------- concepts index + pages ----------
-concept_tiles="".join(tile(f'{c["slug"]}.html',c["en"],c["cn"],c["summary"],c["cn"]+" "+c["en"]+" "+c["summary"]) for c in concepts)
-concept_index=f'''<main>{crumbs(1,[("核心概念",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Concept Library</div><h1>20 个概念<br>不是词典，而是<em>关系网络</em></h1><p class="lead">每个概念都连接原著、操练、课程章节与现实场景。不要只查定义，顺着关系继续走。</p><div class="actions"><a class="btn primary" href="network.html">打开知识关系图</a><a class="btn" href="../self-study/">进入自修中心</a></div><div class="heroFoot">建议入口：使命 / 完整性 / 信任圈 / 沉思与行动 / 悲剧性张力。</div></div></div></section>
+concept_tiles=""
+for c in concepts:
+    search=html.escape((c["cn"]+" "+c["en"]+" "+c["summary"]).lower())
+    concept_tiles+=f'<a class="card tile reveal" data-search-card="{search}" href="{c["slug"]}.html"><span class="tag">{c["en"]}</span><div class="tileVisual">{concept_visual(c["slug"])}</div><h3>{c["cn"]}</h3><p>{c["summary"]}</p><span class="arrow">→</span></a>'
+concept_index=f'''<main>{crumbs(1,[("核心概念",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Concept Library</div><h1>20 个概念<br>不是词典，而是<em>关系网络</em></h1><p class="lead">每个概念都连接原著、操练、相关概念与现实场景。不要只查定义，顺着关系继续走。</p><div class="actions"><a class="btn primary" href="network.html">打开知识关系图</a><a class="btn" href="../self-study/">进入自修中心</a></div><div class="heroFoot">建议入口：使命 / 完整性 / 信任圈 / 沉思与行动 / 悲剧性张力。</div></div></div></section>
 <section class="section"><div class="shell"><div class="searchbar"><input data-site-search placeholder="搜索：使命、灵魂、教育、沉默、张力、公共生活……"></div><div class="grid3">{concept_tiles}</div></div></section></main>'''
 (ROOT/"concepts/index.html").write_text(wrap("核心概念",concept_index,1),encoding="utf-8")
 
@@ -989,15 +1320,19 @@ concept_rail=lambda cur:'<div class="rail">'+''.join(f'<a class="{"current" if c
 for c in concepts:
     related="".join(tile(f'{r}.html',"相关概念",concept_lookup[r]["cn"],concept_lookup[r]["summary"]) for r in c["related"])
     prompt=c["practice"][0] if c["practice"] else c["summary"]
+    visual=concept_visual(c["slug"])
+    circle_extra=""
+    if c["slug"] in {"trustworthy-community","third-things","honest-open-questions","soul"}:
+        circle_extra=f'''<div class="externalCta"><div><span class="tag">Circle of Trust Deep Dive</span><h3>这个概念在信任圈专题中还有更完整的实践脉络</h3><p>主站保留它在 Palmer 整体思想中的位置；Circle of Trust 的历史、规则、11 条基石、第三物与澄心会实践统一在专题站继续。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入信任圈专题 ↗</a></div>'''
     body=f'''<main>{crumbs(1,[("核心概念","index.html"),(c["cn"],None)])}
-    <section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{c["en"]}</div><h1>{c["verb"]}：<em>{c["cn"]}</em></h1><p class="lead">{c["summary"]}</p><div class="actions"><a class="btn primary" href="#practice">现在就练</a><a class="btn" href="#relations">看它与什么相连</a></div><div class="heroFoot">概念不是定义：理解 → 误读校准 → 经验操练 → 原著 → 关系网络 → 现实行动。</div></div><div class="heroSide"><div class="orb"><div class="r"><span>{c["en"].upper()}</span></div></div><div class="sideCard"><span class="tag">带着这个问题</span><h3>{prompt}</h3></div></div></div></section>
+    <section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{c["en"]}</div><h1>{c["verb"]}：<em>{c["cn"]}</em></h1><p class="lead">{c["summary"]}</p><div class="actions"><a class="btn primary" href="#practice">现在就练</a><a class="btn" href="#relations">看它与什么相连</a></div><div class="heroFoot">概念不是定义：理解 → 误读校准 → 经验操练 → 原著 → 关系网络 → 现实行动。</div></div><div class="heroSide"><div class="visualPanel">{visual}</div><div class="sideCard"><span class="tag">带着这个问题</span><h3>{prompt}</h3></div></div></div></section>
     <section class="section"><div class="shell articleLayout"><aside class="toc"><span class="tag">本页导航</span><a href="#meaning">概念位置</a><a href="#text">原著脉络</a><a href="#misread">常见误读</a><a href="#practice">现在操练</a><a href="#relations">知识关联</a><a href="#sources">来源</a><a href="#related">继续探索</a></aside><article class="article">
     {concept_rail(c["slug"])}
     <section id="meaning"><span class="kicker">Meaning</span><h2>它在 Palmer 思想中的位置</h2><p>{c["where"]}</p><div class="quote">{c["summary"]}</div></section>
     <section id="text"><span class="kicker">Textual Context</span><h2>不要把概念从原著里拆出来</h2><p>{c["where"]}</p><p>阅读这个概念时，可以同时追问三个层次：它怎样描述<strong>内在经验</strong>？它要求怎样的<strong>关系条件</strong>？当它进入工作、教育或公共世界时，又怎样成为一种<strong>现实行动</strong>？</p></section>
     <section id="misread"><span class="kicker">Calibration</span><h2>不要把它误读成什么</h2><ul>{''.join(f'<li>{x}</li>' for x in c["misread"])}</ul></section>
     <section id="practice"><div class="practiceBox"><span class="kicker">Practice</span><h3>先按步骤走一遍</h3><div class="steps">{''.join(f'<div class="step"><div>{x}</div></div>' for x in c["practice"])}</div></div>{practice_lab("concept-"+c["slug"],c["cn"],prompt,10)}<div class="actions"><a class="toolButton" href="../self-study/third-things.html">换一个第三物进入</a><a class="toolButton" href="../self-study/questions.html">用开放问题继续</a><a class="toolButton" href="../self-study/records.html">查看我的记录</a></div></section>
-    <section id="relations"><span class="kicker">Knowledge Connections</span><h2>这个概念在整套思想里连接什么</h2><p>不要把“{c["cn"]}”单独记住。沿着原著、实践和课程往返，才能看见它真正的作用。</p>{relation_panel(c)}</section>
+    <section id="relations"><span class="kicker">Knowledge Connections</span><h2>这个概念在整套思想里连接什么</h2><p>不要把“{c["cn"]}”单独记住。沿着原著、实践、相关概念与现实场景往返，才能看见它真正的作用。</p>{relation_panel(c)}{circle_extra}</section>
     <section id="sources"><div class="sourceBox"><h3>主要原著脉络</h3><ul>{''.join(f'<li>{x}</li>' for x in c["sources"])}</ul><p><span class="badge">原著梳理</span><span class="badge">本站中文解释</span><span class="badge">自修工具为本站设计</span></p></div></section>
     <section id="related"><span class="kicker">Connections</span><h2>继续沿着关系走</h2><div class="grid3">{related}</div></section>
     </article></div></section></main>'''
@@ -1018,11 +1353,26 @@ network=f'''<main>{crumbs(1,[("核心概念","index.html"),("知识关系图",No
 (ROOT/"concepts/network.html").write_text(wrap("知识关系图",network,1),encoding="utf-8")
 
 # ---------- books index + pages ----------
-book_tiles="".join(tile(f'{b["slug"]}.html',b["year"],f'{b["zh"]} · {b["title"]}',b["focus"],b["title"]+" "+b["zh"]+" "+b["focus"]) for b in books)
+book_tiles=""
+for b in books:
+    bvisual=concept_visual(b["concepts"][0]) if b["concepts"] else svg_mobius()
+    search=html.escape((b["title"]+" "+b["zh"]+" "+b["focus"]).lower())
+    book_tiles+=f'<a class="card tile reveal" data-search-card="{search}" href="{b["slug"]}.html"><span class="tag">{b["year"]}</span><div class="tileVisual">{bvisual}</div><h3>{b["zh"]}</h3><p><em>{b["title"]}</em><br>{b["focus"]}</p><span class="arrow">→</span></a>'
 book_index=f'''<main>{crumbs(1,[("原著研读",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Primary Texts</div><h1>不是书单<br>而是一张<em>问题地图</em></h1><p class="lead">每本书都进入不同现实领域，但它们共享同一套深层问题：我是谁？我怎样知道？我怎样行动？我们怎样共同生活？</p><div class="heroFoot">每个原著页含：章节地图、关键命题、推荐操练、概念连接。</div></div></div></section><section class="section"><div class="shell"><div class="searchbar"><input data-site-search placeholder="搜索：使命、教育、行动、共同体、公共生活……"></div><div class="grid3">{book_tiles}</div></div></section></main>'''
 (ROOT/"books/index.html").write_text(wrap("原著研读",book_index,1),encoding="utf-8")
 
 for b in books:
+    if b["slug"]=="hidden-wholeness":
+        key_slugs=["divided-life","soul","wholeness","trustworthy-community","undivided-life"]
+        key_cards="".join(tile(f'../concepts/{s}.html',"关键概念",concept_lookup[s]["cn"],concept_lookup[s]["summary"]) for s in key_slugs)
+        body=f'''<main>{crumbs(1,[("原著地图","index.html"),(b["zh"],None)])}
+        <section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{b["year"]} · {b["title"]}</div><h1>{b["zh"]}</h1><p class="lead">{b["focus"]}</p><div class="actions"><a class="btn primary" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入《内在之光》/ 信任圈专题 ↗</a><a class="btn" href="../concepts/wholeness.html">理解“完整性”</a></div><div class="heroFoot">主站只保留这本书在 Palmer 整体思想中的位置；章节共读与 Circle of Trust 实践统一在独立专题站展开。</div></div><div class="heroSide"><div class="visualPanel">{svg_mobius()}</div></div></div></section>
+        <section class="section"><div class="shell"><div class="head"><div><span class="kicker">Why It Matters</span><h2>这本书把“内在真实”与“可信赖共同体”放在同一条路上</h2></div><p>《A Hidden Wholeness》承接 Palmer 长期对 identity、integrity 与 divided life 的思考，并进一步追问：当一个人想不再分裂地生活时，需要怎样的关系条件，才能既得到陪伴，又不被别人接管。</p></div><div class="storyGrid"><div><p class="storyLead">它不是一本单纯的“内在成长”书。前半部在讨论 soul、true self 与 divided life，后半部则不断把问题带回共同体、隐喻、提问、静默和日常非暴力。也就是说：内在工作最终必须进入人与人的关系。</p><p class="storyLead">因此，在 Palmer 的整体思想里，这本书处在一个关键中点：它把《Let Your Life Speak》的使命辨识，与《The Courage to Teach》的身份/完整性，以及后来的公共生活主题连接起来。</p></div><div class="visualPanel">{svg_split_whole()}</div></div></div></section>
+        <section class="section"><div class="shell"><div class="head"><div><span class="kicker">Five Keys</span><h2>先抓住五个关键词</h2></div><p>如果只是想理解 Palmer 的整体思想，从这五个节点已经足够；需要章节研读和实践细节时再进入专题站。</p></div><div class="grid3">{key_cards}</div></div></section>
+        <section class="section"><div class="shell"><div class="externalCta"><div><span class="tag">Independent Deep-Dive Site</span><h3>继续深入《内在之光》与信任圈</h3><p>章节导读、Circle of Trust 历史、11 条基石、第三物、开放问题、澄心会与带领实践已经在独立专题网站系统整理，主站不再重复建设。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入专题网站 ↗</a></div></div></section>
+        </main>'''
+        (ROOT/"books"/f'{b["slug"]}.html').write_text(wrap(b["zh"],body,1,b["focus"]),encoding="utf-8")
+        continue
     rows="".join(f'<tr><td>{n}</td><td><strong>{t}</strong></td><td>{d}</td></tr>' for n,t,d in b["chapters"])
     concept_cards="".join(tile(f'../concepts/{s}.html',"概念",concept_lookup[s]["cn"],concept_lookup[s]["summary"]) for s in b["concepts"])
     prac_cards=[]
@@ -1030,7 +1380,8 @@ for b in books:
         if any(k.lower() in (p["title"]+" "+p["en"]).lower() for k in b["practices"]):
             prac_cards.append(tile(f'../practice/{p["slug"]}.html',"操练",p["title"],p["purpose"]))
     suggested="".join(f'<li>{x}</li>' for x in b["practices"])
-    body=f'''<main>{crumbs(1,[("原著研读","index.html"),(b["zh"],None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{b["year"]} · {b["title"]}</div><h1>{b["zh"]}</h1><p class="lead">{b["focus"]}</p><div class="actions"><a class="btn primary" href="#chapters">看章节地图</a><a class="btn" href="#practice">进入操练</a></div><div class="heroFoot">本页以资料库中的原著与带领指南为基础，采用中文解释与结构化梳理，不替代原书。</div></div><div class="heroSide"><div class="sideCard"><span class="tag">阅读时一直带着</span><h3>这本书正在要求我怎样重新看自己、关系或行动？</h3><p>不要只划金句；把概念放回自己的具体生活。</p></div></div></div></section>
+    book_visual=concept_visual(b["concepts"][0]) if b["concepts"] else svg_mobius()
+    body=f'''<main>{crumbs(1,[("原著研读","index.html"),(b["zh"],None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{b["year"]} · {b["title"]}</div><h1>{b["zh"]}</h1><p class="lead">{b["focus"]}</p><div class="actions"><a class="btn primary" href="#chapters">看章节地图</a><a class="btn" href="#practice">进入操练</a></div><div class="heroFoot">本页以资料库中的原著与带领指南为基础，采用中文解释与结构化梳理，不替代原书。</div></div><div class="heroSide"><div class="visualPanel">{book_visual}</div><div class="sideCard"><span class="tag">阅读时一直带着</span><h3>这本书正在要求我怎样重新看自己、关系或行动？</h3><p>不要只划金句；把概念放回自己的具体生活。</p></div></div></div></section>
     <section class="section"><div class="shell articleLayout"><aside class="toc"><span class="tag">本页导航</span><a href="#chapters">章节地图</a><a href="#ideas">关键命题</a><a href="#practice">操练入口</a><a href="#concepts">相关概念</a></aside><article class="article">
     <section id="chapters"><span class="kicker">Chapter Map</span><h2>章节 / 主题地图</h2><table class="table"><thead><tr><th>章节</th><th>主题</th><th>阅读抓手</th></tr></thead><tbody>{rows}</tbody></table></section>
     <section id="ideas"><span class="kicker">Key Ideas</span><h2>读这本书，抓住这些命题</h2><ul>{''.join(f'<li>{x}</li>' for x in b["ideas"])}</ul></section>
@@ -1040,25 +1391,29 @@ for b in books:
     (ROOT/"books"/f'{b["slug"]}.html').write_text(wrap(b["zh"],body,1,b["focus"]),encoding="utf-8")
 
 # ---------- practice index + pages ----------
-prac_tiles="".join(tile(f'{p["slug"]}.html',p["en"],p["title"],p["purpose"],p["title"]+" "+p["purpose"]+" "+p["when"]) for p in practices)
-matrix_rows="".join(f'<tr><td><strong>{p["title"]}</strong></td><td>{p["duration"]}</td><td>{p["size"]}</td><td>{p["when"]}</td></tr>' for p in practices)
-practice_index=f'''<main>{crumbs(1,[("操练方法",None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Practice Library</div><h1>不是“懂了”<br>而是<em>做一次</em></h1><p class="lead">Palmer 的实践不是为了操控结果，而是设计条件：减慢反应、减少侵入、形成共同中心、让人能够听见自己，并把内在发现带回真实行动。</p><div class="heroFoot">所有流程都应服从一个原则：结构保护主体性，而不是替参与者决定意义。</div></div><div class="heroSide"><div class="orb"><div class="r"><span>SPACE<br>FOR<br>SOUL</span></div></div><div class="sideCard"><h3>先学边界，再追求深度</h3><p>越是深入的内在工作，越需要明确邀请权、保密、时间结构与“不修理”的纪律。</p></div></div></div></section>
+circle_special_slugs={"touchstones","circle-of-trust","clearness-committee"}
+visible_practices=[p for p in practices if p["slug"] not in circle_special_slugs]
+prac_tiles=""
+for p in visible_practices:
+    search=html.escape((p["title"]+" "+p["en"]+" "+p["purpose"]+" "+p["when"]).lower())
+    prac_tiles+=f'<a class="card tile reveal" data-search-card="{search}" href="{p["slug"]}.html"><span class="tag">{p["en"]}</span><div class="tileVisual">{practice_visual(p["slug"])}</div><h3>{p["title"]}</h3><p>{p["purpose"]}</p><span class="arrow">→</span></a>'
+matrix_rows="".join(f'<tr><td><strong>{p["title"]}</strong></td><td>{p["duration"]}</td><td>{p["size"]}</td><td>{p["when"]}</td></tr>' for p in visible_practices)
+practice_index=f'''<main>{crumbs(1,[("实践",None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Practice Library</div><h1>不是“懂了”<br>而是<em>做一次</em></h1><p class="lead">Palmer 的实践不是为了操控结果，而是设计条件：减慢反应、减少侵入、形成共同中心、让人能够听见自己，并把内在发现带回真实行动。</p><div class="heroFoot">这里保留可独立理解和使用的 Palmer 实践；Circle of Trust、11 条基石与澄心会的完整体系统一进入信任圈专题站。</div></div><div class="heroSide"><div class="visualPanel">{svg_inner_teacher()}</div><div class="sideCard"><h3>先学边界，再追求深度</h3><p>越是深入的内在工作，越需要明确邀请权、保密、时间结构与“不修理”的纪律。</p></div></div></div></section>
 <section class="section"><div class="shell"><div class="head"><div><div class="kicker">Practice Matrix</div><h2>先选合适的练习</h2></div><p>不是所有方法都适合所有场景。先根据人数、时间与问题强度选择。</p></div><table class="table"><thead><tr><th>练习</th><th>时间</th><th>人数</th><th>适用场景</th></tr></thead><tbody>{matrix_rows}</tbody></table></div></section>
-<section class="section"><div class="shell"><div class="searchbar"><input data-site-search placeholder="搜索：静默、开放问题、第三物、澄心会、失败、张力……"></div><div class="grid3">{prac_tiles}</div></div></section></main>'''
+<section class="section"><div class="shell"><div class="searchbar"><input data-site-search placeholder="搜索：静默、开放问题、第三物、失败、张力、行动……"></div><div class="grid3">{prac_tiles}</div><div class="externalCta"><div><span class="tag">Circle of Trust Deep Dive</span><h3>信任圈、11 条基石与澄心会</h3><p>这些方法具有完整的伦理、边界与带领结构。主站不再复制细节，请进入独立信任圈专题站系统学习。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入信任圈专题 ↗</a></div></div></section></main>'''
 (ROOT/"practice/index.html").write_text(wrap("操练方法",practice_index,1),encoding="utf-8")
 
 for p in practices:
+    if p["slug"] in circle_special_slugs:
+        bridge_visual=svg_community() if p["slug"]!="clearness-committee" else svg_inner_teacher()
+        bridge=f'''<main>{crumbs(1,[("实践","index.html"),(p["title"],None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{p["en"]}</div><h1>{p["title"]}</h1><p class="lead">{p["purpose"]}</p><div class="actions"><a class="btn primary" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入信任圈专题深入学习 ↗</a><a class="btn" href="../concepts/trustworthy-community.html">理解可信赖共同体</a></div><div class="heroFoot">本页只保留它在 Palmer 思想中的位置；完整规则、步骤、案例与带领边界统一在独立专题站展开。</div></div><div class="heroSide"><div class="visualPanel">{bridge_visual}</div></div></div></section><section class="section"><div class="shell"><div class="head"><div><span class="kicker">Where It Fits</span><h2>它不是一个孤立技巧</h2></div><p>{p["purpose"]}</p></div><div class="grid3"><div class="card"><span class="tag">内在导师</span><h3>最终答案不由群体代替</h3><p>结构的作用是帮助一个人更能听见自己，而不是用群体意见取代个人辨识。</p></div><div class="card"><span class="tag">可信赖共同体</span><h3>关系需要边界</h3><p>邀请、保密、不过度建议与不侵入，是保护主体性的条件。</p></div><div class="card"><span class="tag">现实行动</span><h3>澄明最终要回到生活</h3><p>Palmer 的实践不会以“深度体验”结束，而要回到关系、角色与行动。</p></div></div><div class="externalCta"><div><h3>继续到独立专题站</h3><p>那里包含完整历史、11 条基石、第三物、澄心会、Circle of Trust 的实践结构与中文导读。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">打开专题 ↗</a></div></div></section></main>'''
+        (ROOT/"practice"/f'{p["slug"]}.html').write_text(wrap(p["title"],bridge,1,p["purpose"]),encoding="utf-8")
+        continue
     extra=""
-    if p["slug"]=="touchstones":
-        extra=f'''<section id="core"><span class="kicker">The 11 Touchstones</span><h2>11 条基石完整呈现</h2><div class="grid2">{''.join(f'<div class="card"><span class="tag">{i+1:02d}</span><h3>{x}</h3></div>' for i,x in enumerate(touchstones))}</div><div class="caution"><strong>使用方式：</strong>基石不是带领者拿来约束参与者的规章，而是所有人共同维护空间的承诺。每次聚会可全部读出，也可邀请参与者选择一条此刻最需要练习的基石。</div></section>'''
-    elif p["slug"]=="circle-of-trust":
-        features=["清楚的边界 Clear Boundaries","熟练而克制的带领 Skilled Leadership","开放的邀请 Open Invitation","共同中心 / 共同基础 Common Ground","有助于灵魂出现的氛围 Graceful Ambiance"]
-        extra=f'''<section id="core"><span class="kicker">Five Essentials</span><h2>一个信任圈成立的五个条件</h2><div class="grid2">{''.join(f'<div class="card"><h3>{x}</h3></div>' for x in features)}</div><p>这些条件来自《A Hidden Wholeness》第五章相关带领材料。它们说明：信任不是靠“大家友善一点”产生，而要由边界、邀请、共同中心、带领方式与整体氛围共同支持。</p></section>'''
-    elif p["slug"]=="clearness-committee":
-        extra='''<section id="core"><span class="kicker">Structure</span><h2>澄心会的结构重点</h2><div class="grid2"><div class="card"><h3>焦点人物拥有问题</h3><p>问题属于焦点人物；委员会不接管问题，也不宣布结论。焦点人物可以选择不回答任何问题。</p></div><div class="card"><h3>只以开放而诚实的问题工作</h3><p>问题服务于焦点人物的发现，不服务于委员的好奇，也不把建议包装成问句。</p></div><div class="card"><h3>沉默属于过程</h3><p>问题之间可以有较长停顿；不需要为了“效率”连续追问。</p></div><div class="card"><h3>双重保密</h3><p>不仅内容保密，过程结束后的复盘也只讨论方法本身，不把焦点人物的内容带回大组。</p></div></div><div class="caution"><strong>重要边界：</strong>原始带领材料建议在真正带领澄心会前，先完整学习其步骤、角色与保密原则。它不是危机干预，也不替代心理、医疗、法律等专业支持。</div></section>'''
-    elif p["slug"]=="silence":
+    if p["slug"]=="silence":
         extra='''<section id="core"><span class="kicker">Deepening</span><h2>一个“与沉默对话”的书写练习</h2><div class="practiceBox"><p>把“沉默”当作一个可以回应你的对象，连续写 15–20 分钟。例如从“沉默，你最近在哪里？”开始，然后让“沉默”回答，再由自己继续回应。重点不是文学创作，而是观察：我为什么会靠近或躲开安静？</p><p>《A Hidden Wholeness》的带领材料曾用类似形式帮助参与者探索自己与沉默的关系。</p></div></section>'''
-    body=f'''<main>{crumbs(1,[("操练方法","index.html"),(p["title"],None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{p["en"]}</div><h1>{p["title"]}</h1><p class="lead">{p["purpose"]}</p><div class="actions"><a class="btn primary" href="#steps">直接看步骤</a><a class="btn" href="#facilitator">带领提醒</a></div><div class="heroFoot">建议时间：{p["duration"]} · 建议人数：{p["size"]}</div></div><div class="heroSide"><div class="sideCard"><span class="tag">适用场景</span><h3>{p["when"]}</h3><p>来源脉络：{p["source"]}</p></div></div></div></section>
+    pvisual=practice_visual(p["slug"])
+    body=f'''<main>{crumbs(1,[("操练方法","index.html"),(p["title"],None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{p["en"]}</div><h1>{p["title"]}</h1><p class="lead">{p["purpose"]}</p><div class="actions"><a class="btn primary" href="#steps">直接看步骤</a><a class="btn" href="#facilitator">带领提醒</a></div><div class="heroFoot">建议时间：{p["duration"]} · 建议人数：{p["size"]}</div></div><div class="heroSide"><div class="visualPanel">{pvisual}</div><div class="sideCard"><span class="tag">适用场景</span><h3>{p["when"]}</h3><p>来源脉络：{p["source"]}</p></div></div></div></section>
     <section class="section"><div class="shell articleLayout"><aside class="toc"><span class="tag">本页导航</span><a href="#purpose">目的</a><a href="#core">核心结构</a><a href="#steps">步骤</a><a href="#facilitator">带领提醒</a><a href="#debrief">复盘问题</a><a href="#source">来源</a></aside><article class="article">
     <section id="purpose"><span class="kicker">Purpose</span><h2>这项练习在保护什么</h2><p>{p["purpose"]}</p><p><strong>适合：</strong>{p["when"]}</p></section>
     {extra}
@@ -1072,7 +1427,7 @@ for p in practices:
 # ---------- applications ----------
 app_tiles=[]
 for slug,title,summary,links in applications:
-    app_tiles.append(tile(f'{slug}.html',"应用场景",title,summary,title+" "+summary))
+    app_tiles.append(f'<a class="card tile reveal" href="{slug}.html"><span class="tag">应用场景</span><div class="tileVisual">{application_visual(slug)}</div><h3>{title}</h3><p>{summary}</p><span class="arrow">→</span></a>')
 app_index=f'''<main>{crumbs(1,[("应用场景",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Applications</div><h1>思想只有进入现实<br>才开始接受<em>检验</em></h1><p class="lead">Palmer 的“内在工作”不是自我沉浸，而是要进入职业、教学、领导、社群和公共生活。</p><div class="heroFoot">这里按现实场景重新组合概念与操练，而不是重复书本章节。</div></div></div></section><section class="section"><div class="shell"><div class="grid3">{''.join(app_tiles)}</div></div></section></main>'''
 (ROOT/"applications/index.html").write_text(wrap("应用场景",app_index,1),encoding="utf-8")
 
@@ -1097,7 +1452,8 @@ for slug,title,summary,links in applications:
     practice_section=""
     if practice_cards:
         practice_section=f'''<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Practices</div><h2>推荐操练</h2></div><p>这些练习让概念进入具体经验；请先阅读各自的边界与带领提醒。</p></div><div class="grid3">{''.join(practice_cards)}</div></div></section>'''
-    body=f'''<main>{crumbs(1,[("应用场景","index.html"),(title,None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Application</div><h1>{title}</h1><p class="lead">{summary}</p><div class="heroFoot">应用不是把 Palmer 变成工具箱，而是保留其核心伦理：主体性、关系、边界、内外一致与现实承担。</div></div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Sequence</div><h2>建议顺序</h2></div><p>先处理条件，再处理内容；先减少侵入，再追求深度。</p></div><div class="steps">{''.join(f'<div class="step"><div>{x}</div></div>' for x in seq)}</div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Concepts</div><h2>相关概念</h2></div><p>这些概念构成本场景的思想骨架。</p></div><div class="grid3">{''.join(concept_cards)}</div></div></section>{practice_section}</main>'''
+    avisual=application_visual(slug)
+    body=f'''<main>{crumbs(1,[("应用场景","index.html"),(title,None)])}<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Application</div><h1>{title}</h1><p class="lead">{summary}</p><div class="heroFoot">应用不是把 Palmer 变成工具箱，而是保留其核心伦理：主体性、关系、边界、内外一致与现实承担。</div></div><div class="heroSide"><div class="visualPanel">{avisual}</div></div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Sequence</div><h2>建议顺序</h2></div><p>先处理条件，再处理内容；先减少侵入，再追求深度。</p></div><div class="steps">{''.join(f'<div class="step"><div>{x}</div></div>' for x in seq)}</div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Concepts</div><h2>相关概念</h2></div><p>这些概念构成本场景的思想骨架。</p></div><div class="grid3">{''.join(concept_cards)}</div></div></section>{practice_section}</main>'''
     (ROOT/"applications"/f'{slug}.html').write_text(wrap(title,body,1,summary),encoding="utf-8")
 
 # ---------- pathways ----------
@@ -1125,11 +1481,10 @@ active_sessions=[
 ("6","The Horizon of the Active Life","生命朝向什么地平线")
 ]
 ashtml="".join(f'<div class="card"><span class="tag">SESSION {n}</span><h3>{t}</h3><p>{d}</p></div>' for n,t,d in active_sessions)
-hhhtml="".join(f'<a class="card tile" href="../self-study/hidden-wholeness/{m["slug"]}.html"><span class="tag">{m["id"]} · {m["chapter"]}</span><h3>{m["title"]}</h3><p>{m["focus"]}</p><span class="arrow">→</span></a>' for m in hidden_course)
-paths=f'''<main>{crumbs(1,[("研修路径",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Learning Pathways</div><h1>不要“刷完内容”<br>让阅读、静默与行动<em>交替发生</em></h1><p class="lead">下面提供三条可以实际执行的路径：12 周综合研修、6 次《The Active Life》小组，以及 Prelude + 十章的《A Hidden Wholeness》完整自修。</p><div class="heroFoot">建议每次都保留：第三物 / 静默 / 书写 / 分享 / 开放问题 / 结束带走。</div></div></div></section>
+paths=f'''<main>{crumbs(1,[("研修路径",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Learning Pathways</div><h1>不要“刷完内容”<br>让阅读、静默与行动<em>交替发生</em></h1><p class="lead">主站保留两条跨文本研修路径：12 周综合研修与 6 次《The Active Life》小组；《A Hidden Wholeness》与 Circle of Trust 的系统学习统一进入独立专题站。</p><div class="heroFoot">建议每次都保留：阅读 / 静默 / 书写 / 分享 / 开放问题 / 带回现实。</div></div></div></section>
 <section class="section"><div class="shell"><div class="head"><div><div class="kicker">12 Weeks</div><h2>综合研修</h2></div><p>每周：原著 30–60 分钟 → 书写 10–20 分钟 → 一项微实践 → 伙伴或小组分享。</p></div><div class="grid3">{whtml}</div></div></section>
 <section class="section"><div class="shell"><div class="head"><div><div class="kicker">6 Sessions</div><h2>《The Active Life》小组</h2></div><p>依据 Leader's Guide 的六次结构，适合成人学习小组。</p></div><div class="grid3">{ashtml}</div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">11 Modules</div><h2>《A Hidden Wholeness》完整自修</h2></div><p>现在已从“共读建议”升级为 Prelude + 十章的在线自修课程，每课都有阅读抓手、第三物、计时、书写、操练与现实行动。</p></div><div class="actions" style="margin-bottom:22px"><a class="toolButton primary" href="../self-study/hidden-wholeness/">进入完整在线课程</a></div><div class="grid2">{hhhtml}</div></div></section></main>'''
+<section class="section"><div class="shell"><div class="externalCta"><div><span class="tag">A Hidden Wholeness · Circle of Trust</span><h3>《内在之光》与信任圈的系统学习已独立成站</h3><p>章节导读、11 条基石、Circle of Trust 历史、第三物、澄心会与带领实践，请直接进入专题站；Palmer 主站不再重复维护两套内容。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入专题站 ↗</a></div></div></section></main>'''
 (ROOT/"pathways/index.html").write_text(wrap("研修路径",paths,1),encoding="utf-8")
 
 # ---------- self-study system ----------
@@ -1137,15 +1492,15 @@ study_dir=ROOT/"self-study"
 course_dir=study_dir/"hidden-wholeness"
 course_dir.mkdir(parents=True,exist_ok=True)
 
-study_home=f'''<main>{crumbs(1,[("自修中心",None)])}<section class="hero"><div class="shell"><div class="courseHero"><div class="eyebrow">Self-Study Studio</div><h1>读一点<br>停一停<br><em>让生命回应</em></h1><p>自修不是把 Palmer 的概念背下来，而是让“阅读—静默—书写—关系—行动”形成循环。这里的工具默认在浏览器本地工作，不需要账号。</p><div class="actions"><a class="btn primary" href="hidden-wholeness/">开始《内在之光》课程</a><a class="btn" href="practice-now.html">先做 10 分钟</a></div></div></div></section>
-<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">Your Progress</span><h2>这是你的练习空间，不是成绩单</h2><p>完成数量只帮助你记住走过哪里。真正重要的是：你是否更能听见自己、更能在关系里不侵入别人、更能把内在真实带回现实。</p></div><div class="studyStat"><div><strong data-study-course-count>0</strong><span>/ 11 课已完成</span></div><div><strong data-study-record-count>0</strong><span>条个人记录</span></div></div></div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Four Tools</div><h2>四个随时可用的入口</h2></div><p>这些不是附加功能，而是把 Palmer 的方法变成日常可重复实践的基础设施。</p></div><div class="grid4">
+study_home=f'''<main>{crumbs(1,[("自修中心",None)])}<section class="hero"><div class="shell"><div class="courseHero"><div class="eyebrow">Self-Study Studio</div><h1>读一点<br>停一停<br><em>让生命回应</em></h1><p>自修不是把 Palmer 的概念背下来，而是让“阅读—静默—书写—关系—行动”形成循环。这里保留轻量、可重复的个人工具；《内在之光》与 Circle of Trust 的完整课程进入独立专题站。</p><div class="actions"><a class="btn primary" href="practice-now.html">先做 10 分钟</a><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">《内在之光》/ 信任圈专题 ↗</a></div></div></div></section>
+<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">Your Practice Space</span><h2>这是你的练习空间，不是成绩单</h2><p>真正重要的不是完成多少模块，而是：你是否更能听见自己、更能在关系里不侵入别人、更能把内在真实带回现实。你主动保存的书写只存在当前浏览器。</p><div class="actions"><a class="toolButton primary" href="records.html">查看我的记录</a></div></div><div class="studyStat"><div><strong data-study-record-count>0</strong><span>条个人记录</span></div><div><strong>4</strong><span>个可重复使用的工具入口</span></div></div></div></div></section>
+<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Four Tools</div><h2>四个随时可用的入口</h2></div><p>工具的目的不是制造“深度感”，而是帮助你减慢反应、留下空白、记录线索，并沿知识关系继续探索。</p></div><div class="grid4">
+{tile("practice-now.html","10 分钟","现在练一次","静默、计时与自由书写，从一个真实问题开始。")}
 {tile("third-things.html","第三物","第三物素材库","不用直接逼问自己，让一个物件、画面或隐喻从侧面打开经验。")}
 {tile("questions.html","提问","开放问题生成器","把建议、诊断和暗示，练习改写成帮助对方自我辨识的问题。")}
-{tile("records.html","记录","我的个人记录","集中查看你在概念页和课程里保存的书写，并可导出 JSON 备份。")}
-{tile("../concepts/network.html","关联","知识关系图","看见一个概念如何穿过原著、操练、课程与公共世界。")}
+{tile("records.html","记录","我的个人记录","集中查看你主动保存的书写，并可导出 JSON 备份。")}
 </div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Study Rhythm</div><h2>一次完整自修，建议 35–60 分钟</h2></div><p>不用每次都做全，但尽量不要只停在阅读。</p></div><div class="pathwayFlow"><div class="flowNode"><b>5–15 分钟</b><small>读一小段原著</small></div><div class="flowNode"><b>3 分钟</b><small>静默，不解释</small></div><div class="flowNode"><b>10 分钟</b><small>自由书写</small></div><div class="flowNode"><b>5 分钟</b><small>第三物 / 开放问题</small></div><div class="flowNode"><b>5 分钟</b><small>提炼一句带走</small></div><div class="flowNode"><b>现实中</b><small>做一个小行动</small></div></div></div></section></main>'''
+<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Study Rhythm</div><h2>一次完整自修，建议 35–60 分钟</h2></div><p>不用每次都做全，但尽量不要只停在阅读。</p></div><div class="pathwayFlow"><div class="flowNode"><b>5–15 分钟</b><small>读一小段原著</small></div><div class="flowNode"><b>3 分钟</b><small>静默，不解释</small></div><div class="flowNode"><b>10 分钟</b><small>自由书写</small></div><div class="flowNode"><b>5 分钟</b><small>第三物 / 开放问题</small></div><div class="flowNode"><b>5 分钟</b><small>提炼一句带走</small></div><div class="flowNode"><b>现实中</b><small>做一个小行动</small></div></div><div class="externalCta"><div><span class="tag">Deep Dive</span><h3>需要系统学习《内在之光》与 Circle of Trust？</h3><p>请进入独立专题站，那里维护章节研读、历史脉络与完整实践结构。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入专题站 ↗</a></div></div></section></main>'''
 (study_dir/"index.html").write_text(wrap("自修中心",study_home,1),encoding="utf-8")
 
 practice_now=f'''<main>{crumbs(1,[("自修中心","index.html"),("10 分钟操练",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Practice Now</div><h1>现在给自己<br><em>十分钟</em></h1><p class="lead">不分析整个人生。只把一个问题放在面前，安静下来，写出第一句真实的话。</p><div class="heroFoot">建议问题：此刻，有什么是我已经隐约知道，却一直没有认真聆听的？</div></div></div></section><section class="section"><div class="shell"><div class="thirdThing"><div class="object">〰</div><span class="tag">今天的第三物 · 绳索</span><h2>在暴风雪里，什么能把你带回自己？</h2><p>先不要解释“绳索象征什么”。只回想一个真实的人、地方、习惯、声音或物件：在你混乱的时候，它怎样帮助你不至于迷失？</p></div>{practice_lab("practice-now","10 分钟操练","此刻，有什么是我已经隐约知道，却一直没有认真聆听的？",10)}<div class="actions"><a class="toolButton" href="third-things.html">换一个第三物</a><a class="toolButton" href="questions.html">换一个开放问题</a></div></div></section></main>'''
@@ -1167,33 +1522,14 @@ questions_page=f'''<main>{crumbs(1,[("自修中心","index.html"),("开放问题
 records_page=f'''<main>{crumbs(1,[("自修中心","index.html"),("我的记录",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">My Notes</div><h1>把零散书写<br>慢慢看成<em>生命线索</em></h1><p class="lead">这里汇总你主动保存的个人记录。数据只保存在当前浏览器；清理浏览器数据会丢失，请定期导出备份。</p><div class="actions"><button class="btn primary" data-export-records>导出 JSON 备份</button></div></div></div></section><section class="section"><div class="shell"><div class="recordList" data-record-list></div></div></section></main>'''
 (study_dir/"records.html").write_text(wrap("我的记录",records_page,1),encoding="utf-8")
 
-# Complete A Hidden Wholeness self-study course
-module_cards=""
-for m in hidden_course:
-    module_cards+=f'''<a class="moduleCard" href="{m["slug"]}.html"><div class="moduleNo">{m["id"]}</div><div><span class="tag">{m["chapter"]} · {m["source"]}</span><h3>{m["title"]}</h3><p>{m["focus"]}</p></div><span class="done">进入</span></a>'''
-course_index=f'''<main>{crumbs(2,[("自修中心","../index.html"),("《内在之光》课程",None)])}<section class="hero"><div class="shell"><div class="courseHero"><div class="eyebrow">A Hidden Wholeness · Self-Study</div><h1>《内在之光》<br>完整在线自修</h1><p>课程依照原书 Prelude 与十章展开，但不把它做成章节摘要。每一课都把原著主题、核心概念、第三物、静默书写、具体操练和现实行动连在一起。</p><div class="actions"><a class="btn primary" href="prelude.html">从 Prelude 开始</a><a class="btn" href="../../books/hidden-wholeness.html">查看原著地图</a></div></div></div></section>
-<section class="section"><div class="shell"><div class="head"><div><div class="kicker">Your Progress</div><h2>走到哪里，不必赶</h2></div><p><span data-course-progress-label>0 / {len(hidden_course)} 课</span>。建议每课至少留 45 分钟，也可以一章走一周。</p></div><div class="progressTrack"><div class="progressFill" data-course-progress data-total="{len(hidden_course)}"></div></div></div></section>
-<section class="section"><div class="shell"><div class="moduleList">{module_cards}</div></div></section>
-<section class="section"><div class="shell"><div class="questionBand"><span class="kicker">Why This Structure</span><h2>这不是传统读书会</h2><p>原书附带的读者与带领者指南明确提醒：重点不是“覆盖每章内容”，而是创造条件，让参与者在书与自己的生命之间来回移动。课程因此把阅读理解放在经验、静默、第三物和开放问题之间，而不是放在最上方。</p><div class="actions"><a class="btn primary" href="https://couragerenewal.org/hidden-wholeness-hub" target="_blank" rel="noopener">官方 A Hidden Wholeness Hub ↗</a></div></div></div></section></main>'''
-(course_dir/"index.html").write_text(wrap("《内在之光》完整自修",course_index,2),encoding="utf-8")
+# A Hidden Wholeness now lives on the dedicated Circle of Trust site.
+course_bridge=f'''<main>{crumbs(2,[("自修中心","../index.html"),("《内在之光》专题",None)])}<section class="hero"><div class="shell"><div class="courseHero"><div class="eyebrow">A Hidden Wholeness · Circle of Trust</div><h1>《内在之光》与信任圈<br><em>已经独立成站</em></h1><p>为了避免两套内容重复维护，Palmer 主站只保留这本书在整体思想中的位置；章节共读、11 条基石、第三物、澄心会、历史与带领实践统一在“信任圈入门”专题站继续。</p><div class="actions"><a class="btn primary" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入专题站 ↗</a><a class="btn" href="../../books/hidden-wholeness.html">回到原著导览</a></div></div></div></section><section class="section"><div class="shell"><div class="storyGrid"><div><span class="kicker">Why Separate?</span><h2>主站讲 Palmer 的整体思想，专题站负责深入实践</h2><p class="storyLead">《A Hidden Wholeness》是理解 Palmer 从 divided life 走向 undivided life 的关键文本，也孕育出 Circle of Trust 的重要实践语言。但如果把章节研读、11 条基石与带领流程全部留在主站，反而会淹没他在认识论、教育、行动和公共生活上的更大思想版图。</p></div><div class="visualPanel">{svg_community()}</div></div></div></section></main>'''
+(course_dir/"index.html").write_text(wrap("《内在之光》专题入口",course_bridge,2),encoding="utf-8")
 
-for i,m in enumerate(hidden_course):
-    prev=hidden_course[i-1] if i>0 else None
-    nxt=hidden_course[i+1] if i<len(hidden_course)-1 else None
-    lesson_nav=''.join(f'<a href="{x["slug"]}.html">{"← " if x==prev else ""}{x["id"]} · {x["title"]}{" →" if x==nxt else ""}</a>' for x in [y for y in [prev,nxt] if y])
-    concept_links=''.join(f'<a class="badge" href="../../concepts/{s}.html">{concept_lookup[s]["cn"]}</a>' for s in m["concepts"])
-    p=practice_lookup[m["practice"]]
-    official=f'<a class="externalLink" href="{m["official"]}" target="_blank" rel="noopener">观看 Center for Courage & Renewal 对应补充视频 ↗</a>' if m.get("official") else '<a class="externalLink" href="https://couragerenewal.org/hidden-wholeness-hub" target="_blank" rel="noopener">浏览官方 A Hidden Wholeness Hub ↗</a>'
-    prevnext=f'<div class="actions">{f"""<a class="toolButton" href="{prev["slug"]}.html">← 上一课</a>""" if prev else ""}{f"""<a class="toolButton primary" href="{nxt["slug"]}.html">下一课 →</a>""" if nxt else """<a class="toolButton primary" href="../records.html">回看我的记录</a>"""}</div>'
-    lesson=f'''<main>{crumbs(2,[("自修中心","../index.html"),("《内在之光》课程","index.html"),(m["title"],None)])}<section class="hero"><div class="shell"><div class="courseHero"><div class="eyebrow">{m["id"]} · {m["chapter"]}</div><h1>{m["title"]}</h1><p>{m["focus"]}</p><div class="mini" style="color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.18)">原书章节：{m["source"]}</div></div></div></section><section class="section"><div class="shell lessonLayout"><aside class="lessonNav"><span class="tag">本课路径</span><a href="#read">1 · 阅读抓手</a><a href="#third">2 · 第三物</a><a href="#write">3 · 静默与书写</a><a href="#practice">4 · 具体操练</a><a href="#action">5 · 带回现实</a><a href="#complete">6 · 完成本课</a>{lesson_nav}</aside><article class="lessonMain">
-<section id="read"><span class="kicker">Read</span><h2>读的时候，先抓住这一件事</h2><p>{m["focus"]}</p><p>本课关联：{concept_links}</p><p>建议先读原书对应章节，再回到这里。不要边读边急着摘“正确答案”，而要留意哪些句子使你停下来、抗拒、放松或想起某段经验。</p>{official}</section>
-<section id="third"><div class="thirdThing"><div class="object">{m["symbol"]}</div><span class="tag">Third Thing</span><h2>{m["third"]}</h2><p>先用两分钟只看这个意象，不解释。然后问：它此刻在我的生命里碰到了什么？</p></div></section>
-<section id="write"><span class="kicker">Reflect</span><h2>让问题在你里面待一会</h2><div class="grid2">{''.join(f'<div class="card question"><p>{q}</p></div>' for q in m["questions"])}</div>{practice_lab("course-"+m["slug"],"《内在之光》"+m["id"]+" · "+m["title"],m["questions"][0],10)}</section>
-<section id="practice"><span class="kicker">Practice</span><h2>把本章变成一种可以练的关系方式</h2><div class="card"><h3>{p["title"]}</h3><p>{p["purpose"]}</p><div class="actions"><a class="toolButton primary" href="../../practice/{p["slug"]}.html">打开完整操练流程</a></div></div></section>
-<section id="action"><span class="kicker">Bring It Home</span><h2>不要以“想通了”结束</h2><div class="quote">{m["action"]}</div><p>Palmer 的内在工作总要回到角色、关系与现实世界。尽量把行动缩小到你真的能承担，而不是用一个宏大承诺替代真实变化。</p></section>
-<section id="complete"><div class="completeBox"><span class="tag">Complete</span><h2>这一课先到这里</h2><p>完成不意味着你已经掌握这一章，只表示你愿意暂时离开页面，让内容进入生活。</p><button class="toolButton primary" data-module-complete="{m["slug"]}">标记本课完成</button></div>{prevnext}</section>
-</article></div></section></main>'''
-    (course_dir/f'{m["slug"]}.html').write_text(wrap(m["title"],lesson,2,m["focus"]),encoding="utf-8")
+# Preserve old lesson URLs as lightweight bridges so existing bookmarks do not break.
+for m in hidden_course:
+    lesson_bridge=f'''<main>{crumbs(2,[("自修中心","../index.html"),("《内在之光》专题","index.html"),(m["title"],None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">{m["chapter"]} · {m["source"]}</div><h1>{m["title"]}</h1><p class="lead">这一章节的完整共读与实践内容已迁移到独立“信任圈入门”专题站。主站保留旧地址，方便已有链接继续可用。</p><div class="actions"><a class="btn primary" href="{CIRCLE_SITE}" target="_blank" rel="noopener">前往专题站继续 ↗</a><a class="btn" href="../../books/hidden-wholeness.html">查看《内在之光》在 Palmer 思想中的位置</a></div></div></div></section></main>'''
+    (course_dir/f'{m["slug"]}.html').write_text(wrap(m["title"],lesson_bridge,2,m["focus"]),encoding="utf-8")
 
 # ---------- glossary ----------
 grows="".join(f'<tr><td><strong>{en}</strong></td><td>{zh}</td><td>{d}</td></tr>' for en,zh,d in glossary)
@@ -1205,7 +1541,7 @@ sources=f'''<main>{crumbs(1,[("资料说明",None)])}<section class="hero"><div 
 <section class="section"><div class="shell"><div class="grid4">
 <div class="card"><span class="tag">第一层</span><h3>Palmer 原著</h3><p>A Hidden Wholeness、Let Your Life Speak、The Courage to Teach、To Know as We Are Known、The Active Life、The Company of Strangers、Healing the Heart of Democracy、Going Public、Meeting for Learning。</p></div>
 <div class="card"><span class="tag">第二层</span><h3>带领与讨论指南</h3><p>The Courage to Teach Guide、The Active Life Leader's Guide、A Hidden Wholeness 的读者与小组带领材料，主要用于流程与操练结构。</p></div>
-<div class="card"><span class="tag">第三层</span><h3>研究与思想脉络</h3><p>Elena Soto 的系统研究、Living the Questions、Leading from Within，以及相关历史与思想材料。</p></div>
+<div class="card"><span class="tag">第三层</span><h3>研究与思想脉络</h3><p>人物与思想形成史重点参考 Elena Soto 的 <em>The Spiritual and Educational Vision of Parker J. Palmer: The Birthright Gift of Self</em>，并辅以 <em>Living the Questions</em>、<em>Leading from Within</em> 等研究与纪念文集。</p></div>
 <div class="card"><span class="tag">第四层</span><h3>当前 Courage & Renewal 框架</h3><p>用于了解 Palmer 思想在今天如何被组织为 values、touchstones、principles、practices 与课程资源；本站会把这一层与 Palmer 原著明确区分。</p><a class="externalLink" href="https://couragerenewal.org/courage-renewal-approach/" target="_blank" rel="noopener">官方 Approach 页面 ↗</a></div>
 </div><div class="sourceBox"><h3>本站写作与实践化原则</h3><ol>
 <li>先确认原著在说什么，再做中文解释。</li><li>把术语放回上下文，不做“金句化”。</li><li>区分 Palmer 本人的主张、Courage & Renewal 后续实践、本站再设计。</li>
@@ -1217,17 +1553,19 @@ sources=f'''<main>{crumbs(1,[("资料说明",None)])}<section class="hero"><div 
 index=[]
 for c in concepts:index.append({"title":c["cn"],"url":f'concepts/{c["slug"]}.html',"type":"概念","summary":c["summary"]})
 for b in books:index.append({"title":b["zh"],"url":f'books/{b["slug"]}.html',"type":"原著","summary":b["focus"]})
-for p in practices:index.append({"title":p["title"],"url":f'practice/{p["slug"]}.html',"type":"操练","summary":p["purpose"]})
+for p in visible_practices:index.append({"title":p["title"],"url":f'practice/{p["slug"]}.html',"type":"操练","summary":p["purpose"]})
 for slug,title,summary,_ in applications:index.append({"title":title,"url":f'applications/{slug}.html',"type":"应用","summary":summary})
 index.extend([
-{"title":"自修中心","url":"self-study/","type":"自修","summary":"阅读、静默、自由书写、第三物、开放问题与现实行动组成的个人研修空间。"},
+{"title":"帕克·帕尔默","url":"parker-palmer/","type":"人物","summary":"从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer。"},
+{"title":"思想总图","url":"worldview/","type":"思想","summary":"从分裂生命、内在导师、真实自我与使命，一直走到教育、悖论、不再分裂与公共生活。"},
+{"title":"自修中心","url":"self-study/","type":"自修","summary":"静默、自由书写、第三物、开放问题与个人记录组成的轻量练习空间。"},
 {"title":"第三物素材库","url":"self-study/third-things.html","type":"自修工具","summary":"使用物件、意象与隐喻，从侧面进入内在经验。"},
 {"title":"开放问题生成器","url":"self-study/questions.html","type":"自修工具","summary":"练习把建议、诊断与暗示改写成开放而诚实的问题。"},
-{"title":"我的个人记录","url":"self-study/records.html","type":"自修工具","summary":"汇总并导出在概念与课程页面保存的个人书写。"},
+{"title":"我的个人记录","url":"self-study/records.html","type":"自修工具","summary":"汇总并导出在概念页和自修工具中保存的个人书写。"},
 {"title":"知识关系图","url":"concepts/network.html","type":"关联","summary":"从内在、完整性、关系、认识与行动、进入世界五个层次理解概念之间的关系。"},
-{"title":"Courage & Renewal 实践框架","url":"worldview/courage-renewal.html","type":"思想框架","summary":"把当前 Courage & Renewal 的原则与 Palmer 核心概念建立连接。"}
+{"title":"Courage & Renewal 实践框架","url":"worldview/courage-renewal.html","type":"思想框架","summary":"把当前 Courage & Renewal 的原则与 Palmer 核心概念建立连接。"},
+{"title":"《内在之光》与信任圈专题","url":"self-study/hidden-wholeness/","type":"专题入口","summary":"主站保留桥接页，完整章节研读与 Circle of Trust 实践进入独立专题站。"}
 ])
-for m in hidden_course:index.append({"title":"《内在之光》"+m["id"]+" · "+m["title"],"url":f'self-study/hidden-wholeness/{m["slug"]}.html',"type":"在线课程","summary":m["focus"]})
 (ROOT/"assets/search-index.json").write_text(json.dumps(index,ensure_ascii=False,indent=2),encoding="utf-8")
 
 print("generated", len(list(ROOT.rglob("*.html"))), "html pages")

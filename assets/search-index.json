@@ -174,12 +174,6 @@
     "summary": "早期 Palmer 如何思考基督徒与美国公共生活的更新，为后来“陌生人、公共空间、完整性”主题提供历史脉络。"
   },
   {
-    "title": "信任圈 11 条基石",
-    "url": "practice/touchstones.html",
-    "type": "操练",
-    "summary": "把“尊重”从抽象价值变成可观察、可提醒、可共同维护的关系方式。"
-  },
-  {
     "title": "静默与等待",
     "url": "practice/silence.html",
     "type": "操练",
@@ -208,18 +202,6 @@
     "url": "practice/paired-listening.html",
     "type": "操练",
     "summary": "用清晰轮替，让说话者拥有完整、不被打断的时间，并训练听者放下介入冲动。"
-  },
-  {
-    "title": "信任圈基础结构",
-    "url": "practice/circle-of-trust.html",
-    "type": "操练",
-    "summary": "创造一种既保护个人主体性、又允许共同体支持内在旅程的空间。"
-  },
-  {
-    "title": "澄心会",
-    "url": "practice/clearness-committee.html",
-    "type": "操练",
-    "summary": "帮助一个人围绕真实问题获得澄明，而不是获得委员会的意见。"
   },
   {
     "title": "生命季节反思",
@@ -288,10 +270,22 @@
     "summary": "练习在差异中保有声音、谦逊、张力承载与非暴力，不把公共生活缩成阵营对抗。"
   },
   {
+    "title": "帕克·帕尔默",
+    "url": "parker-palmer/",
+    "type": "人物",
+    "summary": "从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer。"
+  },
+  {
+    "title": "思想总图",
+    "url": "worldview/",
+    "type": "思想",
+    "summary": "从分裂生命、内在导师、真实自我与使命，一直走到教育、悖论、不再分裂与公共生活。"
+  },
+  {
     "title": "自修中心",
     "url": "self-study/",
     "type": "自修",
-    "summary": "阅读、静默、自由书写、第三物、开放问题与现实行动组成的个人研修空间。"
+    "summary": "静默、自由书写、第三物、开放问题与个人记录组成的轻量练习空间。"
   },
   {
     "title": "第三物素材库",
@@ -309,7 +303,7 @@
     "title": "我的个人记录",
     "url": "self-study/records.html",
     "type": "自修工具",
-    "summary": "汇总并导出在概念与课程页面保存的个人书写。"
+    "summary": "汇总并导出在概念页和自修工具中保存的个人书写。"
   },
   {
     "title": "知识关系图",
@@ -324,69 +318,9 @@
     "summary": "把当前 Courage & Renewal 的原则与 Palmer 核心概念建立连接。"
   },
   {
-    "title": "《内在之光》00 · 世界的暴风雪：先找到回家的绳索",
-    "url": "self-study/hidden-wholeness/prelude.html",
-    "type": "在线课程",
-    "summary": "先不急着解决人生，而是辨认：在混乱、压力和外部噪音中，什么能把我带回更真实的自己？"
-  },
-  {
-    "title": "《内在之光》01 · 完整不是完美：看见“不再分裂”的可能",
-    "url": "self-study/hidden-wholeness/images-of-integrity.html",
-    "type": "在线课程",
-    "summary": "完整性不是消除所有矛盾，而是不再用持续的自我切割来维持角色与安全。"
-  },
-  {
-    "title": "《内在之光》02 · 跨越鸿沟：让灵魂与角色重新相遇",
-    "url": "self-study/hidden-wholeness/great-divide.html",
-    "type": "在线课程",
-    "summary": "许多分裂不是突然发生的，而是从我们很早学会用角色、表现和防御保护自己开始。"
-  },
-  {
-    "title": "《内在之光》03 · 真实自我：辨认生命的“原生纹理”",
-    "url": "self-study/hidden-wholeness/true-self.html",
-    "type": "在线课程",
-    "summary": "真实自我既包含礼物，也包含限制。它不是理想人格，而是生命一再显露出来的独特形状。"
-  },
-  {
-    "title": "《内在之光》04 · 独处地在一起：共同体为何不应占领个人",
-    "url": "self-study/hidden-wholeness/alone-together.html",
-    "type": "在线课程",
-    "summary": "真正支持内在旅程的共同体，不替人解释、修理或做决定，而是让每个人在陪伴中仍保有自己的孤独与主体性。"
-  },
-  {
-    "title": "《内在之光》05 · 创造信任圈：先设计条件，再期待深度",
-    "url": "self-study/hidden-wholeness/creating-circles.html",
-    "type": "在线课程",
-    "summary": "信任不是气氛词。清楚边界、熟练带领、开放邀请、共同中心和适宜氛围，共同构成可信赖空间。"
-  },
-  {
-    "title": "《内在之光》06 · 斜着说出真理：第三物为什么能打开内在",
-    "url": "self-study/hidden-wholeness/truth-told-slant.html",
-    "type": "在线课程",
-    "summary": "直接追问常让灵魂躲开；诗、故事、图像、自然物和隐喻可以成为共同中心，让意义从侧面出现。"
-  },
-  {
-    "title": "《内在之光》07 · 深处回应深处：学习真正地说与听",
-    "url": "self-study/hidden-wholeness/deep-speaks.html",
-    "type": "在线课程",
-    "summary": "说真话并不等于倾倒；聆听也不是沉默等待自己发言。两者都需要把注意力从表现与控制移向关系中的真实。"
-  },
-  {
-    "title": "《内在之光》08 · 活在问题里：从建议转向澄明",
-    "url": "self-study/hidden-wholeness/living-questions.html",
-    "type": "在线课程",
-    "summary": "澄心会要求我们放下“我知道什么对你最好”的幻觉，用开放而诚实的问题帮助一个人听见自己的答案。"
-  },
-  {
-    "title": "《内在之光》09 · 笑与静默：让严肃不变成僵硬",
-    "url": "self-study/hidden-wholeness/laughter-silence.html",
-    "type": "在线课程",
-    "summary": "静默可以让深层声音出现；幽默则提醒我们放下自我重要感。两者都在松开控制，让共同体更有生命。"
-  },
-  {
-    "title": "《内在之光》10 · 第三条路：站在悲剧性张力中行动",
-    "url": "self-study/hidden-wholeness/third-way.html",
-    "type": "在线课程",
-    "summary": "面对冲突，我们不必只在逃避与攻击之间选择。Palmer 把信任圈的关系纪律带向非暴力、悲剧性张力与现实行动。"
+    "title": "《内在之光》与信任圈专题",
+    "url": "self-study/hidden-wholeness/",
+    "type": "专题入口",
+    "summary": "主站保留桥接页，完整章节研读与 Circle of Trust 实践进入独立专题站。"
   }
 ]

@@ -1,0 +1,431 @@
+{
+  "arcs": [
+    {
+      "id": "become",
+      "title": "成为自己",
+      "summary": "从内在导师到真实自我与使命。",
+      "concepts": [
+        "inner-teacher",
+        "true-self",
+        "vocation",
+        "identity-integrity"
+      ]
+    },
+    {
+      "id": "undivided",
+      "title": "不再分裂",
+      "summary": "从分裂生命走向完整性与不再分裂地行动。",
+      "concepts": [
+        "divided-life",
+        "wholeness",
+        "identity-integrity",
+        "undivided-life"
+      ]
+    },
+    {
+      "id": "world",
+      "title": "带回世界",
+      "summary": "从可信赖共同体、认识方式与悖论，走向教育、行动与公共生活。",
+      "concepts": [
+        "trustworthy-community",
+        "knowing-loving",
+        "paradox",
+        "active-life",
+        "tragic-gap",
+        "nonviolence",
+        "public-life"
+      ]
+    }
+  ],
+  "concepts": {
+    "inner-teacher": {
+      "books": [
+        "let-your-life-speak",
+        "hidden-wholeness"
+      ],
+      "related": [
+        "true-self",
+        "vocation",
+        "soul"
+      ],
+      "practices": [
+        "silence",
+        "journaling"
+      ],
+      "applications": [
+        "personal",
+        "education"
+      ],
+      "visual": "inner-light"
+    },
+    "soul": {
+      "books": [
+        "hidden-wholeness"
+      ],
+      "related": [
+        "inner-teacher",
+        "true-self",
+        "trustworthy-community"
+      ],
+      "practices": [
+        "silence",
+        "third-things"
+      ],
+      "applications": [
+        "personal",
+        "community"
+      ],
+      "visual": "inner-light"
+    },
+    "true-self": {
+      "books": [
+        "let-your-life-speak",
+        "courage-to-teach"
+      ],
+      "related": [
+        "inner-teacher",
+        "vocation",
+        "identity-integrity"
+      ],
+      "practices": [
+        "journaling",
+        "way-closes"
+      ],
+      "applications": [
+        "personal",
+        "education"
+      ],
+      "visual": "tree"
+    },
+    "vocation": {
+      "books": [
+        "let-your-life-speak"
+      ],
+      "related": [
+        "inner-teacher",
+        "true-self",
+        "seasons"
+      ],
+      "practices": [
+        "way-closes",
+        "seasons"
+      ],
+      "applications": [
+        "personal",
+        "leadership"
+      ],
+      "visual": "paths"
+    },
+    "identity-integrity": {
+      "books": [
+        "courage-to-teach"
+      ],
+      "related": [
+        "true-self",
+        "divided-life",
+        "wholeness",
+        "undivided-life"
+      ],
+      "practices": [
+        "journaling",
+        "action-reaction"
+      ],
+      "applications": [
+        "education",
+        "leadership"
+      ],
+      "visual": "integrity"
+    },
+    "divided-life": {
+      "books": [
+        "hidden-wholeness",
+        "courage-to-teach"
+      ],
+      "related": [
+        "identity-integrity",
+        "wholeness",
+        "undivided-life"
+      ],
+      "practices": [
+        "journaling",
+        "action-reaction"
+      ],
+      "applications": [
+        "personal",
+        "leadership"
+      ],
+      "visual": "split"
+    },
+    "wholeness": {
+      "books": [
+        "hidden-wholeness",
+        "active-life"
+      ],
+      "related": [
+        "divided-life",
+        "identity-integrity",
+        "undivided-life"
+      ],
+      "practices": [
+        "journaling",
+        "seasons"
+      ],
+      "applications": [
+        "personal",
+        "leadership"
+      ],
+      "visual": "mobius"
+    },
+    "undivided-life": {
+      "books": [
+        "hidden-wholeness",
+        "courage-to-teach"
+      ],
+      "related": [
+        "divided-life",
+        "wholeness",
+        "public-life"
+      ],
+      "practices": [
+        "action-reaction",
+        "tragic-gap"
+      ],
+      "applications": [
+        "personal",
+        "leadership",
+        "public"
+      ],
+      "visual": "mobius"
+    },
+    "trustworthy-community": {
+      "books": [
+        "hidden-wholeness",
+        "courage-to-teach"
+      ],
+      "related": [
+        "inner-teacher",
+        "truth-conversation",
+        "third-things"
+      ],
+      "practices": [
+        "paired-listening"
+      ],
+      "applications": [
+        "community",
+        "education"
+      ],
+      "visual": "circle"
+    },
+    "third-things": {
+      "books": [
+        "hidden-wholeness",
+        "courage-to-teach"
+      ],
+      "related": [
+        "trustworthy-community",
+        "truth-conversation",
+        "knowing-loving"
+      ],
+      "practices": [
+        "third-things"
+      ],
+      "applications": [
+        "community",
+        "education"
+      ],
+      "visual": "third-thing"
+    },
+    "honest-open-questions": {
+      "books": [
+        "hidden-wholeness"
+      ],
+      "related": [
+        "trustworthy-community",
+        "inner-teacher",
+        "truth-conversation"
+      ],
+      "practices": [
+        "honest-open-questions"
+      ],
+      "applications": [
+        "community",
+        "leadership"
+      ],
+      "visual": "questions"
+    },
+    "truth-conversation": {
+      "books": [
+        "hidden-wholeness",
+        "to-know-as-we-are-known"
+      ],
+      "related": [
+        "trustworthy-community",
+        "knowing-loving",
+        "public-life"
+      ],
+      "practices": [
+        "paired-listening"
+      ],
+      "applications": [
+        "community",
+        "public"
+      ],
+      "visual": "conversation"
+    },
+    "knowing-loving": {
+      "books": [
+        "to-know-as-we-are-known"
+      ],
+      "related": [
+        "truth-conversation",
+        "education-space",
+        "third-things"
+      ],
+      "practices": [
+        "meeting-for-learning"
+      ],
+      "applications": [
+        "education"
+      ],
+      "visual": "knowing"
+    },
+    "education-space": {
+      "books": [
+        "to-know-as-we-are-known",
+        "courage-to-teach",
+        "meeting-for-learning"
+      ],
+      "related": [
+        "knowing-loving",
+        "identity-integrity",
+        "trustworthy-community"
+      ],
+      "practices": [
+        "meeting-for-learning"
+      ],
+      "applications": [
+        "education"
+      ],
+      "visual": "subject-centered"
+    },
+    "paradox": {
+      "books": [
+        "courage-to-teach",
+        "active-life"
+      ],
+      "related": [
+        "wholeness",
+        "tragic-gap",
+        "active-life"
+      ],
+      "practices": [
+        "tragic-gap"
+      ],
+      "applications": [
+        "education",
+        "leadership",
+        "public"
+      ],
+      "visual": "paradox"
+    },
+    "active-life": {
+      "books": [
+        "active-life"
+      ],
+      "related": [
+        "paradox",
+        "vocation",
+        "nonviolence"
+      ],
+      "practices": [
+        "action-reaction",
+        "failure"
+      ],
+      "applications": [
+        "leadership",
+        "public"
+      ],
+      "visual": "action"
+    },
+    "tragic-gap": {
+      "books": [
+        "hidden-wholeness",
+        "healing-democracy"
+      ],
+      "related": [
+        "paradox",
+        "nonviolence",
+        "public-life"
+      ],
+      "practices": [
+        "tragic-gap"
+      ],
+      "applications": [
+        "public",
+        "leadership"
+      ],
+      "visual": "tragic-gap"
+    },
+    "nonviolence": {
+      "books": [
+        "hidden-wholeness",
+        "company-of-strangers"
+      ],
+      "related": [
+        "tragic-gap",
+        "active-life",
+        "public-life"
+      ],
+      "practices": [
+        "tragic-gap"
+      ],
+      "applications": [
+        "public"
+      ],
+      "visual": "bridge"
+    },
+    "public-life": {
+      "books": [
+        "company-of-strangers",
+        "healing-democracy",
+        "going-public"
+      ],
+      "related": [
+        "undivided-life",
+        "tragic-gap",
+        "nonviolence"
+      ],
+      "practices": [
+        "paired-listening"
+      ],
+      "applications": [
+        "public"
+      ],
+      "visual": "public"
+    },
+    "seasons": {
+      "books": [
+        "let-your-life-speak"
+      ],
+      "related": [
+        "vocation",
+        "true-self",
+        "paradox"
+      ],
+      "practices": [
+        "seasons"
+      ],
+      "applications": [
+        "personal"
+      ],
+      "visual": "seasons"
+    }
+  },
+  "special_sites": {
+    "circle_of_trust": {
+      "title": "信任圈入门",
+      "url": "https://choosemiracle.github.io/circleoftrust/",
+      "scope": "《内在之光》、Circle of Trust、11条基石、澄心会、第三物与实践细节的独立专题站。"
+    }
+  }
+}

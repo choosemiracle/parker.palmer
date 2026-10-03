@@ -1,0 +1,145 @@
+{
+  "name": "Parker J. Palmer",
+  "cn": "帕克·帕尔默",
+  "identity": [
+    "教师",
+    "作家",
+    "教育思想家",
+    "公共知识分子"
+  ],
+  "intro": "他的写作横跨教育、使命、共同体、灵性、领导与公共生活，但底层始终在追问：人怎样与真实的自己保持关系，并让这份真实进入现实世界。",
+  "timeline": [
+    {
+      "stage": "早期学术与教学",
+      "title": "从社会学、课堂与公共问题出发",
+      "text": "Palmer 的思想不是从纯粹个人内省起步。他的早期学术、教学与社区工作，让他持续面对制度、知识、关系与人的真实经验之间的张力。",
+      "visual": "study"
+    },
+    {
+      "stage": "共同体探索",
+      "title": "想谈共同体之前，先真正生活在共同体里",
+      "text": "他后来意识到，自己曾试图带别人前往一个尚未亲身抵达的“共同体”。这种不协调感推动他寻找一种更真实的生活与学习方式。",
+      "visual": "community"
+    },
+    {
+      "stage": "Pendle Hill · 1974–1985",
+      "title": "共同生活、劳动、学习、诗歌与静默成为一所“隐形学校”",
+      "text": "在 Pendle Hill 的十一年，Palmer 逐渐从地位与角色的尺度转向人的天赋；诗歌成为内在探索的入口，非暴力成为深度参与世界的方式，共同体则成为照见自我的镜子。",
+      "visual": "pendle"
+    },
+    {
+      "stage": "Thomas Merton",
+      "title": "从真实自我、静默与悖论重新理解内在生命",
+      "text": "Merton 对 true self、内在生活、静默与悖论的探索，帮助 Palmer 发展 divided life、wholeness、inner teacher 等后来反复出现的语言。",
+      "visual": "merton"
+    },
+    {
+      "stage": "Möbius Strip",
+      "title": "内在与外在不是两面，而是持续互相生成",
+      "text": "Palmer 用莫比乌斯带说明：我们里面的东西不断进入世界，世界也不断进入我们里面。所谓完整，不是退回内心，而是在这场互相塑造中作出更有生命力的选择。",
+      "visual": "mobius"
+    },
+    {
+      "stage": "教育思想成熟",
+      "title": "问题从“怎样教”转向“谁在教”",
+      "text": "在教育领域，他把长期被忽略的教师自身重新放回中心：学科、学生固然重要，但教师的身份、完整性与内在状态同样会进入课堂。",
+      "visual": "teaching"
+    },
+    {
+      "stage": "进入公共世界",
+      "title": "从个人完整性走向教育、制度与公共生活",
+      "text": "Palmer 后期不断把内在工作推向教育改革、领导、民主与公共生活：越能与自己保持真实关系，越有可能在差异与压力中不把别人去人化。",
+      "visual": "public"
+    }
+  ],
+  "influences": [
+    {
+      "title": "Quaker tradition",
+      "cn": "贵格会传统",
+      "text": "静默、inner light、meeting、clearness 与不强迫他人的关系伦理，为 Palmer 提供了重要的实践土壤。",
+      "concepts": [
+        "inner-teacher",
+        "trustworthy-community"
+      ]
+    },
+    {
+      "title": "Thomas Merton",
+      "cn": "托马斯·默顿",
+      "text": "真实自我、隐藏的完整性、静默、独处与悖论，是理解 Palmer 内在生命语言的重要来源。",
+      "concepts": [
+        "true-self",
+        "wholeness",
+        "paradox"
+      ]
+    },
+    {
+      "title": "Poetry",
+      "cn": "诗歌与隐喻",
+      "text": "诗歌让真理不必被正面逼问。Palmer 借由隐喻与“斜着说”保护灵魂不被分析与控制。",
+      "concepts": [
+        "third-things",
+        "inner-teacher"
+      ]
+    },
+    {
+      "title": "Community",
+      "cn": "共同体",
+      "text": "共同体既能支持人，也会暴露投射与阴影。它不是温暖想象，而是学习真实相遇的场所。",
+      "concepts": [
+        "trustworthy-community",
+        "truth-conversation"
+      ]
+    },
+    {
+      "title": "Nonviolence",
+      "cn": "非暴力",
+      "text": "非暴力让 Palmer 看见：内在工作与公共行动并不冲突，它要求更深地进入世界，同时不以支配和去人化回应冲突。",
+      "concepts": [
+        "nonviolence",
+        "public-life"
+      ]
+    }
+  ],
+  "books": [
+    {
+      "slug": "to-know-as-we-are-known",
+      "title": "To Know as We Are Known",
+      "question": "我们怎样知道？"
+    },
+    {
+      "slug": "active-life",
+      "title": "The Active Life",
+      "question": "我们怎样行动？"
+    },
+    {
+      "slug": "courage-to-teach",
+      "title": "The Courage to Teach",
+      "question": "谁在教？"
+    },
+    {
+      "slug": "let-your-life-speak",
+      "title": "Let Your Life Speak",
+      "question": "生命在召唤什么？"
+    },
+    {
+      "slug": "hidden-wholeness",
+      "title": "A Hidden Wholeness",
+      "question": "怎样不再分裂？"
+    },
+    {
+      "slug": "healing-democracy",
+      "title": "Healing the Heart of Democracy",
+      "question": "我们怎样共同生活？"
+    }
+  ],
+  "sources": [
+    {
+      "title": "Elena Soto, The Spiritual and Educational Vision of Parker J. Palmer",
+      "role": "人物、灵性旅程、教育思想与影响关系的主要二级研究来源。"
+    },
+    {
+      "title": "Parker J. Palmer 原著",
+      "role": "概念、文本脉络与核心命题的第一手来源。"
+    }
+  ]
+}
