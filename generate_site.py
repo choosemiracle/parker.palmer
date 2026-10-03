@@ -1,6 +1,7 @@
 from pathlib import Path
 import html
 import json
+import re
 import shutil
 
 ROOT = Path(__file__).resolve().parent
@@ -390,12 +391,18 @@ h3{font-weight:650}
 }
 @media(max-width:680px){
   .shell{width:min(var(--max),calc(100% - 32px))}
-  h1,h2,h3{word-break:normal!important;overflow-wrap:anywhere;line-break:auto;text-wrap:balance}
+  h1,h2{word-break:normal!important;overflow-wrap:anywhere;line-break:auto;text-wrap:balance;max-width:100%}
+  h3{word-break:normal!important;overflow-wrap:break-word;line-break:strict;text-wrap:pretty;max-width:100%}
   p,.lead,.storyLead{overflow-wrap:anywhere}
-  .semanticTitle .titleLine{width:auto;max-width:100%;white-space:normal;text-wrap:balance}
+  .semanticTitle{width:100%;max-width:100%}
+  .semanticTitle .titleLine{width:auto;max-width:100%;white-space:normal;text-wrap:pretty;overflow-wrap:anywhere;word-break:normal}
+  .semanticTitleDesigned .titleLine{display:block}
+  .semanticTitleNatural .titleLine{display:inline}
+  .card h3{font-size:22px;line-height:1.44;text-wrap:pretty}
+  .sideCard h3,.practiceBox h3{text-wrap:pretty}
   .actions{max-width:100%;min-width:0}
   .btn,.toolButton{max-width:100%;white-space:normal;text-align:center}
-  h1{font-size:clamp(34px,11vw,48px)}
+  h1{font-size:clamp(32px,9.6vw,44px);line-height:1.28}
   .heroMain,.heroMain.compact{min-height:auto;padding:58px 0 78px}
   .heroFoot{bottom:22px}
   .heroSide{padding:0 0 48px}
@@ -596,14 +603,22 @@ def tile(url, tag, title, summary, search=""):
     s=html.escape((search+" "+title+" "+summary).lower())
     return f'<a class="card tile reveal" data-search-card="{s}" href="{url}"><span class="tag">{tag}</span><h3>{title}</h3><p>{summary}</p><span class="arrow">→</span></a>'
 
+def _visible_cjk(text):
+    """Count CJK characters after removing trusted inline markup."""
+    plain=re.sub(r'<[^>]+>','',text)
+    return sum(1 for ch in plain if '\u3400' <= ch <= '\u9fff')
+
 def sem_title(*lines):
-    """Render intentional Chinese title breaks. Each line is kept intact on screen."""
-    return '<span class="semanticTitle">' + ''.join(f'<span class="titleLine">{line}</span>' for line in lines) + '</span>'
+    """Use semantic breaks only for genuinely long titles; short titles flow naturally."""
+    joined=''.join(lines)
+    if _visible_cjk(joined) <= 16:
+        return f'<span class="semanticTitle semanticTitleNatural"><span class="titleLine">{joined}</span></span>'
+    return '<span class="semanticTitle semanticTitleDesigned">' + ''.join(f'<span class="titleLine">{line}</span>' for line in lines) + '</span>'
 
 def sem_title_auto(title):
-    """Split trusted internal titles only at natural Chinese punctuation."""
-    cjk=sum(1 for ch in title if '\u3400' <= ch <= '\u9fff')
-    if cjk <= 10:
+    """Split trusted internal titles only when they are long enough to benefit."""
+    cjk=_visible_cjk(title)
+    if cjk <= 16:
         return title
     for sep in ("：","，","；"):
         if sep in title:
