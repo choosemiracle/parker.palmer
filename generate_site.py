@@ -1,8 +1,8 @@
 from pathlib import Path
 import html, json
 
-ROOT = Path("/Users/weijiahong/Documents/Codex/2026-10-03/k/parker-palmer-study")
-DIST = ROOT / "dist"
+ROOT = Path(__file__).resolve().parent
+DIST = ROOT
 (DIST / "assets").mkdir(parents=True, exist_ok=True)
 for d in ["concepts","books","practice","genealogy","pathways","sources"]:
     (DIST/d).mkdir(parents=True, exist_ok=True)
@@ -19,11 +19,12 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.targe
 """
 (DIST/"assets/site.js").write_text(js, encoding="utf-8")
 
-NAV = '<nav><a href="/genealogy/">思想谱系</a><a href="/concepts/">核心概念</a><a href="/books/">原著地图</a><a href="/practice/">实践实验室</a><a href="/pathways/">研修路径</a><a href="/sources/">资料说明</a></nav>'
+def nav(pref):
+    return f'<nav><a href="{pref}genealogy/">思想谱系</a><a href="{pref}concepts/">核心概念</a><a href="{pref}books/">原著地图</a><a href="{pref}practice/">实践实验室</a><a href="{pref}pathways/">研修路径</a><a href="{pref}sources/">资料说明</a></nav>'
 
 def wrap(title, body, depth=0, desc=""):
     pref = "../"*depth
-    return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}｜帕克·帕尔默思想研究</title><meta name="description" content="{html.escape(desc or title)}"><link rel="stylesheet" href="{pref}assets/site.css"></head><body><header class="top"><div class="shell topin"><a class="brand" href="{pref}index.html"><span class="mark"></span>帕克·帕尔默思想研究</a>{NAV}</div></header>{body}<footer class="footer"><div class="shell"><strong>帕克·帕尔默思想研究与生命实践</strong><p>独立中文研究项目。以 Palmer 原著、带领指南与相关研究文献为基础，目标不是替读者下结论，而是帮助进入文本、形成自己的理解，并把思想带回生活。</p></div></footer><script src="{pref}assets/site.js"></script></body></html>'''
+    return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}｜帕克·帕尔默思想研究</title><meta name="description" content="{html.escape(desc or title)}"><link rel="stylesheet" href="{pref}assets/site.css"></head><body><header class="top"><div class="shell topin"><a class="brand" href="{pref}index.html"><span class="mark"></span>帕克·帕尔默思想研究</a>{nav(pref)}</div></header>{body}<footer class="footer"><div class="shell"><strong>帕克·帕尔默思想研究与生命实践</strong><p>独立中文研究项目。以 Palmer 原著、带领指南与相关研究文献为基础，目标不是替读者下结论，而是帮助进入文本、形成自己的理解，并把思想带回生活。</p></div></footer><script src="{pref}assets/site.js"></script></body></html>'''
 
 concepts = [
 ("inner-teacher","内在导师","Inner Teacher","聆听","不是替你下命令的权威，而是人内在能够辨认真实、意义与方向的资源。","《A Hidden Wholeness》把“关注自己的内在导师”放在信任圈基石之中；《Let Your Life Speak》也把使命理解为一种需要从内部听见的召唤。","此刻我已经隐约知道、却一直没有认真聆听的是什么？",["静默 5 分钟，只记录出现的念头，不评价。","把今天自己说过的一句话抄下来，问：这句话在告诉我什么？","分别写下“别人希望我知道的”和“我自己其实知道的”。"],["true-self","vocation","trustworthy-community"]),
@@ -98,15 +99,15 @@ sources_body='''<main><div class="shell crumbs"><a href="../index.html">首页</
 (DIST/"sources/index.html").write_text(wrap("资料说明",sources_body,1),encoding="utf-8")
 
 home_tiles = [
-("/genealogy/","思想谱系","从社会学、Pendle Hill、贵格会与 Merton 看思想根系"),
-("/concepts/","核心概念","十个概念页面组成可继续扩展的知识网络"),
-("/books/","原著地图","按问题而不是按年代进入主要著作"),
-("/practice/","实践实验室","静默、第三物、信任圈、澄心会与聆听练习"),
-("/pathways/","十二周研修","从原著阅读走向个人、双人和小组实践"),
-("/sources/","资料说明","查看本站如何区分原著、指南、研究与本站解释")
+("genealogy/","思想谱系","从社会学、Pendle Hill、贵格会与 Merton 看思想根系"),
+("concepts/","核心概念","十个概念页面组成可继续扩展的知识网络"),
+("books/","原著地图","按问题而不是按年代进入主要著作"),
+("practice/","实践实验室","静默、第三物、信任圈、澄心会与聆听练习"),
+("pathways/","十二周研修","从原著阅读走向个人、双人和小组实践"),
+("sources/","资料说明","查看本站如何区分原著、指南、研究与本站解释")
 ]
 ht=''.join(f'<a class="card tile reveal" href="{u}"><span class="tag">LEVEL</span><h3>{t}</h3><p>{d}</p><span class="arrow">→</span></a>' for u,t,d in home_tiles)
-home=f'''<main><section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Parker J. Palmer · Study & Practice</div><h1>从<em>一页介绍</em><br>走向一座知识花园</h1><p class="lead">这是一个多层中文知识网站：既可以快速理解 Palmer，也可以沿思想谱系、核心概念、原著、实践与研修路径不断深入。最深的一层，不是“知道更多”，而是把问题带回自己的生命。</p><div class="actions"><a class="btn primary" href="/concepts/">打开知识地图</a><a class="btn" href="/pathways/">开始十二周研修</a></div><div class="heroFoot">网站结构：入口层 → 概念层 → 文本层 → 实践层 → 研修层 → 现实应用层。</div></div><div class="heroSide"><div class="orb"><div class="r"><span>INNER<br>→ OUTER</span></div></div><div class="sideCard"><span class="tag">核心线索</span><h3>内在真实 → 可信赖关系 → 不分裂的行动</h3><p>不是把 Palmer 的思想切成“使命、教育、共同体、民主”几个栏目，而是看见它们围绕同一条生命逻辑展开。</p></div></div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Knowledge Architecture</div><h2>六层入口</h2></div><p>每一层回答不同问题：它从哪里来？在说什么？原文在哪里？如何实践？怎么系统学习？如何带回真实生活？</p></div><div class="knowledgeGrid">{ht}</div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Suggested Entry</div><h2>第一次来，可以这样走</h2></div><p>如果你不想“逛网站”，而想真正进入 Palmer，可以从这三条入口开始。</p></div><div class="grid3"><a class="card tile dark" href="/concepts/vocation.html"><span class="tag">从自己开始</span><h3>使命与召唤</h3><p>适合正在做职业、人生方向与内在选择的人。</p><span class="arrow">→</span></a><a class="card tile dark" href="/concepts/trustworthy-community.html"><span class="tag">从关系开始</span><h3>可信赖的共同体</h3><p>适合社群带领者、教师、教练与空间主理人。</p><span class="arrow">→</span></a><a class="card tile dark" href="/concepts/undivided-life.html"><span class="tag">从现实开始</span><h3>不再分裂地生活</h3><p>适合已经知道某处“内外不一”，准备把理解带进行动的人。</p><span class="arrow">→</span></a></div></div></section></main>'''
+home=f'''<main><section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Parker J. Palmer · Study & Practice</div><h1>从<em>一页介绍</em><br>走向一座知识花园</h1><p class="lead">这是一个多层中文知识网站：既可以快速理解 Palmer，也可以沿思想谱系、核心概念、原著、实践与研修路径不断深入。最深的一层，不是“知道更多”，而是把问题带回自己的生命。</p><div class="actions"><a class="btn primary" href="concepts/">打开知识地图</a><a class="btn" href="pathways/">开始十二周研修</a></div><div class="heroFoot">网站结构：入口层 → 概念层 → 文本层 → 实践层 → 研修层 → 现实应用层。</div></div><div class="heroSide"><div class="orb"><div class="r"><span>INNER<br>→ OUTER</span></div></div><div class="sideCard"><span class="tag">核心线索</span><h3>内在真实 → 可信赖关系 → 不分裂的行动</h3><p>不是把 Palmer 的思想切成“使命、教育、共同体、民主”几个栏目，而是看见它们围绕同一条生命逻辑展开。</p></div></div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Knowledge Architecture</div><h2>六层入口</h2></div><p>每一层回答不同问题：它从哪里来？在说什么？原文在哪里？如何实践？怎么系统学习？如何带回真实生活？</p></div><div class="knowledgeGrid">{ht}</div></div></section><section class="section"><div class="shell"><div class="head"><div><div class="kicker">Suggested Entry</div><h2>第一次来，可以这样走</h2></div><p>如果你不想“逛网站”，而想真正进入 Palmer，可以从这三条入口开始。</p></div><div class="grid3"><a class="card tile dark" href="concepts/vocation.html"><span class="tag">从自己开始</span><h3>使命与召唤</h3><p>适合正在做职业、人生方向与内在选择的人。</p><span class="arrow">→</span></a><a class="card tile dark" href="concepts/trustworthy-community.html"><span class="tag">从关系开始</span><h3>可信赖的共同体</h3><p>适合社群带领者、教师、教练与空间主理人。</p><span class="arrow">→</span></a><a class="card tile dark" href="concepts/undivided-life.html"><span class="tag">从现实开始</span><h3>不再分裂地生活</h3><p>适合已经知道某处“内外不一”，准备把理解带进行动的人。</p><span class="arrow">→</span></a></div></div></section></main>'''
 (DIST/"index.html").write_text(wrap("首页",home,0,"帕克·帕尔默思想研究与生命实践多层知识网站"),encoding="utf-8")
 
 print("generated", len(list(DIST.rglob("*.html"))), "html pages")
