@@ -22,7 +22,6 @@ if (ROOT / "static").exists():
 KNOWLEDGE = json.loads((ROOT / "data/knowledge.json").read_text(encoding="utf-8"))
 PALMER = json.loads((ROOT / "data/parker-palmer.json").read_text(encoding="utf-8"))
 CIRCLE_SITE = KNOWLEDGE["special_sites"]["circle_of_trust"]["url"]
-MOBIUS_SEQ = 0
 
 CSS = r"""
 :root{
@@ -155,7 +154,7 @@ h3{font-weight:650}
 .tile .arrow{position:absolute;right:18px;bottom:15px;color:var(--accent);font-size:20px}
 .tile small{display:block;color:#888;margin-top:12px}
 .tileVisual{height:138px;margin:12px 0 16px;display:grid;place-items:center;overflow:hidden;border-radius:14px;background:rgba(238,229,215,.48);border:1px solid rgba(207,196,179,.7)}
-.tileVisual>svg,.tileVisual .miniDiagram{width:100%;height:100%;max-height:138px}.tileVisual .mobiusWrap{width:100%;transform:scale(.9)}.tileVisual .mobiusWrap svg{max-height:160px}.tileVisual .mobiusLabel,.tileVisual .mobiusCaption{display:none}
+.tileVisual>svg,.tileVisual .miniDiagram{width:100%;height:100%;max-height:138px}.tileVisual .mobiusWrap{width:100%;transform:scale(.72)}.tileVisual .mobiusWrap svg{max-height:160px}
 .dark{background:var(--deep);color:#fff;border-color:var(--deep)}
 .dark p,.dark li{color:#d9dfdb}.dark .mini{border-color:rgba(255,255,255,.14);color:#c8cfca}.dark .tag{color:#e4b379}
 .quote{border-left:3px solid var(--accent);padding:6px 0 6px 18px;font-size:20px;line-height:1.72;color:#354139}
@@ -330,9 +329,8 @@ h3{font-weight:650}
 .relationPulse{stroke-dasharray:5 7;animation:dashMove 8s linear infinite}.subjectLink{stroke-dasharray:90;stroke-dashoffset:90;animation:drawPath 2.2s ease forwards}.balanceNode{transform-box:fill-box;transform-origin:center;animation:balanceNode 5s ease-in-out infinite}
 .publicStage{animation:fadeNode 1.2s ease both}.publicStage.s2{animation-delay:.3s}.publicStage.s3{animation-delay:.6s}.publicStage.s4{animation-delay:.9s}
 @keyframes drawPath{to{stroke-dashoffset:0}}@keyframes pulseNode{0%,100%{opacity:.58;transform:scale(.94)}50%{opacity:1;transform:scale(1.08)}}@keyframes fadeNode{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes whisper{0%,100%{opacity:.28;transform:translateY(0)}50%{opacity:.72;transform:translateY(-4px)}}@keyframes integrityLeft{0%,100%{transform:translateX(-9px)}50%{transform:translateX(7px)}}@keyframes integrityRight{0%,100%{transform:translateX(9px)}50%{transform:translateX(-7px)}}@keyframes communityPerson{0%,100%{opacity:.55;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}@keyframes balanceNode{0%,100%{transform:translateX(-12px)}50%{transform:translateX(12px)}}
-.mobiusWrap{position:relative;width:min(100%,620px);margin:auto;isolation:isolate}.mobiusWrap svg{display:block;width:100%;height:auto;overflow:visible}.mobiusMonoForm{transform-box:fill-box;transform-origin:center}.mobiusMonoShadow,.mobiusMonoBase,.mobiusMonoFace,.mobiusMonoFlow,.mobiusMonoCrossBase,.mobiusMonoCross{fill:none;stroke-linejoin:round}.mobiusMonoShadow{stroke:#111;stroke-width:54;stroke-linecap:round;opacity:.055;filter:blur(7px)}.mobiusMonoBase{stroke:#161616;stroke-width:52;stroke-linecap:round;opacity:.95}.mobiusMonoFace{stroke-width:46;stroke-linecap:round}.mobiusMonoFlow{stroke:#fff;stroke-width:15;stroke-linecap:round;stroke-dasharray:94 802;opacity:.075;filter:blur(5px);animation:mobiusMonoLight 20s linear infinite}.mobiusMonoCrossBase{stroke:#161616;stroke-width:52;stroke-linecap:butt;opacity:.96}.mobiusMonoCross{stroke-width:46;stroke-linecap:butt}
-@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusMonoLight{to{stroke-dashoffset:-896}}
-@media(prefers-reduced-motion:reduce){.mobiusMonoFlow{animation:none!important}}
+.mobiusWrap{position:relative;width:min(100%,560px);margin:auto;perspective:900px}.mobiusWrap svg{overflow:visible;transform-origin:50% 50%;animation:mobiusFloat 8s ease-in-out infinite}.mobiusShadow{fill:none;stroke:#1f2924;stroke-width:43;stroke-linecap:round;opacity:.14;filter:url(#mobiusShadow)}.mobiusRibbon{fill:none;stroke:url(#mobiusRibbonGrad);stroke-width:34;stroke-linecap:round;filter:url(#mobiusSoftShadow)}.mobiusEdge{fill:none;stroke:rgba(255,255,255,.66);stroke-width:2;stroke-linecap:round;opacity:.6}.mobiusUnderEdge{fill:none;stroke:#5a3b2c;stroke-width:1.4;stroke-linecap:round;opacity:.55}.mobiusCrossShadow{fill:none;stroke:#1c2a24;stroke-width:43;stroke-linecap:round;opacity:.22;filter:url(#mobiusShadow)}.mobiusCross{fill:none;stroke:url(#mobiusCrossGrad);stroke-width:35;stroke-linecap:round;filter:url(#mobiusSoftShadow)}.mobiusGlint{fill:none;stroke:#fff4d6;stroke-width:5;stroke-linecap:round;stroke-dasharray:30 520;animation:mobiusGlint 6.5s linear infinite;opacity:.82}.mobiusLabel{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;fill:#526059}.mobiusLabel.accent{fill:#8a4f2d;font-weight:700}
+@keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusGlint{to{stroke-dashoffset:-550}}@keyframes mobiusFloat{0%,100%{transform:rotateX(7deg) rotateZ(-1.5deg) translateY(0)}50%{transform:rotateX(3deg) rotateZ(1deg) translateY(-5px)}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
 .bioIntro{display:grid;grid-template-columns:minmax(0,680px) minmax(300px,420px);gap:72px;align-items:start;justify-content:space-between}
@@ -646,48 +644,30 @@ def sem_title_auto(title):
     return title
 
 def svg_mobius():
-    global MOBIUS_SEQ
-    MOBIUS_SEQ += 1
-    uid=f"mobius-{MOBIUS_SEQ}"
-    path="M78,160 C132,62 214,60 280,160 C346,260 428,258 482,160 C428,62 346,60 280,160 C214,260 132,258 78,160"
-    cross="M196,72 C235,100 258,137 280,160 C303,184 326,223 365,250"
-    return f'''<div class="mobiusWrap"><svg viewBox="0 0 560 320" role="img" aria-label="抽象莫比乌斯带：内在与外在持续流动、彼此转化" data-animated-svg>
+    path="M62,150 C118,46 205,43 260,150 C315,257 402,254 458,150 C402,46 315,43 260,150 C205,257 118,254 62,150"
+    cross="M207,88 C231,105 246,132 260,150 C274,169 292,194 316,211"
+    return f'''<div class="mobiusWrap"><svg viewBox="0 0 520 310" role="img" aria-label="立体莫比乌斯带：内在生命与外在世界彼此连续、彼此塑造" data-animated-svg>
       <defs>
-        <linearGradient id="{uid}-mono" x1="0%" y1="12%" x2="100%" y2="88%">
-          <stop offset="0%" stop-color="#171717"/>
-          <stop offset="18%" stop-color="#414141"/>
-          <stop offset="36%" stop-color="#b9b9b6"/>
-          <stop offset="50%" stop-color="#ecebe7"/>
-          <stop offset="64%" stop-color="#9a9a96"/>
-          <stop offset="82%" stop-color="#3f3f3f"/>
-          <stop offset="100%" stop-color="#171717"/>
+        <linearGradient id="mobiusRibbonGrad" x1="0%" y1="15%" x2="100%" y2="85%">
+          <stop offset="0%" stop-color="#d7c5af"/><stop offset="20%" stop-color="#a66a43"/><stop offset="45%" stop-color="#6d402c"/>
+          <stop offset="55%" stop-color="#273b32"/><stop offset="78%" stop-color="#87958b"/><stop offset="100%" stop-color="#e3d6c4"/>
         </linearGradient>
-        <linearGradient id="{uid}-cross" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#d9d8d4"/>
-          <stop offset="34%" stop-color="#f2f1ed"/>
-          <stop offset="62%" stop-color="#8f8f8b"/>
-          <stop offset="100%" stop-color="#1a1a1a"/>
+        <linearGradient id="mobiusCrossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f0dfc7"/><stop offset="34%" stop-color="#b77a4d"/><stop offset="62%" stop-color="#6f4631"/><stop offset="100%" stop-color="#26372f"/>
         </linearGradient>
-        <radialGradient id="{uid}-cross-fade" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="white"/>
-          <stop offset="58%" stop-color="white"/>
-          <stop offset="100%" stop-color="black"/>
-        </radialGradient>
-        <mask id="{uid}-cross-mask">
-          <rect x="0" y="0" width="560" height="320" fill="black"/>
-          <ellipse cx="280" cy="160" rx="92" ry="82" fill="url(#{uid}-cross-fade)"/>
-        </mask>
+        <filter id="mobiusShadow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7"/></filter>
+        <filter id="mobiusSoftShadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#1f2924" flood-opacity=".18"/></filter>
       </defs>
-      <g class="mobiusMonoForm">
-        <path class="mobiusMonoShadow" d="{path}"/>
-        <path class="mobiusMonoBase" d="{path}"/>
-        <path class="mobiusMonoFace" d="{path}" stroke="url(#{uid}-mono)"/>
-        <path class="mobiusMonoFlow" d="{path}"/>
-        <g mask="url(#{uid}-cross-mask)">
-          <path class="mobiusMonoCrossBase" d="{cross}"/>
-          <path class="mobiusMonoCross" d="{cross}" stroke="url(#{uid}-cross)"/>
-        </g>
-      </g>
+      <path class="mobiusShadow" d="{path}"/>
+      <path class="mobiusRibbon" d="{path}"/>
+      <path class="mobiusUnderEdge" d="{path}"/>
+      <path class="mobiusEdge" d="{path}"/>
+      <path class="mobiusCrossShadow" d="{cross}"/>
+      <path class="mobiusCross" d="{cross}"/>
+      <path class="mobiusGlint" d="{path}"/>
+      <text class="mobiusLabel accent" x="66" y="45">INNER · 内在</text>
+      <text class="mobiusLabel" x="365" y="278">OUTER · 外在</text>
+      <text class="mobiusLabel" x="171" y="302">沿着同一条带前行，内与外会彼此转化</text>
     </svg></div>'''
 
 def svg_split_whole():
