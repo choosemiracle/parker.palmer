@@ -291,7 +291,19 @@
     "title": "自修中心",
     "url": "self-study/",
     "type": "自修",
-    "summary": "静默、自由书写、第三物、开放问题与个人记录组成的轻量练习空间。"
+    "summary": "静默、自由书写、第三物、开放问题、专题模块与个人记录组成的练习空间。"
+  },
+  {
+    "title": "默观与行动",
+    "url": "self-study/contemplation-action.html",
+    "type": "专题自修",
+    "summary": "跨读 The Company of Strangers、The Active Life、The Courage to Teach 与 A Hidden Wholeness，理解默观与行动如何共同形成完整生命。"
+  },
+  {
+    "title": "悖论思想",
+    "url": "self-study/paradox.html",
+    "type": "专题自修",
+    "summary": "从 both-and、六组教学空间悖论到悲剧性张力与第三条路，学习承载两种同时真实的力量。"
   },
   {
     "title": "第三物素材库",

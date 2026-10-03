@@ -1538,6 +1538,11 @@ for c in concepts:
     circle_extra=""
     if c["slug"] in {"trustworthy-community","third-things","honest-open-questions","soul"}:
         circle_extra=f'''<div class="externalCta"><div><span class="tag">信任圈专题</span><h3>这个概念在信任圈专题中还有更完整的实践脉络</h3><p>主站保留它在帕尔默整体思想中的位置；信任圈的历史、规则、11 条基石、第三物与澄心会实践统一在专题站继续。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入信任圈专题 ↗</a></div>'''
+    deep_module_extra=""
+    if c["slug"]=="active-life":
+        deep_module_extra='''<div class="externalCta"><div><span class="tag">专题自修 · Deep Dive</span><h3>默观与行动：从“平衡”走向内外共同创造</h3><p>跨读《The Company of Strangers》《The Active Life》《The Courage to Teach》与《A Hidden Wholeness》，并完成行动 / 反应审计与莫比乌斯带练习。</p></div><a class="btn" href="../self-study/contemplation-action.html">进入专题模块 →</a></div>'''
+    elif c["slug"]=="paradox":
+        deep_module_extra='''<div class="externalCta"><div><span class="tag">专题自修 · Deep Dive</span><h3>悖论思想：从 both-and 到悲剧性张力</h3><p>深入六组经典教学悖论、拆分悖论后的阴影、承载张力与第三条路，并把一个真实困境画成张力地图。</p></div><a class="btn" href="../self-study/paradox.html">进入专题模块 →</a></div>'''
     body=f'''<main>{crumbs(1,[("核心概念","index.html"),(c["cn"],None)])}
     <section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">{c["en"]}</div><h1>{sem_title(c["verb"]+"：",f'<em>{c["cn"]}</em>')}</h1><p class="lead">{c["summary"]}</p><div class="actions"><a class="btn primary" href="#practice">现在就练</a><a class="btn" href="#relations">看它与什么相连</a></div><div class="heroFoot">概念不是定义：理解 → 误读校准 → 经验操练 → 原著 → 关系网络 → 现实行动。</div></div><div class="heroSide"><div class="visualPanel">{visual}</div><div class="sideCard"><span class="tag">带着这个问题</span><h3>{prompt}</h3></div></div></div></section>
     <section class="section"><div class="shell articleLayout"><aside class="toc"><span class="tag">本页导航</span><a href="#meaning">概念位置</a><a href="#text">原著脉络</a><a href="#misread">常见误读</a><a href="#practice">现在操练</a><a href="#relations">知识关联</a><a href="#sources">来源</a><a href="#related">继续探索</a></aside><article class="article">
@@ -1545,7 +1550,7 @@ for c in concepts:
     <section id="meaning"><span class="kicker">Meaning</span><h2>{sem_title("它在整套思想中，","处在什么位置")}</h2><p>{c["where"]}</p><div class="quote">{c["summary"]}</div></section>
     <section id="text"><span class="kicker">Textual Context</span><h2>{sem_title("不要把概念","从原著里拆出来")}</h2><p>{c["where"]}</p><p>阅读这个概念时，可以同时追问三个层次：它怎样描述<strong>内在经验</strong>？它要求怎样的<strong>关系条件</strong>？当它进入工作、教育或公共世界时，又怎样成为一种<strong>现实行动</strong>？</p></section>
     <section id="misread"><span class="kicker">Calibration</span><h2>不要把它误读成什么</h2><ul>{''.join(f'<li>{x}</li>' for x in c["misread"])}</ul></section>
-    <section id="practice"><div class="practiceBox"><span class="kicker">Practice</span><h3>先按步骤走一遍</h3><div class="steps">{''.join(f'<div class="step"><div>{x}</div></div>' for x in c["practice"])}</div></div>{practice_lab("concept-"+c["slug"],c["cn"],prompt,10)}<div class="actions"><a class="toolButton" href="../self-study/third-things.html">换一个第三物进入</a><a class="toolButton" href="../self-study/questions.html">用开放问题继续</a><a class="toolButton" href="../self-study/records.html">查看我的记录</a></div></section>
+    <section id="practice"><div class="practiceBox"><span class="kicker">Practice</span><h3>先按步骤走一遍</h3><div class="steps">{''.join(f'<div class="step"><div>{x}</div></div>' for x in c["practice"])}</div></div>{practice_lab("concept-"+c["slug"],c["cn"],prompt,10)}<div class="actions"><a class="toolButton" href="../self-study/third-things.html">换一个第三物进入</a><a class="toolButton" href="../self-study/questions.html">用开放问题继续</a><a class="toolButton" href="../self-study/records.html">查看我的记录</a></div>{deep_module_extra}</section>
     <section id="relations"><span class="kicker">Knowledge Connections</span><h2>{sem_title("这个概念，","在整套思想里连接什么")}</h2><p>不要把“{c["cn"]}”单独记住。沿着原著、实践、相关概念与现实场景往返，才能看见它真正的作用。</p>{relation_panel(c)}{circle_extra}</section>
     <section id="sources"><div class="sourceBox"><h3>主要原著脉络</h3><ul>{''.join(f'<li>{x}</li>' for x in c["sources"])}</ul><p><span class="badge">原著梳理</span><span class="badge">本站中文解释</span><span class="badge">自修工具为本站设计</span></p></div></section>
     <section id="related"><span class="kicker">Connections</span><h2>继续沿着关系走</h2><div class="grid3">{related}</div></section>
@@ -1681,8 +1686,8 @@ weeks=[
 ("07","第三物","隐喻、诗歌、故事与间接表达","practice/third-things.html"),
 ("08","开放问题与澄心","从建议转向辨识","practice/clearness-committee.html"),
 ("09","认识与真理","To Know as We Are Known：从占有到关系","concepts/knowing-loving.html"),
-("10","沉思与行动","The Active Life：行动、反应与失败","concepts/active-life.html"),
-("11","悲剧性张力","现实与可能之间的承载","practice/tragic-gap.html"),
+("10","默观与行动","跨读 The Active Life：看清现实、行动/反应与内外共同创造","self-study/contemplation-action.html"),
+("11","悖论与悲剧性张力","从 both-and 到现实 / 可能之间的承载","self-study/paradox.html"),
 ("12","带回世界","做一次不再分裂、但可承担后果的行动","concepts/undivided-life.html"),
 ]
 whtml="".join(f'<a class="card tile" href="../{u}"><span class="tag">WEEK {n}</span><h3>{t}</h3><p>{d}</p><span class="arrow">→</span></a>' for n,t,d,u in weeks)
@@ -1707,7 +1712,11 @@ course_dir=study_dir/"hidden-wholeness"
 course_dir.mkdir(parents=True,exist_ok=True)
 
 study_home=f'''<main>{crumbs(1,[("自修中心",None)])}<section class="studyWelcome"><div class="shell"><div class="studyWelcomeGrid"><div class="studyWelcomeCopy"><div class="eyebrow">开始探索 · Self-Study</div><h1>{sem_title("读一点，停一停，","<em>让生命自己回应</em>")}</h1><p class="lead">第一次来，不用先读完帕尔默，也不需要懂所有术语。你可以从十分钟开始：读一小段，安静一会儿，写下此刻真实的回应，再把一个小行动带回生活。</p><div class="actions"><a class="btn primary" href="practice-now.html">从 10 分钟开始</a><a class="btn" href="#tools">先看看有哪些工具</a></div></div><aside class="studyGuide"><span class="kicker">第一次来？这样用</span><h2>不用“学会”，先亲自体验一次</h2><div class="studyGuideStep"><b>1</b><div><strong>先停下来</strong><span>给自己 10 分钟，不需要解决整个人生。</span></div></div><div class="studyGuideStep"><b>2</b><div><strong>写下一句真的话</strong><span>不求漂亮，只记录此刻你已经隐约知道的东西。</span></div></div><div class="studyGuideStep"><b>3</b><div><strong>再决定往哪里走</strong><span>需要时再进入第三物、开放问题、个人记录或系统共读。</span></div></div></aside></div></div></section>
-<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">个人练习空间</span><h2>{sem_title("这是你的练习空间，","不是成绩单")}</h2><p>这里不会给你打分，也不要求把所有模块做完。更重要的是：你是否更能听见自己、更少替别人下结论，并把内在已经知道的事带回现实。你主动保存的文字只存在当前浏览器。</p><div class="actions"><a class="toolButton primary" href="records.html">查看我的记录</a></div></div><div class="studyStat"><div><strong data-study-record-count>0</strong><span>条个人记录</span></div><div><strong>4</strong><span>个可重复使用的工具入口</span></div></div></div></div></section>
+<section class="section"><div class="shell"><div class="studyDock"><div><span class="kicker">个人练习空间</span><h2>{sem_title("这是你的练习空间，","不是成绩单")}</h2><p>这里不会给你打分，也不要求把所有模块做完。更重要的是：你是否更能听见自己、更少替别人下结论，并把内在已经知道的事带回现实。你主动保存的文字只存在当前浏览器。</p><div class="actions"><a class="toolButton primary" href="records.html">查看我的记录</a></div></div><div class="studyStat"><div><strong data-study-record-count>0</strong><span>条个人记录</span></div><div><strong>2</strong><span>个专题自修模块</span></div></div></div></div></section>
+<section class="section" id="deep-modules"><div class="shell"><div class="head wideHead"><div><div class="kicker">Deep-Dive Modules</div><h2>{sem_title("两条贯穿帕尔默一生的思想线，","值得单独慢慢走")}</h2></div><p>这两页不是把已有概念放大，而是跨越早期公共生活写作、《The Active Life》《The Courage to Teach》与《A Hidden Wholeness》，看同一个思想怎样逐步成熟，并把它变成可亲自实践的辨识方式。</p></div><div class="grid2">
+<a class="card tile reveal" href="contemplation-action.html"><span class="tag">MODULE 01 · CONTEMPLATION & ACTION</span><div class="tileVisual">{svg_mobius()}</div><h3>默观与行动</h3><p>默观不是退出世界，行动也不是不断做事。帕尔默把两者理解为彼此校正、彼此生成的生命运动：看清现实，并参与共同创造现实。</p><span class="arrow">→</span></a>
+<a class="card tile reveal" href="paradox.html"><span class="tag">MODULE 02 · PARADOX</span><div class="tileVisual">{svg_paradox()}</div><h3>悖论思想</h3><p>不是模糊折中，也不是永不决定，而是学习让两种同时真实的力量保持张力，直到出现比“二选一”更完整的理解与行动。</p><span class="arrow">→</span></a>
+</div></div></section>
 <section class="section" id="tools"><div class="shell"><div class="head"><div><div class="kicker">四个工具入口</div><h2>需要什么，就从哪里开始</h2></div><p>工具的目的不是制造“深度感”，而是帮助你减慢反应、留下空白、记录线索，并沿知识关系继续探索。</p></div><div class="grid4">
 {tile("practice-now.html","10 分钟","现在练一次","静默、计时与自由书写，从一个真实问题开始。")}
 {tile("third-things.html","第三物","第三物素材库","不用直接逼问自己，让一个物件、画面或隐喻从侧面打开经验。")}
@@ -1716,6 +1725,108 @@ study_home=f'''<main>{crumbs(1,[("自修中心",None)])}<section class="studyWel
 </div></div></section>
 <section class="section"><div class="shell"><div class="head"><div><div class="kicker">一次完整练习</div><h2>{sem_title("如果时间允许，","可以留出 35–60 分钟")}</h2></div><p>不用每次都做全，但尽量不要只停在阅读。</p></div><div class="pathwayFlow"><div class="flowNode"><b>5–15 分钟</b><small>读一小段原著</small></div><div class="flowNode"><b>3 分钟</b><small>静默，不解释</small></div><div class="flowNode"><b>10 分钟</b><small>自由书写</small></div><div class="flowNode"><b>5 分钟</b><small>第三物 / 开放问题</small></div><div class="flowNode"><b>5 分钟</b><small>提炼一句带走</small></div><div class="flowNode"><b>现实中</b><small>做一个小行动</small></div></div><div class="externalCta"><div><span class="tag">深入专题</span><h3>想系统学习《内在之光》与信任圈？</h3><p>请进入独立专题站，那里维护章节研读、历史脉络与完整实践结构。</p></div><a class="btn" href="{CIRCLE_SITE}" target="_blank" rel="noopener">进入专题站 ↗</a></div></div></section></main>'''
 (study_dir/"index.html").write_text(wrap("自修中心",study_home,1),encoding="utf-8")
+
+# ---------- deep-dive self-study modules ----------
+contemplation_action=f'''<main>{crumbs(1,[("自修中心","index.html"),("默观与行动",None)])}
+<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Deep-Dive 01 · Contemplation & Action</div><h1>{sem_title("默观不是退出世界，","行动也不只是<em>不断去做</em>")}</h1><p class="lead">在帕尔默那里，<strong>默观（contemplation）与行动（action）不是两种互相竞争的生活方式</strong>。默观帮助我们穿过表象与自我欺骗，看见更真实的处境；行动则让我们进入关系，与他人、世界及更大的生命现实共同创造下一刻。两者不断互相检验，构成一种“默观中的行动、行动中的默观”。</p><div class="actions"><a class="btn primary" href="#practice">从自己的生活开始辨认</a><a class="btn" href="../concepts/active-life.html">回到核心概念</a></div><div class="heroFoot">译词说明：本站在这一专题使用“默观”对应 contemplation，强调它不只等于静坐或沉默；帕尔默所说的 contemplation 也包括反思、看穿幻象，以及在经验中重新看见真实。</div></div><div class="heroSide"><div class="visualPanel">{svg_mobius()}</div><div class="sideCard"><span class="tag">一个关键问题</span><h3>我正在参与共同创造怎样的现实？</h3><p>不只问“我做了什么”，还要问：这个行动从哪里出发？它正在使我与世界变得更真实，还是更焦虑、更扭曲？</p></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head wideHead"><div><span class="kicker">Two Movements</span><h2>{sem_title("一个负责“看清”，","一个负责“进入并共同创造”")}</h2></div><p>《The Active Life》的带领材料把这两种运动定义得很宽：它们不是宗教专家才拥有的特殊技巧，而是每个人日常生命里本来就有的两股力量。</p></div><div class="grid2">
+<div class="card dark"><span class="tag">CONTEMPLATION · 默观</span><h3>揭开“看似现实”的幻象</h3><p>默观的核心，不是让脑中没有念头，而是让我们有机会发现：哪些东西只是恐惧、惯性、社会期待或自我形象制造出来的“现实”？什么在更深处其实已经被我们知道？</p><p class="mini">它可能发生在静默、祈祷、阅读、写作、独处中，也可能突然发生在失望、失败、关系冲突或一场无法继续自欺的经验里。</p></div>
+<div class="card dark"><span class="tag">ACTION · 行动</span><h3>参与现实，而不是站在现实之外操控</h3><p>行动并不等于忙碌。帕尔默把行动理解为：我们以某种方式与他人及世界一起参与现实的形成。说话、照顾、教学、创造、拒绝、加入一个共同事业，都可能是行动。</p><p class="mini">因此行动最重要的问题不是“我完成了多少”，而是：我从什么身份出发？我把什么带进关系？我正在共同创造什么？</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">The Living Paradox</span><h2>为什么两者缺一不可</h2></div><p>帕尔默最警惕的，不是一个人更偏行动或更偏默观，而是把两者拆成互不相干的世界。</p></div><div class="grid3">
+<div class="card"><span class="tag">只有行动</span><h3>容易滑向躁动、反应与控制</h3><p>当行动失去反思，它很容易由焦虑驱动：不断读取别人怎样看我、环境要求我成为什么，然后快速回应。看似积极，其实可能只是被外界牵着走。</p></div>
+<div class="card"><span class="tag">只有默观</span><h3>容易滑向退避与自我封闭</h3><p>如果内在工作从不返回关系与现实，它可能变成另一种安全区：我越来越会理解自己，却不必承担改变现实关系所带来的风险。</p></div>
+<div class="card"><span class="tag">默观 × 行动</span><h3>形成一个不断学习的循环</h3><p>行动暴露我们的幻象，默观帮助看见它；新的看见再进入行动。成功与失败都不再只是结果，而成为继续认识自己与现实的材料。</p></div>
+</div><div class="pathwayFlow" style="margin-top:24px"><div class="flowNode"><b>看见</b><small>发生了什么</small></div><div class="flowNode"><b>停留</b><small>不急着反应</small></div><div class="flowNode"><b>辨认</b><small>幻象 / 真实</small></div><div class="flowNode"><b>行动</b><small>进入现实</small></div><div class="flowNode"><b>承受结果</b><small>成功 / 失败</small></div><div class="flowNode"><b>再看见</b><small>继续学习</small></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head wideHead"><div><span class="kicker">Across Palmer's Work</span><h2>{sem_title("这不是《The Active Life》的一章，","而是一条贯穿几十年的思想线")}</h2></div><p>从早期公共生活写作，到后来的莫比乌斯带与“不再分裂”，同一问题一直在发展：内在生命怎样进入外在世界，而不被外在世界吞没？</p></div><div class="grid4">
+<div class="card"><span class="tag">1981 · The Company of Strangers</span><h3>向内走，不是离开公共世界</h3><p>早期帕尔默已经反对“内在 / 公共”的二分。他认为真正的内在探索，应当使人重新进入共同体与公共责任，并为长期行动补充不会轻易耗尽的来源。</p></div>
+<div class="card"><span class="tag">1990 · The Active Life</span><h3>形成“活的悖论”</h3><p>他系统讨论默观与行动的关系、行动的阴影、正确行动、失败，以及工具性行动与表达性行动之间的区别。</p></div>
+<div class="card"><span class="tag">1998 · The Courage to Teach</span><h3>内在身份进入外在专业角色</h3><p>“我们教我们所是。”行动不再只是做正确的方法，而要看教师把怎样的身份、恐惧与完整性带进课堂关系。</p></div>
+<div class="card"><span class="tag">2004 · A Hidden Wholeness</span><h3>莫比乌斯带：内与外本来就在互相形成</h3><p>帕尔默不再只说“两者需要平衡”，而用莫比乌斯带说明：内与外其实是同一生命表面的连续流动。问题不是要不要连接，而是我们能否清醒地参与这种连接。</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Four Distinctions</span><h2>四个最容易混淆的地方</h2></div><p>把这四组区别看清，会比“我要多静坐一点 / 多行动一点”更接近帕尔默。</p></div><table class="table"><thead><tr><th>容易混淆</th><th>帕尔默式辨别</th><th>可以问自己</th></tr></thead><tbody>
+<tr><td><strong>行动 ≠ 忙碌</strong></td><td>忙碌可能只是焦虑反应；行动应该从较稳定的身份与真实关切出发。</td><td>如果没人看见、没人表扬，我还会做这件事吗？</td></tr>
+<tr><td><strong>默观 ≠ 什么都不做</strong></td><td>看穿幻象本身已经会改变我们与现实的关系；有时不立即介入，反而是更有责任的行动。</td><td>我现在最想立刻解决什么？如果先不解决，我可能看见什么？</td></tr>
+<tr><td><strong>工具性行动 ≠ 全部行动</strong></td><td>为了预定结果而行动有其必要，但如果一切都只用结果衡量，人会越来越依赖控制。表达性行动则让内在天赋与真实在世界中获得形式。</td><td>这一步除了“达成结果”，还表达了我重视什么？</td></tr>
+<tr><td><strong>行动 ≠ 反应</strong></td><td>反应来自对别人期待与世界要求的焦虑读取；真实行动更能承受不被理解，也更能接受现实反馈。</td><td>我是在回应真实处境，还是在回应自己对处境的恐惧？</td></tr>
+</tbody></table></div></section>
+
+<section class="section"><div class="shell"><div class="storyGrid"><div><span class="kicker">Möbius Strip</span><h2>{sem_title("不是“先修好内在，再去行动”，","而是看见内外<em>一直在互相塑造</em>")}</h2><p class="storyLead">《A Hidden Wholeness》把早期的 contemplation-and-action 推得更远：我们并没有一个纯粹的“内在世界”，等准备好了才打开门走出去。恐惧、价值、信念与阴影一直从里面流向外部；制度、关系与时代也一直从外部流进我们里面。</p><p class="storyLead">因此，内在工作不是行动之前的一项准备工作，而是行动本身的一部分；现实行动也不是内在工作的“应用题”，而是帮助我们发现自己究竟相信什么的重要途径。</p><div class="actions"><a class="toolButton" href="../concepts/identity-integrity.html">身份与完整性</a><a class="toolButton" href="../concepts/undivided-life.html">不再分裂</a><a class="toolButton" href="../concepts/public-life.html">公共生活</a></div></div><div class="visualPanel">{svg_mobius()}</div></div></div></section>
+
+<section class="section" id="practice"><div class="shell"><div class="head"><div><span class="kicker">Practice 01</span><h2>{sem_title("做一次“行动 / 反应”审计，","再决定下一步")}</h2></div><p>不要从宏大使命开始，只选过去 48 小时里一件你投入了明显精力的事。</p></div><div class="grid2">
+<div class="practiceBox"><span class="tag">四栏书写</span><h3>把一个真实行动拆开来看</h3><div class="steps"><div class="step"><div><strong>事实</strong>：我实际做了什么？只写可观察的动作。</div></div><div class="step"><div><strong>驱动力</strong>：我在害怕什么、证明什么、保护什么、回应什么？</div></div><div class="step"><div><strong>共同创造</strong>：我的做法正在让关系或环境变成什么样？</div></div><div class="step"><div><strong>下一步</strong>：如果更少被焦虑控制，我仍愿意做什么？会停止什么？</div></div></div></div>
+<div class="practiceBox"><span class="tag">莫比乌斯带练习</span><h3>把“里面”与“外面”放在同一条带子上</h3><p>拿一张纸条。一面写下此刻重要的内在力量：天赋、价值、恐惧、渴望；另一面写你正在世界里承担的工作、关系与责任。把纸条扭转半圈粘成莫比乌斯带，再沿表面用手指慢慢走一圈。</p><p>然后问：<strong>哪些内在力量正在外化？哪些外在经验正在重塑我？我想更有意识地参与哪一段交换？</strong></p></div>
+</div>
+{practice_lab("deep-contemplation-action","默观与行动","选一件最近让我很忙、很急或很想控制结果的事：如果先不问“怎样成功”，而问“这里真正的现实是什么”，我看见了什么？",15)}
+</div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">Practice 02</span><h2>一周“默观—行动”循环</h2></div><p>把专题变成七天的小实验，而不是一次性的理解。</p></div><div class="grid4">
+<div class="card"><span class="tag">DAY 1–2</span><h3>只观察反应</h3><p>每次明显着急、解释、证明或介入时，记一笔：刚才是什么触发了我？</p></div>
+<div class="card"><span class="tag">DAY 3–4</span><h3>加入短暂停顿</h3><p>在一个惯常快速回应的场景里，给自己 30 秒到 3 分钟，不为了平静，只为了看得更完整。</p></div>
+<div class="card"><span class="tag">DAY 5–6</span><h3>做一个表达性行动</h3><p>选择一件即使结果不确定，你仍愿意因为它忠于某项价值或天赋而去做的事。</p></div>
+<div class="card"><span class="tag">DAY 7</span><h3>把结果变成教材</h3><p>不先评判成败。只问：这次行动揭露了我、他人和现实的什么？下一轮要怎样调整？</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="sourceBox"><h3>主要文本依据</h3><ul><li><em>The Company of Strangers</em>：早期“内在探索—公共行动”与“悖论的事工”脉络。</li><li><em>The Active Life</em> 及 Leader's Guide：默观、行动、行动/反应、工具性/表达性行动、失败与学习循环。</li><li><em>The Courage to Teach</em>：身份与完整性如何进入真实专业行动。</li><li><em>A Hidden Wholeness</em>：莫比乌斯带、内外共同创造与“不再分裂”的成熟表达。</li></ul><p><span class="badge">原著梳理</span><span class="badge">跨文本综合</span><span class="badge">练习为本站再设计</span></p></div><div class="actions"><a class="btn primary" href="paradox.html">继续：悖论思想 →</a><a class="btn" href="../books/active-life.html">进入《The Active Life》</a></div></div></section>
+</main>'''
+(study_dir/"contemplation-action.html").write_text(wrap("默观与行动",contemplation_action,1,"深入梳理 Parker J. Palmer 的默观与行动思想：从内在探索与公共行动，到 The Active Life 的活的悖论，再到 A Hidden Wholeness 的莫比乌斯带。"),encoding="utf-8")
+
+paradox_pairs=[
+("有边界，也开放","没有边界，空间会散掉；只有边界，探索又会窒息。边界提供共同中心，开放保留真正发现的可能。"),
+("好客，也带着张力","安全不等于没有挑战。好的空间既让人感到被欢迎，也让重要问题保持足够的“电荷”，不被礼貌稀释。"),
+("个人声音，也有群体声音","个人不应被群体淹没，群体也不只是若干私人意见的相加；两种声音要能彼此修正。"),
+("小故事，也有大故事","个人经验需要被认真听见，也需要放进学科、历史与传统的大叙事中，避免只剩自我中心。"),
+("独处，也有共同体","内在辨识必须保有不可侵犯的独处空间，但真正的共同体又能帮助我们看见自己看不见的部分。"),
+("沉默，也有言说","言说让经验获得形式；沉默让言说不至于变成自动反应，也让尚未成形的理解有时间出现。")
+]
+paradox_cards="".join(f'<div class="card"><span class="tag">PARADOX {i:02d}</span><h3>{title}</h3><p>{body}</p></div>' for i,(title,body) in enumerate(paradox_pairs,1))
+
+paradox_module=f'''<main>{crumbs(1,[("自修中心","index.html"),("悖论思想",None)])}
+<section class="hero"><div class="shell heroGrid"><div class="heroMain"><div class="eyebrow">Deep-Dive 02 · Paradox</div><h1>{sem_title("悖论不是含糊折中，","而是学习<em>不急着切掉一半现实</em>")}</h1><p class="lead">帕尔默常把最重要的生命问题写成一对彼此拉扯的真理：独处与共同体、自由与纪律、思想与感受、默观与行动、现实与可能。<strong>悖论（paradox）的任务不是让两端各退一步，而是先让两端都保持完整地在场</strong>，看看张力能否把我们的理解、关系与行动打开到更大的空间。</p><div class="actions"><a class="btn primary" href="#six">看六组经典悖论</a><a class="btn" href="../concepts/paradox.html">回到核心概念</a></div><div class="heroFoot">重要边界：帕尔默的“both-and”并不意味着事实没有真假、伦理没有界限，也不要求人在危险中继续承受伤害。并非所有矛盾都需要被“悖论化”。</div></div><div class="heroSide"><div class="visualPanel">{svg_paradox()}</div><div class="sideCard"><span class="tag">先这样辨认</span><h3>A 是真的，B 也是真的。</h3><p>如果两句话都能被真实经验支持，却在实践中互相拉扯，你面对的可能不是一道“选边题”，而是一段需要被承载的张力。</p></div></div></div></section>
+
+<section class="section"><div class="shell"><div class="head wideHead"><div><span class="kicker">What Paradox Is</span><h2>{sem_title("先区分三件事：","矛盾、模糊，与悖论")}</h2></div><p>如果一切冲突都被叫作“悖论”，both-and 很快会变成逃避判断的口号。帕尔默真正关心的是那些“深层真理”之间的创造性张力。</p></div><div class="grid3">
+<div class="card"><span class="tag">不是</span><h3>事实矛盾</h3><p>“会议在三点开始”和“会议不在三点开始”不能因为 both-and 就同时成立。经验事实仍然需要核实、判断与选择。</p></div>
+<div class="card"><span class="tag">不是</span><h3>模糊折中</h3><p>悖论不是双方各让 50%，也不是把尖锐问题磨平。相反，它要求我们更完整地看见两端各自携带的真实与风险。</p></div>
+<div class="card dark"><span class="tag">是</span><h3>两种深层真理的创造性张力</h3><p>它们如果被拆开，会分别退化；如果被强行合并，也会失真。成熟的任务是把两端放在一个足够大的生命空间里共同工作。</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="storyGrid"><div><span class="kicker">Two Images</span><h2>{sem_title("像呼吸，也像电池，","生命来自两端之间的<em>流动与电流</em>")}</h2><p class="storyLead">《The Courage to Teach》用非常日常的图像说明悖论：呼吸之所以完整，是因为吸气与呼气都在；电池之所以有电流，是因为两极保持关系。把一端永久消灭，看似解决了张力，实际上也把生命的动力一起切断。</p><p class="storyLead">最典型的例子是<strong>独处与共同体</strong>：独处被切离共同体，会退化成孤立；共同体被切离独处，会退化成人群压力与噪音。不是选中“正确的一边”，而是让两者互相保护。</p></div><div class="visualPanel">{svg_paradox()}</div></div></div></section>
+
+<section class="section" id="six"><div class="shell"><div class="head wideHead"><div><span class="kicker">The Courage to Teach · Six Tensions</span><h2>{sem_title("帕尔默最经典的六组悖论，","本来就是一套<em>空间设计原则</em>")}</h2></div><p>这六组来自《The Courage to Teach》第三章关于教学空间的讨论。帕尔默强调它们不是唯一清单，也不是教学配方，而是展示如何用悖论来设计一个更有生命力的学习空间。</p></div><div class="grid3">{paradox_cards}</div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">When Paradox Breaks</span><h2>把悖论拆开，会发生什么</h2></div><p>帕尔默特别关注“分裂后的两端如何各自变形”。这也是理解 hidden wholeness 的一个入口。</p></div><table class="table"><thead><tr><th>原本需要同时存在</th><th>只剩第一端</th><th>只剩第二端</th></tr></thead><tbody>
+<tr><td><strong>头脑 ↔ 心</strong></td><td>知识变得冷而疏离</td><td>感受失去现实与证据的校正</td></tr>
+<tr><td><strong>理论 ↔ 实践</strong></td><td>理论离开生命</td><td>实践失去理解与反思</td></tr>
+<tr><td><strong>教学 ↔ 学习</strong></td><td>教师只说不听</td><td>学习失去引导与共同中心</td></tr>
+<tr><td><strong>独处 ↔ 共同体</strong></td><td>孤独、封闭、自我循环</td><td>从众、侵入、群体噪音</td></tr>
+<tr><td><strong>默观 ↔ 行动</strong></td><td>退避现实</td><td>躁动、焦虑反应与过度控制</td></tr>
+<tr><td><strong>现实 ↔ 可能</strong></td><td>犬儒：只剩“事情就是这样”</td><td>虚假乐观：只愿看理想，不肯接触事实</td></tr>
+</tbody></table></div></section>
+
+<section class="section"><div class="shell"><div class="head wideHead"><div><span class="kicker">Holding the Tension</span><h2>{sem_title("真正困难的，不是理解悖论，","而是身体愿不愿意<em>留在张力里</em>")}</h2></div><p>一旦张力出现，人会本能地想快速结束不舒服：替沉默填空、替别人做决定、把异议压下去、把复杂关系缩成好人/坏人。帕尔默认为，这往往不是技巧不足，而是我们内在没有足够空间承受“不知道”。</p></div><div class="grid3">
+<div class="card"><span class="tag">01 · 不急着关闭</span><h3>先辨认“我为什么这么想结束它”</h3><p>张力会触发失控感。与其立刻解决，不如先注意：我怕失去效率、权威、归属、正确形象，还是安全感？</p></div>
+<div class="card"><span class="tag">02 · 让问题继续活着</span><h3>不是拖延，而是延迟过早结论</h3><p>真正开放的探究需要时间。帕尔默借 Rilke 的精神强调：有些答案不是想出来的，而是需要在生活中慢慢“活进去”。</p></div>
+<div class="card"><span class="tag">03 · 等待第三种可能</span><h3>第三条路通常不是预先设计好的折中</h3><p>当两端都被认真保留，新方案才可能出现。它有时是一种新理解，有时是一种更有尊严的关系方式，也可能是一个此前看不见的行动。</p></div>
+</div></div></section>
+
+<section class="section"><div class="shell"><div class="head"><div><span class="kicker">From Classroom to Life</span><h2>{sem_title("悖论后来走出课堂，","成为“不再分裂”与非暴力的骨架")}</h2></div><p>《A Hidden Wholeness》把“承载张力”带入关系、组织与公共世界。最成熟的一种表达，就是<strong>悲剧性张力（tragic gap）</strong>。</p></div><div class="storyGrid"><div><p class="storyLead">悲剧性张力是<strong>“现实现在是什么”与“我们深知它可能成为什么”</strong>之间的距离。只抓现实，会滑向犬儒；只抓可能，会滑向脱离事实的乐观。帕尔默的非暴力思想要求人尽量站在两者之间，让心和思考不要因为压力而过早关闭。</p><p class="storyLead">这里的“第三条路”不是中庸式各退一步。它可能比原来的两种方案都更要求勇气，因为它既不允许我们逃避现实，也不允许我们靠攻击、羞辱或控制来解除自己的焦虑。</p><div class="actions"><a class="toolButton" href="../practice/tragic-gap.html">悲剧性张力练习</a><a class="toolButton" href="../concepts/nonviolence.html">日常非暴力</a><a class="toolButton" href="contemplation-action.html">默观与行动</a></div></div><div class="visualPanel">{svg_public()}</div></div></div></section>
+
+<section class="section" id="practice"><div class="shell"><div class="head"><div><span class="kicker">Practice</span><h2>{sem_title("把一个真实困境，","从“二选一”改写成<em>张力地图</em>")}</h2></div><p>选一个没有紧急安全风险、但你反复卡住的真实问题。练习的目标不是今天必须得出结论，而是先让问题变得更完整。</p></div><div class="grid2">
+<div class="practiceBox"><span class="tag">STEP 1 · 两句都是真的话</span><h3>先不要写“但是”</h3><p><strong>A：</strong>我需要 ______，因为 ______。<br><strong>B：</strong>我也需要 ______，因为 ______。</p><p>尽量让两句话都能被你的真实经验支持，而不是一真一假。</p></div>
+<div class="practiceBox"><span class="tag">STEP 2 · 看见两端的礼物与阴影</span><h3>每一端都在保护什么？</h3><p>分别写：这一端想保护的价值是什么？如果它独占整个局面，最可能变成什么阴影？</p><p>例如“独处”保护内在空间，但独占时可能变成隔离；“共同体”保护连接，但独占时可能变成侵入。</p></div>
+<div class="practiceBox"><span class="tag">STEP 3 · 感受张力落在哪里</span><h3>不是只在头脑里解题</h3><p>当两端同时在场，你的身体哪里最紧？你最想马上删除哪一端？这个冲动可能在告诉你什么？</p></div>
+<div class="practiceBox"><span class="tag">STEP 4 · 寻找第三种实验</span><h3>不要找终极答案，只找下一次实验</h3><p>有什么小行动能够同时尊重 A 与 B 的核心价值？它不必完美，只需要比原来的“全选一边”多容纳一点现实。</p></div>
+</div>
+{practice_lab("deep-paradox","悖论思想","写下一个最近反复让我想“必须二选一”的问题。A 端有什么真实？B 端也有什么真实？如果暂时不消灭任何一端，一个新的问题会是什么？",15)}
+</div></section>
+
+<section class="section"><div class="shell"><div class="sourceBox"><h3>主要文本依据</h3><ul><li><em>The Courage to Teach</em> 第三章：深层真理、both-and、六组教学空间悖论，以及 holding the tension of opposites。</li><li><em>The Active Life</em>：默观与行动作为“活的悖论”，以及拆开两端后走向躁动或退避的风险。</li><li><em>The Company of Strangers</em>：早期“从 contradiction 到 paradox”与内在/公共、独处/共同体的思想脉络。</li><li><em>A Hidden Wholeness</em>：Being Alone Together、悲剧性张力、第三条路与日常非暴力。</li></ul><p><span class="badge">原著梳理</span><span class="badge">跨文本综合</span><span class="badge">练习为本站再设计</span></p></div><div class="actions"><a class="btn primary" href="contemplation-action.html">返回：默观与行动</a><a class="btn" href="../books/courage-to-teach.html">进入《The Courage to Teach》</a></div></div></section>
+</main>'''
+(study_dir/"paradox.html").write_text(wrap("悖论思想",paradox_module,1,"深入梳理 Parker J. Palmer 的悖论思想：both-and、六组教学空间悖论、承载对立张力、悲剧性张力与第三条路。"),encoding="utf-8")
 
 practice_now=f'''<main>{crumbs(1,[("自修中心","index.html"),("10 分钟操练",None)])}<section class="hero"><div class="shell"><div class="heroMain compact"><div class="eyebrow">Practice Now</div><h1>{sem_title("现在，给自己","<em>十分钟</em>")}</h1><p class="lead">不分析整个人生。只把一个问题放在面前，安静下来，写出第一句真实的话。</p><div class="heroFoot">建议问题：此刻，有什么是我已经隐约知道，却一直没有认真聆听的？</div></div></div></section><section class="section"><div class="shell"><div class="thirdThing"><div class="object">〰</div><span class="tag">今天的第三物 · 绳索</span><h2>{sem_title("在暴风雪里，","什么能把你带回自己？")}</h2><p>先不要解释“绳索象征什么”。只回想一个真实的人、地方、习惯、声音或物件：在你混乱的时候，它怎样帮助你不至于迷失？</p></div>{practice_lab("practice-now","10 分钟操练","此刻，有什么是我已经隐约知道，却一直没有认真聆听的？",10)}<div class="actions"><a class="toolButton" href="third-things.html">换一个第三物</a><a class="toolButton" href="questions.html">换一个开放问题</a></div></div></section></main>'''
 (study_dir/"practice-now.html").write_text(wrap("10 分钟操练",practice_now,1),encoding="utf-8")
@@ -1773,7 +1884,9 @@ index.extend([
 {"title":"帕克·帕尔默","url":"parker-palmer/","type":"人物","summary":"从生命经历、Pendle Hill、Thomas Merton、贵格会传统、教育思想与代表著作认识 Parker J. Palmer。"},
 {"title":"帕克·帕尔默详细传记","url":"parker-palmer/biography.html","type":"人物传记","summary":"从芝加哥、Carleton、Berkeley、Georgetown、Pendle Hill、贵格会静默与抑郁的黑夜，一路读到教育思想、Courage & Renewal 与公共生活。"},
 {"title":"思想总图","url":"worldview/","type":"思想","summary":"从分裂生命、内在导师、真实自我与使命，一直走到教育、悖论、不再分裂与公共生活。"},
-{"title":"自修中心","url":"self-study/","type":"自修","summary":"静默、自由书写、第三物、开放问题与个人记录组成的轻量练习空间。"},
+{"title":"自修中心","url":"self-study/","type":"自修","summary":"静默、自由书写、第三物、开放问题、专题模块与个人记录组成的练习空间。"},
+{"title":"默观与行动","url":"self-study/contemplation-action.html","type":"专题自修","summary":"跨读 The Company of Strangers、The Active Life、The Courage to Teach 与 A Hidden Wholeness，理解默观与行动如何共同形成完整生命。"},
+{"title":"悖论思想","url":"self-study/paradox.html","type":"专题自修","summary":"从 both-and、六组教学空间悖论到悲剧性张力与第三条路，学习承载两种同时真实的力量。"},
 {"title":"第三物素材库","url":"self-study/third-things.html","type":"自修工具","summary":"使用物件、意象与隐喻，从侧面进入内在经验。"},
 {"title":"开放问题生成器","url":"self-study/questions.html","type":"自修工具","summary":"练习把建议、诊断与暗示改写成开放而诚实的问题。"},
 {"title":"我的个人记录","url":"self-study/records.html","type":"自修工具","summary":"汇总并导出在概念页和自修工具中保存的个人书写。"},
