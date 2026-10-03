@@ -307,19 +307,29 @@ h3{font-weight:650}
 @keyframes dashMove{to{stroke-dashoffset:-130}}@keyframes mobiusGlint{to{stroke-dashoffset:-550}}@keyframes mobiusFloat{0%,100%{transform:rotateX(7deg) rotateZ(-1.5deg) translateY(0)}50%{transform:rotateX(3deg) rotateZ(1deg) translateY(-5px)}}
 .photoBand{display:grid;grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:54px;align-items:center;padding:44px;background:rgba(255,253,248,.5);border:1px solid var(--line);border-radius:24px}.photoBand img{width:100%;max-height:520px;object-fit:cover;border-radius:18px;filter:saturate(.78) sepia(.06)}.photoBand h2{font-size:clamp(31px,3.25vw,42px);line-height:1.38;margin:8px 0 18px}.photoBand p{font-size:17px;color:var(--muted)}
 .sourceNote{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;color:#77746e;border-top:1px solid var(--line);padding-top:14px;margin-top:22px}
-.bioIntro{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:64px;align-items:start}
+.bioIntro{display:grid;grid-template-columns:minmax(0,680px) minmax(300px,420px);gap:72px;align-items:start;justify-content:space-between}
 .bioHero h1{max-width:10.8em}
-.bioIntro .storyLead{font-size:21px}
+.bioIntro>div:first-child{max-width:680px}
+.bioIntro p{font-size:17.5px;line-height:1.95;color:#4a554d;margin:0 0 1.15em}
+.bioIntro .storyLead{font-size:20px;line-height:1.9;color:#344139}
 .bioFacts{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.bioFact{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.54)}.bioFact b{display:block;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}.bioFact span{font-size:17px;line-height:1.6}
 .bioNav{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,253,248,.62)}.bioNav a{display:block;padding:17px 14px;text-decoration:none;border-right:1px solid var(--line);min-height:76px}.bioNav a:last-child{border-right:0}.bioNav small{display:block;font-family:ui-monospace,monospace;font-size:10px;letter-spacing:.08em;color:var(--accent);margin-bottom:5px}.bioNav strong{font-size:14px;line-height:1.4}.bioNav a:hover{background:var(--white)}
-.bioChapter{padding:74px 0;border-top:1px solid var(--line);scroll-margin-top:88px}.bioChapter:nth-of-type(even){background:rgba(255,253,248,.25)}
-.bioChapterGrid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(320px,1.08fr);gap:62px;align-items:center}.bioChapter.reverse .bioText{order:2}.bioChapter.reverse .bioMedia{order:1}
-.bioYear{font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}.bioText h2{font-size:clamp(32px,4vw,52px);line-height:1.38;margin:10px 0 20px}.bioText p{font-size:17px;line-height:1.95;color:var(--muted)}.bioText p:first-of-type{font-size:20px;color:#465149}
-.bioMedia{min-height:320px;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.55);overflow:hidden;display:grid;place-items:center;position:relative}.bioMedia img{width:100%;height:100%;min-height:320px;max-height:500px;object-fit:cover;filter:saturate(.76) sepia(.08)}.bioMedia .credit{padding:0 16px 14px}.bioMedia .visualPanel{width:100%;height:100%;border:0;border-radius:0;background:transparent}
-.bioPull{font-size:clamp(25px,3vw,39px);line-height:1.58;margin:24px 0;padding:24px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)}
+.bioChapter{padding:88px 0;border-top:1px solid var(--line);scroll-margin-top:88px}.bioChapter:nth-of-type(even){background:rgba(255,253,248,.25)}
+.bioChapterGrid{display:grid;grid-template-columns:minmax(0,620px) minmax(340px,500px);gap:64px;align-items:center;justify-content:space-between}.bioChapter.reverse .bioText{order:2}.bioChapter.reverse .bioMedia{order:1}
+.bioText{width:100%;max-width:620px}.bioYear{font-family:ui-sans-serif,system-ui,sans-serif;font-size:12px;letter-spacing:.08em;color:var(--accent);font-weight:650}.bioText h2{font-size:clamp(31px,3.4vw,46px);line-height:1.42;margin:12px 0 24px;letter-spacing:-.015em}.bioText p{font-size:18px;line-height:1.95;color:#465149;margin:0 0 1.18em}.bioText p:first-of-type{font-size:19px;line-height:1.92;color:#354139}
+.bioMedia{width:100%;max-width:500px;min-height:320px;margin:0 auto;border:1px solid var(--line);border-radius:24px;background:rgba(255,253,248,.55);overflow:hidden;display:grid;place-items:center;position:relative;justify-self:center}.bioMedia .visualPanel{width:100%;height:100%;border:0;border-radius:0;background:transparent}.bioMedia.photo{display:block;min-height:0;max-width:560px;border:0;background:transparent;overflow:visible}.bioMedia.photo img{display:block;width:100%;height:auto;min-height:0;max-height:none;object-fit:contain;object-position:center;border:1px solid var(--line);border-radius:20px;filter:saturate(.82) sepia(.05)}.bioMedia.photo .credit{text-align:center;padding:10px 12px 0;line-height:1.6}
+.bioPull{font-size:clamp(23px,2.5vw,34px);line-height:1.68;margin:28px 0 0;padding:22px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--ink)}
 .bioMilestones{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bioMilestone{padding:20px;border:1px solid var(--line);border-radius:16px;background:rgba(255,253,248,.55)}.bioMilestone b{display:block;font-size:27px;color:var(--accent);margin-bottom:6px}.bioMilestone span{font-size:14px;color:var(--muted)}
+.bioReadingHint{display:flex;gap:12px;align-items:flex-start;margin:22px 0 14px;padding:15px 18px;border-left:2px solid var(--accent);background:rgba(255,253,248,.48);color:#4b554e}.bioReadingHint strong{flex:0 0 auto;font-family:ui-sans-serif,system-ui,sans-serif;font-size:13px;color:var(--ink)}.bioReadingHint span{font-size:14px;line-height:1.7}
 .bioResources{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.bioResource{display:block;text-decoration:none;padding:24px;border:1px solid var(--line);border-radius:18px;background:rgba(255,253,248,.62);min-height:190px}.bioResource:hover{background:var(--white);box-shadow:var(--shadow);transform:translateY(-2px)}.bioResource h3{font-size:22px;margin:10px 0}.bioResource p{font-size:15px;color:var(--muted)}
 .bioSources{display:grid;gap:10px}.bioSource{padding:18px 20px;border-left:2px solid var(--accent);background:rgba(255,253,248,.48)}.bioSource b{display:block;margin-bottom:4px}.bioSource span{font-size:14px;color:var(--muted)}
+
+/* Self-study landing: same warm editorial language as the rest of the site */
+.studyWelcome{border-bottom:1px solid var(--line);background:radial-gradient(circle at 82% 34%,rgba(191,141,91,.14),transparent 24%),linear-gradient(135deg,#f7f2e9 0%,#efe5d6 100%)}
+.studyWelcomeGrid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(300px,.72fr);gap:72px;align-items:center;padding:82px 0 78px}
+.studyWelcomeCopy h1{font-size:clamp(42px,5.4vw,66px);line-height:1.28;margin:16px 0 22px;letter-spacing:-.03em}.studyWelcomeCopy h1 em{color:var(--accent);font-style:normal}.studyWelcomeCopy .lead{max-width:720px;font-size:19px;line-height:1.9}
+.studyGuide{background:rgba(255,253,248,.7);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 16px 42px rgba(72,61,48,.055)}
+.studyGuide h2{font-size:26px;line-height:1.45;margin:8px 0 20px}.studyGuideStep{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}.studyGuideStep:first-of-type{border-top:0}.studyGuideStep b{width:30px;height:30px;border:1px solid rgba(138,79,45,.38);border-radius:50%;display:grid;place-items:center;font-family:ui-sans-serif,system-ui,sans-serif;font-size:11px;color:var(--accent)}.studyGuideStep strong{display:block;font-size:16px;margin-bottom:3px}.studyGuideStep span{display:block;font-size:14px;line-height:1.65;color:var(--muted)}
 .hideOnMain{display:none!important}
 
 @media(prefers-reduced-motion:reduce){
@@ -332,6 +342,11 @@ h3{font-weight:650}
   nav{display:none}
   .heroGrid,.head,.articleLayout,.lessonLayout,.labGrid,.studyDock,.portraitHero,.storyGrid,.chapterGrid,.photoBand,.bioIntro,.bioChapterGrid{grid-template-columns:minmax(0,1fr)}
   .bioChapter.reverse .bioText,.bioChapter.reverse .bioMedia{order:initial}
+  .bioText{max-width:720px;margin-inline:auto}
+  .bioMedia{max-width:760px;margin-inline:auto}
+  .bioMedia.photo{max-width:760px}
+  .studyWelcomeGrid{grid-template-columns:minmax(0,1fr);gap:34px;padding:68px 0}
+  .studyGuide{max-width:720px}
   .bioMilestones{grid-template-columns:repeat(2,1fr)}
   .bioResources{grid-template-columns:repeat(2,1fr)}
   .toc,.lessonNav{position:static}
@@ -361,16 +376,20 @@ h3{font-weight:650}
   .heroFoot{bottom:22px}
   .heroSide{padding:0 0 48px}
   .grid2,.grid3,.grid4,.matrix,.relationMap,.networkGrid,.thirdGrid,.influenceMap,.bookRiver,.contrastGrid,.bioMilestones,.bioResources,.bioFacts{grid-template-columns:1fr}
-  .bioChapter{padding:58px 0}
+  .bioChapter{padding:64px 0}
   .bioChapterGrid{gap:28px}
-  .bioMedia{min-height:240px}
-  .bioMedia img{min-height:240px}
+  .bioText p{font-size:17px;line-height:1.92}.bioText p:first-of-type{font-size:18px}.bioText h2{font-size:clamp(29px,8.2vw,36px);margin-bottom:18px}
+  .bioMedia{min-height:240px}.bioMedia.photo{min-height:0}
   .bioHero h1{font-size:clamp(34px,8.5vw,38px);max-width:none;letter-spacing:-.04em}
   .bioNav{display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
   .bioNav a{min-width:0;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
   .bioNav a:nth-child(2n){border-right:0}
   .bioNav a:last-child{grid-column:1/-1;border-right:0;border-bottom:0}
   .section{padding:70px 0}
+  .studyWelcomeGrid{padding:56px 0 60px;gap:28px}
+  .studyWelcomeCopy h1{font-size:clamp(36px,10vw,44px)}
+  .studyWelcomeCopy .lead{font-size:17px;line-height:1.86}
+  .studyGuide{padding:22px 20px}
   .head{gap:18px;margin-bottom:34px}
   .table{font-size:13px;display:block;overflow-x:auto}
   .experienceHero{padding-bottom:48px}
