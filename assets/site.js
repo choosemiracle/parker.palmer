@@ -1,6 +1,42 @@
 
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.05});
 document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+
+/* Keep intentional Chinese title lines intact without ever clipping them.
+   On desktop/tablet, shrink the whole heading slightly only when a designed
+   semantic line is wider than its real container. On phones CSS allows the
+   semantic line itself to wrap naturally instead of forcing tiny type. */
+const semanticTitleHeads=[...document.querySelectorAll('h1:has(.semanticTitle),h2:has(.semanticTitle)')];
+const fitSemanticTitles=()=>{
+  semanticTitleHeads.forEach(h=>{
+    if(!h.dataset.fitReady){
+      h.dataset.fitReady='1';
+      h.dataset.fitInlineFont=h.style.fontSize||'';
+    }
+    h.style.fontSize=h.dataset.fitInlineFont;
+    h.classList.remove('semanticTitleFit');
+    if(window.innerWidth<=680) return;
+    const title=h.querySelector('.semanticTitle');
+    const lines=[...title.querySelectorAll('.titleLine')];
+    const available=Math.max(1,h.clientWidth-2);
+    const base=parseFloat(getComputedStyle(h).fontSize)||40;
+    const min=Math.max(24,base*.64);
+    if(lines.some(line=>line.scrollWidth>available+.5)){
+      h.classList.add('semanticTitleFit');
+      let size=base;
+      while(size>min && lines.some(line=>line.scrollWidth>available+.5)){
+        size-=.5;
+        h.style.fontSize=size+'px';
+      }
+    }
+  });
+};
+let fitTimer;
+const scheduleTitleFit=()=>{clearTimeout(fitTimer);fitTimer=setTimeout(fitSemanticTitles,40)};
+requestAnimationFrame(fitSemanticTitles);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fitSemanticTitles);
+window.addEventListener('resize',scheduleTitleFit,{passive:true});
+
 const q=document.querySelector('[data-site-search]');
 if(q){
   const cards=[...document.querySelectorAll('[data-search-card]')];
